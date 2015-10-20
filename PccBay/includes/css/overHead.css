@@ -1,0 +1,81 @@
+/* overHead */
+.overHeadPullout{
+	background: #E6E9ED;
+	z-index: 99999;
+	position: fixed;
+	height: 0%; 
+	width: 100%; 
+	bottom:0px; 
+	left:0px;
+}
+
+.overHead-close{
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	font-size: 20px;
+	cursor: pointer;
+	display: none;
+}
+.noScroll{
+	overflow: hidden !important
+}
+#pb-j{
+	padding: 20px;
+}
+
+
+/* Content Styles */
+.oh-center{
+	margin: 0px auto;
+}
+.oh-section{
+	min-height: 100px;
+	background: #ffffff;
+	margin: 0px auto;
+}
+.oh-section-half{
+	width: 50%;
+}
+.oh-section-full{
+	width: 90%;
+}
+
+.oh-section textarea{
+	min-height: 80px;
+	max-height: 200px;
+	margin-left: -1px;
+	background: transparent;
+}
+
+.maxtext_counter{
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	opacity: 0.4;
+}
+
+.oh-section .btn{
+	margin: 5px;
+}
+
+.oh-section h3{
+	padding: 10px;
+	margin: 0px;
+	color: #e67e22;
+}
+
+#ex1Slider .slider-selection {
+	background: #E6E9ED;
+}
+
+.uploadBlock{
+	width: 100%;
+	min-height: 100px;
+/* 	border: 2px #E6E9ED dashed; */
+/* 	margin: 5px auto; */
+}
+.dz-message{
+	text-align: center;
+	width: 100%;
+}
