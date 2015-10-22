@@ -19,12 +19,6 @@
 	    return $randomString;
 	}
 	
-	
-	function include_root($Fullpath){
-		$path = $_SERVER['DOCUMENT_ROOT'].$Fullpath;
-		include($path);
-	}
-	
 	function get_words($sentence, $count = 8) {
 	  preg_match("/(?:\w+(?:\W+|$)){0,$count}/", $sentence, $matches);
 	  return $matches[0];

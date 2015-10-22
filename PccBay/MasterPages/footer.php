@@ -1,6 +1,5 @@
 <footer class="<?php sessionSet('userLogged', 'col-md-9', 'col-md-12') ?>">
 	<div style="float: left;">
-		<a href="#">Change Log</a> |
 		<a href="#">Privacy Policy</a> |
 		<a href="#">FAQ's</a>
 	</div>

@@ -1,16 +1,13 @@
-<?php
-	session_name('com_pccbay_user');session_start('');
-	include_once('includes/php/commonFunctions.php');
-?>
+<?php include_once($_SERVER['DOCUMENT_ROOT'].'/MasterPages/overhead.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<title>PCCbay | The eBay for PCC</title>
-		<?php pb_include('/head.php'); ?>
+		<?php pb_include('/MasterPages/head.php'); ?>
 	</head>	
 <body>
 	<header>		
-		<?php pb_include('/header.php'); ?>
+		<?php pb_include('/MasterPages/header.php'); ?>
 	</header>
 	<div class="container-fluid">
 		<div class="row">
@@ -95,6 +92,6 @@
 	</div>
 
 
-<?php pb_include('/footer.php'); ?>
+<?php pb_include('/MasterPages/footer.php'); ?>
 </body>
 </html>
