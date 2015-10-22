@@ -36,10 +36,12 @@
 <link rel="stylesheet" href="/includes/css/PccBay.css" type="text/css" >
 <script src="/includes/js/jquery.js"></script>
 <?php  
-$pb_user['theme'] = 'default';	
 $user_data = json_decode(pb_user_data($_SESSION['userLogged'], 'user_data'), true);
-foreach($user_data as $data){
-	$pb_user['theme']=$data['theme'];
-} 
-print '<link rel="stylesheet" href="/includes/css/themes/'.$pb_user['theme'].'.css" type="text/css" >'; 
+if($user_data){
+	$pb_user['theme'] = 'default';
+	foreach($user_data as $data){
+		$pb_user['theme']=$data['theme'];
+	} 
+	print '<link rel="stylesheet" href="/includes/css/themes/'.$pb_user['theme'].'.css" type="text/css" >'; 
+}
 ?>
