@@ -4,6 +4,7 @@ body{
 	padding: 0px;
 	background-color: #E6E9ED;
 	font-family: 'Raleway', sans-serif;
+	color: #2c3e50;
 }
 
 .pb-sidebar-group.activeSet{
@@ -168,6 +169,12 @@ a:hover{
 .pb-theme-green{
 	color: #27ae60;
 }
+.pb-theme-blue{
+	color: #3498db;
+}
+.pb-theme-black{
+	color: #2c3e50;
+}
 
 .btn-default{
 	color: #ffffff;
@@ -222,6 +229,12 @@ a:hover{
 }
 .pb-rule-below-thick{
 	border-bottom: 2px #E6E9ED solid;
+}
+.pb-half-rule{
+	width: 50%;
+	height: 1px;
+	background: #E6E9ED;
+	margin: 0px auto;
 }
 
 /* Post Boxes */
