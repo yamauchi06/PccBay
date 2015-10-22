@@ -149,7 +149,7 @@
 	}	
 	
 
-	function pb_feed($retrieve='*', $loop=1){
+	function pb_feed($loop=1, $retrieve='*'){
 		$json = pb_json_feed();
 		$jsonIterator = json_decode($json, TRUE);
 		$i=1;
@@ -229,6 +229,25 @@
 		$i++;	
 		}
 		
+	}
+	
+	function pb_user_data($user_id, $row){
+		global $servername;
+		global $username;
+		global $password;
+		global $dbname;
+		$conn = new mysqli($servername, $username, $password, $dbname);
+		if ($conn->connect_error) {
+		    die("Connection failed: " . $conn->connect_error);
+		} 
+		$sql = "SELECT * FROM  pb_users Where user_id='$user_id'";
+		$result = $conn->query($sql);
+		if ($result->num_rows > 0) {
+		    while($sqlrow = $result->fetch_assoc()) {
+				return $sqlrow[$row];
+		    }
+		}
+		$conn->close();
 	}
 	
 	
