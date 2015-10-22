@@ -4,11 +4,11 @@
 	
 	<form class="pb-rule-below-thick" method="post">
 		
-		<input class="form-control" rows="3" placeholder="What is is?">
+		<input class="form-control" rows="3" name="product_title" placeholder="What is is?">
 		
-		<input class="form-control" rows="3" placeholder="Price.">
+		<input class="form-control" rows="3" name="product_price" placeholder="Price.">
 			
-		<textarea class="form-control no-resize" rows="3" data-maxtext="200" placeholder="Tell us about it."></textarea>
+		<textarea class="form-control no-resize" rows="3" data-maxtext="200" name="product_desc" placeholder="Tell us about it."></textarea>
 
 		<input class="form-control tags" rows="3" placeholder="Tag it.">
 		<br />
@@ -18,7 +18,7 @@
 					<span>Condition</span>
 				</td>
 				<td>
-					<div style="margin-left: 10px;" class="nstSlider" data-range_min="-100" data-range_max="100" data-cur_min="100" data-cur_max="0">	
+					<div style="margin-left: 10px;" class="nstSlider" data-range_min="-100" data-range_max="100" data-cur_min="100" data-cur_max="0" name="condition">	
 						<div class="highlightPanel"></div>
 						<div class="bar"></div>
 						<div class="leftGrip"></div>

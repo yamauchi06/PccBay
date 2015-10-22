@@ -244,5 +244,22 @@
 		$conn->close();
 	}
 	
+	function pb_add_product($user_id) {
+		global $servername;
+		global $username;
+		global $password;
+		global $dbname;
+		$conn = new mysqli($servername, $username, $password, $dbname);
+		if ($conn->connect_error) {
+		    die("Connection failed: " . $conn->connect_error);
+		} 
+		foreach($user as $key=>$value) { $$key = $value; }
+		$sql = "INSERT INTO pb_post uid,";
+		$result = $conn->$query($sql);
+		
+		
+   	$conn->close();
+	}
+	
 	
 ?>
