@@ -1,5 +1,7 @@
 <?php
-	include_once('includes/php/commonFunctions.php');	
+	session_name('com_pccbay_user');
+	session_start('');
+	include_once('includes/php/commonFunctions.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +28,7 @@
 		<link rel="manifest" href="/images/favicon/manifest.json">
 		<meta name="msapplication-TileColor" content="#ffffff">
 		<meta name="msapplication-TileImage" content="/images/favicon/ms-icon-144x144.png">
-		<meta name="theme-color" content="#3498DB">
+		<meta name="theme-color" content="#e67e22">
 		<!-- Latest compiled and minified -->
 		<link rel="stylesheet" href="/includes/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/includes/css/bootstrap-tagsinput.css">
@@ -50,10 +52,19 @@
 		<div class="col-md-3">
 			<a href="/"><img src="/images/favicon/pccBay-logo.svg" height="40px" alt="PccBay" /></a>
 		</div>	
-		<div class="col-md-2 col-md-offset-3" id="headerBtns">
-			<a href="#" class="transition-300" id="MyCardbtn" data-overHead="#MyCardBox"><i class="zmdi zmdi-card"></i></a>
-			<a href="#" id="NewProductbtn" class="transition-300" data-overHead="#NewProductBox"><i class="zmdi zmdi-plus-square"></i></a>			
-		</div>
+			<div class="col-md-2 col-md-offset-3" id="headerBtns">
+			<?php 
+				if(isset($_SESSION['userLogged'])){ 
+					?>
+					<a href="#" class="transition-300" id="MyCardbtn" data-overHead="#MyCardBox"><i class="zmdi zmdi-card"></i></a>
+					<a href="#" id="NewProductbtn" class="transition-300" data-overHead="#NewProductBox"><i class="zmdi zmdi-plus-square"></i></a>			
+					<?php
+				}else{ 
+					print '<a href="/?sessionSet=userLogged&value=JoshFerguson" class="transition-300" id="LogOnBtn"><i class="zmdi zmdi-sign-in"></i></a>';
+				} 
+			?>
+			</div>
+		
 		<div class="col-md-4">
 		    <div class="input-group MainSearchBox transition-300">
 		      <input type="text" class="form-control" placeholder="Search PCCbay">
@@ -71,46 +82,62 @@
 	<div class="container-fluid">
 		<div class="row">
 			<!-- Begin Content -->
-			<div class="col-md-9 MainFeed">
+			<div class="col-md-<?php if(isset($_SESSION['userLogged'])){ print '9'; }else{ print '12'; } ?> MainFeed">
 				<div id="freewall">
 					<?php pb_feed(); ?>
 				</div>
 			</div>
 			<!-- Begin SideBar -->
-			<div class="col-md-3 MainSideBar">
-				<nav>
-					<a href="#" class="transition-300 activeSet" data-obj="side_dashboard">
-						<div class="col-md-4">
-							<i class="zmdi zmdi-view-dashboard"></i>
-						</div>
-					</a>
-					<a href="#" class="transition-300" data-obj="side_notifications">
-						<div class="col-md-4">
-							<i class="zmdi zmdi-notifications"></i>
-						</div>
-					</a>
-					<a href="#" class="transition-300" data-obj="side_account">
-						<div class="col-md-4">
-							<i class="zmdi zmdi-account-box"></i>
-						</div>
-					</a>
-				</nav>
-				
-				<div id="side_dashboard" class="pb-sidebar-group activeSet">
-					<?php include('includes/content/pbRightBar/side_dashboard.php'); ?>
+			<?php
+			if(isset($_SESSION['userLogged'])){
+				?>
+				<div class="col-md-3 MainSideBar">
+					<nav>
+						<a href="#" class="transition-300 activeSet" data-obj="side_dashboard">
+							<div class="col-md-4">
+								<i class="zmdi zmdi-view-dashboard"></i>
+							</div>
+						</a>
+						<a href="#" class="transition-300" data-obj="side_notifications">
+							<div class="col-md-4">
+								<i class="zmdi zmdi-notifications"></i>
+							</div>
+						</a>
+						<a href="#" class="transition-300" data-obj="side_account">
+							<div class="col-md-4">
+								<i class="zmdi zmdi-account-box"></i>
+							</div>
+						</a>
+					</nav>
+					
+					<div id="side_dashboard" class="pb-sidebar-group activeSet">
+						<?php include('includes/content/pbRightBar/side_dashboard.php'); ?>
+					</div>
+					<div id="side_notifications" class="pb-sidebar-group">
+						<?php include('includes/content/pbRightBar/side_notifications.php'); ?>
+					</div>
+					<div id="side_account" class="pb-sidebar-group full-width">
+						<?php include('includes/content/pbRightBar/side_account.php'); ?>
+					</div>
+					
 				</div>
-				<div id="side_notifications" class="pb-sidebar-group">
-					<?php include('includes/content/pbRightBar/side_notifications.php'); ?>
-				</div>
-				<div id="side_account" class="pb-sidebar-group full-width">
-					<?php include('includes/content/pbRightBar/side_account.php'); ?>
-				</div>
-				
-			</div>
+				<?php
+			}	
+			?>
 		</div>
 	</div>
 	
-	<footer class="col-md-9">
+	
+	<div class="pb-sticky-side">
+		<a href="#" class="pb-sticky-btn feedback">
+			<i class="zmdi zmdi-assignment-check"></i>
+		</a>
+		<a href="http://s.pccbay.com/Xt5y22i" class="pb-sticky-btn">
+			<i class="zmdi zmdi-card-giftcard"></i>
+		</a>
+	</div>
+	
+	<footer class="col-md-<?php if(isset($_SESSION['userLogged'])){ print '9'; }else{ print '12'; } ?>">
 		<div style="float: left;">
 			<a href="#">Change Log</a> |
 			<a href="#">Privacy Policy</a> |
@@ -127,11 +154,18 @@
 		<div id="NewProductBox" class="HiddenFrame">
 			<?php include('includes/content/forms/newProduct.php'); ?>
 		</div>
-		<div id="MyCardBox" class="HiddenFrame">Put My Card Stuff here</div>
-		<div id="accSettingsBox" class="HiddenFrame">Account Settings here</div>
-		<div id="postViewer" class="HiddenFrame"></div>
+		<div id="MyCardBox" class="HiddenFrame">
+			<?php include('includes/content/forms/myPCCcard.php'); ?>
+		</div>
+		<div id="accSettingsBox" class="HiddenFrame">
+			<?php include('includes/content/forms/accountSettings.php'); ?>
+		</div>
+		<div id="postViewer" class="HiddenFrame">
+			<?php include('includes/content/forms/postViewer.php'); ?>
+		</div>
 	</div>
 </div>
+
 
 
 <script src="/includes/js/bootstrap.min.js"></script>
@@ -144,6 +178,6 @@
 <script src="/includes/plugins/dropzone/dropzone.js"></script>	
 <script src="/includes/js/autosize.js"></script>	
 <script src="/includes/plugins/nstSlider/jquery.nstSlider.min.js"></script>	
-<script src="/includes/js/commonScripts.js"></script>
+<script src="/includes/js/_commonScripts.js"></script>
 </body>
 </html>

@@ -1,6 +1,9 @@
 <?php
 	include_once('_db-config.php');
 	
+	if(!empty($_GET['sessionSet'])){ $_SESSION[$_GET['sessionSet']] = $_GET['value']; }
+	if(!empty($_GET['sessionUnSet'])){ unset( $_SESSION[$_GET['sessionUnSet']] ); }
+	
 	function rand_str($kind='mixed', $length = 10) {
 	    if($kind=='mixed'){
 		    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; }
@@ -138,12 +141,12 @@
 		while($i<=$loop){
 			foreach ($jsonIterator as $key => $val) {
 			    ?>
-			    <div class="col-md-4 pb-post grid-item" id="pb_post_<?php print $val['id']; ?>">
+			    <div class="col-md-<?php if(isset($_SESSION['userLogged'])){ print '4'; }else{ print '3'; } ?> pb-post grid-item" id="pb_post_<?php print $val['id']; ?>">
 					<div class="pb-post-block">
 						<div class="pb-post-head">
 							<img src="<?php print $val['author_avatar']; ?>" class="pb-post-avatar" />
 							<div class="pb-post-author">
-								<span><?php print $val['author_name']; ?></span><br />
+								<strong><a href="profile/<?php print $val['author_name']; ?>"><?php print $val['author_name']; ?></a></strong><br />
 								<span class="pb-post-timestamp"> <i class="pb-post-timestamp-o">
 								<?php  print time_ago( strtotime($val['date']) ); ?>
 								</i></span>
@@ -154,12 +157,16 @@
 							<div class="pb-post-slider flexslider">
 							  <ul class="slides">
 								  <?php
+									$imgIDCount=0;
 									$imgArr = explode(',', $val['images']); 
 									foreach ($imgArr as $index => $imgID) {
-										print '<li>';
-											//print '[safe_image]';
-											safe_image($imgID, 'image-lazy', 'class="pb-post-product lazy" data-overHead="#postViewer" data-overHead-temp="open-veiw-trans"');
-										print '</li>';
+										if($imgIDCount==0){
+											print '<li>';
+												//print '[safe_image]';
+												safe_image($imgID, 'image-lazy', 'class="pb-post-product lazy" data-overHead="#postViewer" data-overHead-temp="open-veiw-trans"');
+											print '</li>';
+											$imgIDCount++;
+										}
 									}
 									?>
 							  </ul>
@@ -188,14 +195,12 @@
 							
 							<div class="row">
 								<div class="col-xs-6 pb-va-rule text-center">
-								  <a href="#" class="feed-post-tab-link" data-type="competency">
-								    <i class="mdi-action-assessment feed-post-tab-icon"></i>
+								  <a href="#" class="feed-post-tab-link transition-300">
 								    <span class="feed-post-tab"><i class="zmdi zmdi-format-valign-bottom"></i> Place bid</span>
 								  </a>
 								</div>
 								<div class="col-xs-6 text-center">
-								  <a href="#" class="feed-post-tab-link" data-type="contribution">
-								    <i class="mdi-action-assignment feed-post-tab-icon"></i>
+								  <a href="#" class="feed-post-tab-link transition-300">
 								    <span class="feed-post-tab"><i class="zmdi zmdi-money-box"></i> Get this</span>
 								  </a>
 								</div>

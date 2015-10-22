@@ -33,6 +33,7 @@
 	min-height: 100px;
 	background: #ffffff;
 	margin: 0px auto;
+	padding: 5px;
 }
 .oh-section-half{
 	width: 50%;
@@ -40,6 +41,19 @@
 .oh-section-full{
 	width: 90%;
 }
+
+@media (max-width: 1192px) {
+  .oh-section-half, .oh-section-full{
+	  width: 90%;
+  }
+}
+/*
+@media (max-width: 480px) {
+  .oh-section-half, .oh-section-full{
+	  width: 100%;
+  }
+}
+*/
 
 .oh-section textarea{
 	min-height: 80px;

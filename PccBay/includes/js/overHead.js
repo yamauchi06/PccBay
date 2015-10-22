@@ -21,14 +21,16 @@ function overHead(that, just_close, temp){
 	var docsize = $('.MainSideBar').height()+5;
 	
 	if(temp=='open-veiw' || temp == 'open-veiw-trans'){
-		if($(document).width() < 992){
-			$( ".overHeadPullout" ).width( $(document).width() );
-		}else{
-			$( ".overHeadPullout" ).width( $(document).width()-$('.MainSideBar').width() );
-			$( window ).resize(function() {
+		
+		$( ".overHeadPullout" ).width( $(document).width()-$('.MainSideBar').width() );
+		$( window ).resize(function() {
+		  if($(document).width() > 992){
 			  $( ".overHeadPullout" ).width( $(document).width()-$('.MainSideBar').width() ).height( $('.MainSideBar').height() );
-			});	
-		}
+		  }else{
+			  $( ".overHeadPullout" ).width( $(document).width() );
+		  }
+		});	
+		
 	}
 	if(temp == 'open-veiw-trans'){
 		$( ".overHeadPullout" ).css('background', 'rgba(232,235,238,0.90)');
@@ -45,7 +47,7 @@ function overHead(that, just_close, temp){
 	    	$('#HiddenFrames .HiddenFrame').hide();
 	    	$( ".overHeadPullout" ).css({marginBottom:0, height: 0});
 	  	});
-	  	
+	  	$('body').removeClass('noScroll');
 		$(that).attr('data-overHead_state', 'close');
 	}else{
 		if( $('.overHeadPullout').height() == 0 ){
@@ -58,6 +60,7 @@ function overHead(that, just_close, temp){
 		    	
 		  	});
 			$(that).attr('data-overHead_state', 'open');
+			$('body').addClass('noScroll');
 		}
 	}
 }

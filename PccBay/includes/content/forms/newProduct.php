@@ -12,20 +12,32 @@
 
 		<input class="form-control tags" rows="3" placeholder="Tag it.">
 		<br />
-		<span style="margin-left: 10px;">Condition</span>
-		<input id="ex1" data-slider-id='ex1Slider' class="HRSlider" type="text" data-slider-min="0" data-slider-max="6" data-slider-step="1" data-slider-value="6"/>
-		
+		<table style="margin-left: 10px;" >
+			<tr>
+				<td>
+					<span>Condition</span>
+				</td>
+				<td>
+					<div style="margin-left: 10px;" class="nstSlider" data-range_min="-100" data-range_max="100" data-cur_min="100" data-cur_max="0">	
+						<div class="highlightPanel"></div>
+						<div class="bar"></div>
+						<div class="leftGrip"></div>
+					</div>
+				</td>
+			</tr>
+		</table>
+
 		<div class="checkbox" style="margin-left: 10px;">
             <input id="checkbox1" class="styled" type="checkbox" checked>
             <label for="checkbox1">
-                Allow Bidding <sup><a href="#"><i class="zmdi zmdi-help-outline"></i></a></sup>
+                Allow Bidding <sup><a href="#" data-toggle="tooltip" title="Allow people to place bids on your item"><i class="zmdi zmdi-help-outline"></i></a></sup>
             </label>
         </div>
         
         <div class="checkbox" style="margin-left: 10px;">
             <input id="checkbox2" class="styled" type="checkbox" checked>
             <label for="checkbox2">
-                Lock my images <sup><a href="#"><i class="zmdi zmdi-help-outline"></i></a></sup>
+                Lock my images <sup><a href="#"data-toggle="tooltip" title="Helps  prevent people from saving your images."><i class="zmdi zmdi-help-outline"></i></a></sup>
             </label>
         </div>
 		
@@ -35,8 +47,8 @@
 			<form id="myAwesomeDropzone" action="includes/plugins/dropzone/postFile.php" class="dropzone">
 				<div class="dz-message">
 					<br />
-					<i class="zmdi zmdi-image-o" style="font-size: 50px;color: #3498DB"></i><br />
-					Drop photos here or click to upload
+					<i class="zmdi zmdi-image-o" style="font-size: 50px;color: #d3711a"></i><br />
+					Click or Drop photos here!
 				</div>
 <!--
 				
@@ -52,10 +64,10 @@
 
 		
 		<div style="text-align: right;width: 100%;">
-			<input type="submit" class="btn btn-primary" value="Post it!">
+			<input type="submit" class="btn btn-default" value="Post it!">
+			<a href="#" style="float: left;margin: 5px;">Privacy Policy </a>
 		</div>
 		
-	</form>
 	
 	
 </div>
