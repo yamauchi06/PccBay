@@ -1,10 +1,10 @@
-CREATE TABLE IF NOT EXISTS users (
-  `user_id` 			INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  `num_of_ratings` 	INTEGER UNSIGNED  NOT NULL,
-  `total_ratings`    INTEGER UNSIGNED  NOT NULL,
-  `permissions` 	   INTEGER UNSIGNED NOT NULL,
-  `id_card_key` 		VARCHAR(255) NOT NULL UNIQUE,
-  `contact_info`     VARCHAR(1024)
+CREATE TABLE IF NOT EXISTS pb_users (
+  'user_id' 			INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  'num_of_ratings' 	INTEGER UNSIGNED  NOT NULL,
+  'total_ratings'    INTEGER UNSIGNED  NOT NULL,
+  'permissions' 	   INTEGER UNSIGNED NOT NULL,
+  'id_card_key' 		VARCHAR(255) NOT NULL UNIQUE,
+  'contact_info'     VARCHAR(1024)
 
   PRIMARY KEY (user_id)
 )

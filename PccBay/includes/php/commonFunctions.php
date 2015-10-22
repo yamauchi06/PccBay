@@ -89,6 +89,21 @@
 		$conn->close();
 	}
 	
+	function pb_include($include, $root=true, $includeTimes=''){	
+		if($root){ $include = $_SERVER['DOCUMENT_ROOT'].$include; }
+		if(file_exists($include)){
+			if($includeTimes == 'once'){
+				include_once($include); }else{
+				include($include); }
+		}else{
+			print 'path [ '.$include.' ] not found';	
+		}
+	}
+	
+	function sessionSet($session='', $isset='', $unset=''){
+		if(isset($_SESSION[$session])){ print $isset; }else{ print $unset; }
+	}
+	
 	
 	function pb_json_feed($retrieve='*', $loop=0){
 		global $servername;
@@ -134,10 +149,10 @@
 	}	
 	
 
-	function pb_feed($retrieve='*', $loop=2){
+	function pb_feed($retrieve='*', $loop=1){
 		$json = pb_json_feed();
 		$jsonIterator = json_decode($json, TRUE);
-		$i=0;
+		$i=1;
 		while($i<=$loop){
 			foreach ($jsonIterator as $key => $val) {
 			    ?>
