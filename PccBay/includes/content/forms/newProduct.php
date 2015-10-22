@@ -1,8 +1,14 @@
+<?php
+   if($_POST['add_product']) {
+      pb_add_product($_SESSION['user_id']);
+   }  
+?>
+
 <div class="oh-section oh-section-half">
 	
 	<h3 class="pb-rule-below">New Product</h3>
 	
-	<form class="pb-rule-below-thick" method="post">
+	<form class="pb-rule-below-thick" method="post" action="">
 		
 		<input class="form-control" rows="3" name="product_title" placeholder="What is is?">
 		
@@ -64,7 +70,7 @@
 
 		
 		<div style="text-align: right;width: 100%;">
-			<input type="submit" class="btn btn-default" value="Post it!">
+			<input type="submit" class="btn btn-default" name="add_product" value="Post it!">
 			<a href="#" style="float: left;margin: 5px;">Privacy Policy </a>
 		</div>
 		
