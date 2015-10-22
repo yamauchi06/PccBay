@@ -253,9 +253,30 @@
 		if ($conn->connect_error) {
 		    die("Connection failed: " . $conn->connect_error);
 		} 
-		foreach($user as $key=>$value) { $$key = $value; }
-		$sql = "INSERT INTO pb_post uid,";
+			$product_info = array();
+      		array_push($product_info, array(
+      			"timestamp" => "".date("F j, Y, g:i a")."",
+      			"title"     => "".$_POST['product_title']."",
+      			"desc"      => "".$_POST['product_desc']."",
+      			"tags"      => "".$_POST['product_tags']."",
+      			"price"     => "".$_POST['product_price']."",
+      			"condition" => "".$_POST['condition'].""
+      		));
+      		
+         $product_info = json_encode($product_info);
+         
+         $trans_info = array();
+            array_push($trans_info, array(
+               "completed" => 0,
+               "method"    => 0,
+               "sold_to"   => 0,
+               "date_sold" => 0
+            ));
+      		
+      	$trans_info = json_encode($trans_info);
+		$sql = "INSERT INTO pb_product user_id, product_info, trans_info VALUES (".$user_id.",".$product_info.",".$trans_info.")";
 		$result = $conn->$query($sql);
+   	
    	$conn->close();
 	}
 	
