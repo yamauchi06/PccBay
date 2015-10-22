@@ -256,8 +256,6 @@
 		foreach($user as $key=>$value) { $$key = $value; }
 		$sql = "INSERT INTO pb_post uid,";
 		$result = $conn->$query($sql);
-		
-		
    	$conn->close();
 	}
 	
