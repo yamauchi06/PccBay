@@ -4,7 +4,14 @@ include_once('commonFunctions.php');
 
 
 	$product_info = array();
-		array_push($product_info, array('timestamp'=>'10/21/2015'));
+	
+		array_push($product_info, array(
+			'timestamp'=>'10/21/2015',
+			'title'=>'test Item',
+			'desc'=>'this is cool',
+			'tags'=>'["tag1","tag2","tag3","tag4","tag5"]',
+			'price'=>'$1.00'
+		));
 		
 		$product_info = json_encode($product_info);
 	
