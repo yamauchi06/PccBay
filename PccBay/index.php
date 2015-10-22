@@ -59,7 +59,7 @@
 	
 	<!-- Sticky side buttons -->
 	<div class="pb-sticky-side <?php sessionSet('userLogged', '', 'hide') ?>">
-		<a href="#" class="pb-sticky-btn feedback">
+		<a href="#" class="pb-sticky-btn feedback" data-overHead="#feedbackBox">
 			<i class="zmdi zmdi-assignment-check"></i>
 		</a>
 		<a class="pb-sticky-btn" data-overHead="#invitationCodeBox">
@@ -87,6 +87,9 @@
 			</div>
 			<div id="invitationCodeBox" class="HiddenFrame">
 				<?php pb_include('/includes/content/info/invitationCode.php'); ?>
+			</div>
+			<div id="feedbackBox" class="HiddenFrame">
+				<?php pb_include('/includes/content/forms/feedback.php'); ?>
 			</div>
 		</div>
 	</div>
