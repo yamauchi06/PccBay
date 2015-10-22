@@ -1,0 +1,94 @@
+
+header{
+	background-color: #9b59b6;
+	border-bottom: 2px #8e44ad solid;
+	box-shadow: 1px 0px 6px #8e44ad;
+}
+
+a {
+    color: #9b59b6;
+}
+
+.MainSideBar nav a:hover{
+	color: #9b59b6;
+}
+.MainSideBar nav a.activeSet{
+	color: #9b59b6;
+	border-bottom: 2px #9b59b6 solid;
+}
+
+.btn-default{
+	color: #ffffff;
+	background-color: #8e44ad;
+	border-color: #8e44ad;
+}
+.btn-default:hover{
+	color: #ffffff;
+	background-color: #8e44ad;
+	border-color: #8e44ad;
+}
+
+
+.pb-page-divider{
+	background: #9b59b6;
+}
+
+
+.pb-post-author{
+	color: #9b59b6;
+}
+
+.pb-post-timestamp .zmdi{
+	color: #9b59b6;
+}
+
+.pb-post-tag{
+	background: #9b59b6;
+	border-bottom: 2px #9b59b6 solid;
+}
+.feed-post-tab-link{
+	border-color: #9b59b6;
+}
+.feed-post-tab-link:hover, .feed-post-tab-link-Cancel:hover, .feed-post-tab-link-Accept:hover{
+	color: #ffffff;
+	background: #9b59b6;
+	border-color: #9b59b6;
+}
+ 
+.pb-sidebar-group::-webkit-scrollbar-thumb {
+  background-color: #9b59b6
+}
+
+.pb-sidebar-group h3{
+	color: #9b59b6;
+}
+
+.pb-sticky-btn.feedback{
+	background: #9b59b6;
+}
+
+
+
+
+
+
+
+
+
+
+/* overHead */
+.overHeadPullout{
+	background: #9b59b6;
+}
+.oh-section h3{
+	color: #9b59b6;
+}
+
+#ex1Slider .slider-selection {
+	background: #9b59b6;
+}
+
+.dz-message i{
+	color: #9b59b6
+}
+

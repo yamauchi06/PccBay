@@ -4,6 +4,7 @@ foreach($user_data as $data){
 	$pb_user['name']=$data['name'];
 	$pb_user['avatar']=$data['avatar'];
 	$pb_user['registered']=date("F d, Y", strtotime($data['registered']));
+	$pb_user['theme']=$data['theme'];
 } 
 ?>
 <div class="pb-page-divider">

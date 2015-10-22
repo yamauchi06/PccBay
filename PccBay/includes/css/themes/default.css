@@ -1,0 +1,63 @@
+
+header{
+	background-color: #e67e22;
+	border-bottom: 2px #d3711a solid;
+	box-shadow: 1px 0px 6px #d3711a;
+}
+
+.MainSideBar nav a:hover{
+	color: #e67e22;
+}
+.MainSideBar nav a.activeSet{
+	color: #e67e22;
+	border-bottom: 2px #e67e22 solid;
+}
+
+.btn-default{
+	color: #ffffff;
+	background-color: #e67e22;
+	border-color: #d3711a;
+}
+.btn-default:hover{
+	color: #ffffff;
+	background-color: #f69b4b;
+	border-color: #e18330;
+}
+
+
+.pb-page-divider{
+	background: #e67e22;
+}
+
+
+.pb-post-author{
+	color: #e67e22;
+}
+
+.pb-post-timestamp .zmdi{
+	color: #e67e22;
+}
+
+.pb-post-tag{
+	background: #e67e22;
+	border-bottom: 2px #d3711a solid;
+}
+
+.feed-post-tab-link:hover, .feed-post-tab-link-Cancel:hover, .feed-post-tab-link-Accept:hover{
+	color: #ffffff;
+	background: #e67e22;
+	border-color: #e67e22;
+}
+ 
+.pb-sidebar-group::-webkit-scrollbar-thumb {
+  background-color: #e67e22
+}
+
+.pb-sidebar-group h3{
+	color: #e67e22;
+}
+
+.pb-sticky-btn.feedback{
+	background: #e67e22;
+}
+

@@ -47,7 +47,7 @@
 			<form id="myAwesomeDropzone" action="includes/plugins/dropzone/postFile.php" class="dropzone">
 				<div class="dz-message">
 					<br />
-					<i class="zmdi zmdi-image-o" style="font-size: 50px;color: #d3711a"></i><br />
+					<i class="zmdi zmdi-image-o"></i><br />
 					Click or Drop photos here!
 				</div>
 <!--

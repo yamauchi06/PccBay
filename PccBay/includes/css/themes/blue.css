@@ -1,0 +1,94 @@
+
+header{
+	background-color: #3498db;
+	border-bottom: 2px #2980b9 solid;
+	box-shadow: 1px 0px 6px #2980b9;
+}
+
+a {
+    color: #3498db;
+}
+
+.MainSideBar nav a:hover{
+	color: #3498db;
+}
+.MainSideBar nav a.activeSet{
+	color: #3498db;
+	border-bottom: 2px #3498db solid;
+}
+
+.btn-default{
+	color: #ffffff;
+	background-color: #2980b9;
+	border-color: #2980b9;
+}
+.btn-default:hover{
+	color: #ffffff;
+	background-color: #2980b9;
+	border-color: #2980b9;
+}
+
+
+.pb-page-divider{
+	background: #3498db;
+}
+
+
+.pb-post-author{
+	color: #3498db;
+}
+
+.pb-post-timestamp .zmdi{
+	color: #3498db;
+}
+
+.pb-post-tag{
+	background: #3498db;
+	border-bottom: 2px #3498db solid;
+}
+.feed-post-tab-link{
+	border-color: #3498db;
+}
+.feed-post-tab-link:hover, .feed-post-tab-link-Cancel:hover, .feed-post-tab-link-Accept:hover{
+	color: #ffffff;
+	background: #3498db;
+	border-color: #3498db;
+}
+ 
+.pb-sidebar-group::-webkit-scrollbar-thumb {
+  background-color: #3498db
+}
+
+.pb-sidebar-group h3{
+	color: #3498db;
+}
+
+.pb-sticky-btn.feedback{
+	background: #3498db;
+}
+
+
+
+
+
+
+
+
+
+
+/* overHead */
+.overHeadPullout{
+	background: #3498db;
+}
+.oh-section h3{
+	color: #3498db;
+}
+
+#ex1Slider .slider-selection {
+	background: #3498db;
+}
+
+.dz-message i{
+	color: #3498db
+}
+
