@@ -75,7 +75,7 @@ foreach($contact_info as $data){
 
 		
 		<div style="text-align: right;width: 100%;">
-			<input type="submit" class="btn btn-default" value="Post it!">
+			<input type="submit" class="btn btn-default" value="Save">
 			<a href="#" style="float: left;margin: 5px;">Privacy Policy</a>
 		</div>
 		
