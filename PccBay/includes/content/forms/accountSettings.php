@@ -4,6 +4,7 @@ $contact_info = json_decode(pb_user_data($_SESSION['userLogged'], 'contact_info'
 foreach($user_data as $data){
 	$pb_user['theme']=$data['theme'];
 	$pb_user['interest']=$data['interest'];
+	$pb_user['avatar']=$data['avatar'];
 } 
 foreach($contact_info as $data){
 	$pb_user['email']=$data['email'];
@@ -15,7 +16,7 @@ foreach($contact_info as $data){
 ?>
 <div class="oh-section oh-section-half">
 	
-	<h3 class="pb-rule-below">My Account</h3>
+	<h3 class="pb-rule-below"><img src="<?php print $pb_user['avatar']; ?>" class="pb-post-avatar" /> My Account</h3>
 	
 	<form method="post">
 		
