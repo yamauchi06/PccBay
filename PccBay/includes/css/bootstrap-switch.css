@@ -74,6 +74,13 @@
   color: #000;
   background: #eeeeee;
 }
+
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-theme,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-theme {
+  color: #000;
+  background: #eeeeee;
+}
+
 .bootstrap-switch .bootstrap-switch-label {
   text-align: center;
   margin-top: -1px;

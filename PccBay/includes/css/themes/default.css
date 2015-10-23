@@ -61,3 +61,10 @@ header{
 	background: #e67e22;
 }
 
+/* Toggle Buttons */
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-theme,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-theme {
+  color: #ffffff;
+  background: #e67e22;
+}
+

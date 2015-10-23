@@ -10,6 +10,7 @@ foreach($contact_info as $data){
 	$pb_user['phone']=$data['phone'];
 	$pb_user['building']=$data['building'];
 	$pb_user['room']=$data['room'];
+	$pb_user['resident']=$data['resident'];
 } 
 ?>
 <div class="oh-section oh-section-half">
@@ -37,7 +38,7 @@ foreach($contact_info as $data){
 			<legend>Residence Info</legend>
 			<div class="row">
 				<div class="col-md-4" style="padding-top:6px;margin-left:7px;">Dorm Student?</div>
-				<div class="col-md-3"><input type="checkbox" name="account_residence" data-on-text="YES"data-off-text="NO" data-toggleswitch checked data-on-color="warning"></div>
+				<div class="col-md-3"><input type="checkbox" name="account_residence" data-on-text="YES"data-off-text="NO" data-toggleswitch <?php if($pb_user['resident']=='true') print 'checked' ?> data-on-color="theme"></div>
 			</div>
 			<div id="account_resedence_op">
 				<div class="row">
@@ -58,12 +59,12 @@ foreach($contact_info as $data){
 			<legend>Notifications</legend>
 			<div class="row">
 				<div class="col-md-4" style="padding-top:6px;margin-left:7px;">Desktop Notifications?</div>
-				<div class="col-md-3"><input type="checkbox" name="account_resedence" data-toggleswitch checked data-on-color="warning"></div>
+				<div class="col-md-3"><input type="checkbox" name="account_resedence" data-toggleswitch checked data-on-color="theme"></div>
 			</div>
 			<br />
 			<div class="row">
 				<div class="col-md-4" style="padding-top:6px;margin-left:7px;">Mobile Notifications?</div>
-				<div class="col-md-3"><input type="checkbox" name="account_resedence" data-toggleswitch checked data-on-color="warning"></div>
+				<div class="col-md-3"><input type="checkbox" name="account_resedence" data-toggleswitch checked data-on-color="theme"></div>
 			</div>
 		</fieldset>
 
@@ -76,7 +77,13 @@ foreach($contact_info as $data){
 		
 		<div style="text-align: right;width: 100%;">
 			<input type="submit" class="btn btn-default" value="Save">
-			<a href="#" style="float: left;margin: 5px;">Privacy Policy</a>
+			<div style="float: left;margin: 5px;">
+				<span class="themeOption <?php if($pb_user['theme']=='default') print 'active' ?>" data-theme="default"></span>
+				<span class="themeOption <?php if($pb_user['theme']=='blue') print 'active' ?>" data-theme="blue"></span>
+				<span class="themeOption <?php if($pb_user['theme']=='dark') print 'active' ?>" data-theme="dark"></span>
+				<span class="themeOption <?php if($pb_user['theme']=='green') print 'active' ?>" data-theme="green"></span>
+				<span class="themeOption <?php if($pb_user['theme']=='purple') print 'active' ?>" data-theme="purple"></span>
+			</div>
 		</div>
 		
 	</form>
@@ -84,29 +91,3 @@ foreach($contact_info as $data){
 	
 	
 </div>
-
-
-
-
-<!--
-[{
-	"ID": 100006044469574, 	
-	"username": "JoshFerguson", 	
-	"name": "Josh Ferguson", 
-	"avatar": "https://scontent-atl3-1.xx.fbcdn.net/hphotos-xpl1/t31.0-8/11228039_1686546648223468_7048846777877974576_o.jpg", 	
-	"registered": "10/20/2015", 	
-	"permissions": "100", 	
-	"theme": "default",
-	"interest": ["tech", "Art"] 
-}]
-
-
-[{ 	
-	"resident": false, 	
-	"building": "null", 	
-	"room": "null", 	
-	"phone": "850 281-9161",
-	"email": "josh@inspirosity.net" 
-}]
-
--->

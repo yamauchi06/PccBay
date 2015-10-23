@@ -92,3 +92,12 @@ a {
 	color: #2ecc71
 }
 
+
+
+/* Toggle Buttons */
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-theme,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-theme {
+  color: #ffffff;
+  background: #2ecc71;
+}
+
