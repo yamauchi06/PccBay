@@ -69,10 +69,12 @@
 	
 
 	<!-- Place Hidden Popups and lightbox frames here -->
-	<div class="overHeadPullout">
-		<span class="overHead-close">X</span>
+	<div class="overHeadPullout col-md-12">
+		<div class="col-md-9" id="overHead-close">
+			<span class="overHead-close col-md-1 col-md-offset-11">X</span>
+		</div>
 		<div id="pb-j"></div>
-		<div id="HiddenFrames">
+		<div id="HiddenFrames" class="col-md-9">
 			<div id="NewProductBox" class="HiddenFrame">
 				<?php pb_include('/includes/content/forms/newProduct.php'); ?>
 			</div>

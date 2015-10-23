@@ -76,14 +76,16 @@ foreach($contact_info as $data){
 
 		
 		<div style="text-align: right;width: 100%;">
-			<input type="submit" class="btn btn-default" value="Save">
-			<div style="float: left;margin: 5px;">
-				<span class="themeOption <?php if($pb_user['theme']=='default') print 'active' ?>" data-theme="default"></span>
-				<span class="themeOption <?php if($pb_user['theme']=='blue') print 'active' ?>" data-theme="blue"></span>
-				<span class="themeOption <?php if($pb_user['theme']=='dark') print 'active' ?>" data-theme="dark"></span>
-				<span class="themeOption <?php if($pb_user['theme']=='green') print 'active' ?>" data-theme="green"></span>
-				<span class="themeOption <?php if($pb_user['theme']=='purple') print 'active' ?>" data-theme="purple"></span>
+			<div style="float:left;margin:5px;padding-top: 5px;">Themes</div>
+			<div style="float:left;margin:5px;">
+				<input type="hidden" name="account_theme" value="<?php print $pb_user['theme']; ?>">
+				<span class="transition-200 themeOption  <?php if($pb_user['theme']=='default') print 'active' ?>" data-theme="default"></span>
+				<span class="transition-200 themeOption <?php if($pb_user['theme']=='blue') print 'active' ?>" data-theme="blue"></span>
+				<span class="transition-200 themeOption <?php if($pb_user['theme']=='dark') print 'active' ?>" data-theme="dark"></span>
+				<span class="transition-200 themeOption <?php if($pb_user['theme']=='green') print 'active' ?>" data-theme="green"></span>
+				<span class="transition-200 themeOption <?php if($pb_user['theme']=='purple') print 'active' ?>" data-theme="purple"></span>
 			</div>
+			<input type="submit" class="btn btn-default" value="Save">
 		</div>
 		
 	</form>
@@ -91,3 +93,10 @@ foreach($contact_info as $data){
 	
 	
 </div>
+<script>
+$('body').on('click', '.themeOption', function(){
+	$('.themeOption.active').removeClass('active');
+	$(this).addClass('active');
+	$('[name="account_theme"]').val( $(this).data('theme') );
+});
+</script>

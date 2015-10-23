@@ -1,17 +1,12 @@
 $(document).ready(function(){
 	
-	$( ".overHeadPullout" ).css({
-		height: $(window).height()-$('header').height(),
-		marginBottom: -$(window).height()
-	});
-	
 	$('body').on('click', '[data-overHead]', function(event){
 		event.preventDefault();
 		var temp = $(this).attr('data-overHead-temp');
 		if(!temp){temp='open-veiw';}
 		overHead(this, false, temp );
+		$(window).trigger('resize');
 	});
-	
 	$('body').on('click', '.overHead-close', function(event){
 		overHead(this, true);
 	});
@@ -24,32 +19,26 @@ function overHead(that, just_close, temp){
 	var state = $(that).attr('data-overHead_state');
 	var inner = $(that).attr('data-overHead');
 	var header = $('header').height();
-	var docsize = $(window).height();
+	var docsize = $('.MainSideBar').height()+5;
 	
-	
-	$('#HiddenFrames .HiddenFrame').each(function(){
-    	if( $(this).attr('id') != inner){
-	    	$(this).hide();
-    	}
-	});
-	
-	
-	$( window ).resize(function() {
-		   if(state=='open'){
-			   $( ".overHeadPullout" ).css({
-					height: $(window).height()-$('header').height(),
-					marginBottom: -$(window).height()
-				});
-		   }
-	});	
+	if(temp=='open-veiw' || temp == 'open-veiw-trans'){
 		
-	
-
+		$( ".overHeadPullout" ).width( $(document).width()-$('.MainSideBar').width() );
+		$( window ).resize(function() {
+		  if($(document).width() > 992){
+			  $( ".overHeadPullout" ).width( $(document).width()-$('.MainSideBar').width() ).height( $('.MainSideBar').height() );
+		  }else{
+			  $( ".overHeadPullout" ).width( $(document).width() );
+		  }
+		});	
+		
+	}
 	if(temp == 'open-veiw-trans'){
 		$( ".overHeadPullout" ).css('background', 'rgba(232,235,238,0.90)');
 	}else{
 		$( ".overHeadPullout" ).css('background', '#E6E9ED');
 	}
+	
 	if(just_close){
 		$('.overHead-close').hide();
 		$( ".overHeadPullout" ).animate({
@@ -61,14 +50,15 @@ function overHead(that, just_close, temp){
 			    	$(this).hide();
 		    	}
 	    	});
+	    	$( ".overHeadPullout" ).css({marginBottom:0, height: 0});
 	  	});
 	  	$('body').removeClass('noScroll');
 		$(that).attr('data-overHead_state', 'close');
 	}else{
-		if( parseInt($('.overHeadPullout').css('margin-bottom')) <= 0 ){
+		if( $('.overHeadPullout').height() == 0 ){
 			$(inner).show();
 			$( ".overHeadPullout" ).animate({
-		    	marginBottom: 0,
+		    	height: docsize,
 		    	opacity: 1
 		  	}, 300, function() {
 			  	$('.overHead-close').show();
