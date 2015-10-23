@@ -273,8 +273,9 @@ a:hover{
 
 legend{
 	font-size: 15px;
-	font-weight: bold;z
+	font-weight: bold;
 	margin: 0px;
+	padding-bottom: 2px;
 	border: 0px;
 }
 

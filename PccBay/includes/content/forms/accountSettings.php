@@ -1,10 +1,20 @@
-<?php  
-$user_data = json_decode(pb_user_data($_SESSION['userLogged'], 'user_data'), true);
-$contact_info = json_decode(pb_user_data($_SESSION['userLogged'], 'contact_info'), true);
+<?php 
+	
+if(isset($_POST['account_submit'])){
+	pb_update_account($_SESSION['user_id']);
+}	
+	
+	 
+$user_data = json_decode(pb_user_data($_SESSION['user_id'], 'user_data'), true);
+$contact_info = json_decode(pb_user_data($_SESSION['user_id'], 'contact_info'), true);
 foreach($user_data as $data){
 	$pb_user['theme']=$data['theme'];
 	$pb_user['interest']=$data['interest'];
 	$pb_user['avatar']=$data['avatar'];
+	$pb_user['username']=$data['username'];
+	$pb_user['name']=$data['name'];
+	$pb_user['registered']=$data['registered'];
+	$pb_user['permissions']=$data['permissions'];
 } 
 foreach($contact_info as $data){
 	$pb_user['email']=$data['email'];
@@ -12,13 +22,26 @@ foreach($contact_info as $data){
 	$pb_user['building']=$data['building'];
 	$pb_user['room']=$data['room'];
 	$pb_user['resident']=$data['resident'];
+	$pb_user['notifications']=$data['notifications'];
+} 
+foreach($pb_user['notifications'] as $note){
+	$pb_user['note_desktop']=$note['desktop'];
+	$pb_user['note_mobile']=$note['mobile'];
 } 
 ?>
 <div class="oh-section oh-section-half">
 	
 	<h3 class="pb-rule-below"><img src="<?php print $pb_user['avatar']; ?>" class="pb-post-avatar" /> My Account</h3>
-	
-	<form method="post">
+	<form method="post" action="/">
+		
+		<div class="hide">
+			<input type="hidden" name="account_ID" value="<?php print $_SESSION['user_id']; ?>">
+			<input type="hidden" name="account_username" value="<?php print $pb_user['username']; ?>">
+			<input type="hidden" name="account_name" value="<?php print $pb_user['name']; ?>">
+			<input type="hidden" name="account_avatar" value="<?php print $pb_user['avatar']; ?>">
+			<input type="hidden" name="account_registered" value="<?php print $pb_user['registered']; ?>">
+			<input type="hidden" name="account_permissions" value="<?php print $pb_user['permissions']; ?>">
+		</div>
 		
 		<fieldset class="pb-rule-around">
 			<legend>Contact Info</legend>
@@ -39,7 +62,7 @@ foreach($contact_info as $data){
 			<legend>Residence Info</legend>
 			<div class="row">
 				<div class="col-md-4" style="padding-top:6px;margin-left:7px;">Dorm Student?</div>
-				<div class="col-md-3"><input type="checkbox" name="account_residence" data-on-text="YES"data-off-text="NO" data-toggleswitch <?php if($pb_user['resident']=='true') print 'checked' ?> data-on-color="theme"></div>
+				<div class="col-md-3"><input type="checkbox" name="account_residence" value="true" data-on-text="YES"data-off-text="NO" data-toggleswitch <?php if($pb_user['resident']) print 'checked' ?> data-on-color="theme"></div>
 			</div>
 			<div id="account_resedence_op">
 				<div class="row">
@@ -60,18 +83,18 @@ foreach($contact_info as $data){
 			<legend>Notifications</legend>
 			<div class="row">
 				<div class="col-md-4" style="padding-top:6px;margin-left:7px;">Desktop Notifications?</div>
-				<div class="col-md-3"><input type="checkbox" name="account_resedence" data-toggleswitch checked data-on-color="theme"></div>
+				<div class="col-md-3"><input type="checkbox" name="account_note_desktop" value="true" data-toggleswitch <?php if($pb_user['note_desktop']) print 'checked' ?> data-on-color="theme"></div>
 			</div>
 			<br />
 			<div class="row">
 				<div class="col-md-4" style="padding-top:6px;margin-left:7px;">Mobile Notifications?</div>
-				<div class="col-md-3"><input type="checkbox" name="account_resedence" data-toggleswitch checked data-on-color="theme"></div>
+				<div class="col-md-3"><input type="checkbox" name="account_note_mobile" value="true" data-toggleswitch <?php if($pb_user['note_mobile']) print 'checked' ?> data-on-color="theme"></div>
 			</div>
 		</fieldset>
 
 		<br />
 
-		<input class="form-control tags" rows="3" placeholder="things I’m interested in" value="<?php print $pb_user['interest']; ?>">
+		<input class="form-control tags" rows="3" placeholder="things I’m interested in" name="account_interest" value="<?php print $pb_user['interest']; ?>">
 		
 		<div class="pb-full-rule"></div>
 		
@@ -85,7 +108,7 @@ foreach($contact_info as $data){
 				<span class="transition-200 themeOption <?php if($pb_user['theme']=='green') print 'active' ?>" data-theme="green"></span>
 				<span class="transition-200 themeOption <?php if($pb_user['theme']=='purple') print 'active' ?>" data-theme="purple"></span>
 			</div>
-			<input type="submit" class="btn btn-default" value="Save">
+			<input type="submit" name="account_submit" class="btn btn-default" value="Save">
 		</div>
 		
 	</form>

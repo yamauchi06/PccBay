@@ -12,7 +12,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<!-- Begin Content -->
-			<div class="<?php pb_isset($_SESSION['userLogged'], 'col-md-9', 'col-md-12') ?> MainFeed">
+			<div class="<?php pb_isset($_SESSION['user_id'], 'col-md-9', 'col-md-12') ?> MainFeed">
 				<div id="freewall">
 					<?php pb_feed(1); ?>
 				</div>
@@ -20,7 +20,7 @@
 			
 			<!-- Begin SideBar -->
 			<?php
-			pb_isset($_SESSION['userLogged'], 
+			pb_isset($_SESSION['user_id'], 
 				'
 				<div class="col-md-3 MainSideBar">
 					<nav>
@@ -58,7 +58,7 @@
 	</div>
 	
 	<!-- Sticky side buttons -->
-	<div class="pb-sticky-side <?php pb_isset($_SESSION['userLogged'], '', 'hide') ?>">
+	<div class="pb-sticky-side <?php pb_isset($_SESSION['user_id'], '', 'hide') ?>">
 		<a href="#" class="pb-sticky-btn feedback" data-overHead="#feedbackBox">
 			<i class="zmdi zmdi-assignment-check"></i>
 		</a>

@@ -37,7 +37,7 @@
 <link rel="stylesheet" href="/includes/css/PccBay.css" type="text/css" >
 <script src="/includes/js/jquery.js"></script>
 <?php  
-$user_data = json_decode(pb_user_data($_SESSION['userLogged'], 'user_data'), true);
+$user_data = json_decode(pb_user_data($_SESSION['user_id'], 'user_data'), true);
 if($user_data){
 	$pb_user['theme'] = 'default';
 	foreach($user_data as $data){

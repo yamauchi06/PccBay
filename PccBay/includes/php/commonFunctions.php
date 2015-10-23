@@ -95,7 +95,7 @@
 	}
 	
 	function pb_isset($var, $isset='', $unset=''){
-		if(isset($var) || !empty($var) ){ print $isset; }else{ print $unset; }
+		if( isset($var) ){ print $isset; }else{ print $unset; }
 	}
 	
 	
@@ -281,5 +281,62 @@
    	$conn->close();
 	}
 	
+	
+	
+	
+	function pb_update_account($user_id) {
+		global $servername;
+		global $username;
+		global $password;
+		global $dbname;
+		global $_POST;
+		if(isset($_POST['account_residence'])){ $account_residence = true; }else{ $account_residence = false; }
+		if(isset($_POST['account_note_desktop'])){ $account_note_desktop = true; }else{ $account_note_desktop = false; }
+		if(isset($_POST['account_note_mobile'])){ $account_note_mobile = true; }else{ $account_note_mobile = false; }
+		
+		$contact_info = array();
+  		array_push($contact_info, array(
+  			"resident" => $account_residence,
+  			"building"     => "".$_POST['account_building']."",
+  			"room"      => "".$_POST['account_room']."",
+  			"phone"      => "".$_POST['account_phone']."",
+  			"email"     => "".$_POST['account_email']."",
+  			"notifications" => array(
+  				"desktop" => $account_note_desktop,
+  				"mobile" => $account_note_mobile
+  			)
+  		));
+        $contact_info = json_encode($contact_info);
+        
+        $user_data = array();
+  		array_push($user_data, array(
+  			"ID" => $_POST['account_ID'],
+  			"username"     => "".$_POST['account_username']."",
+  			"name"      => "".$_POST['account_name']."",
+  			"avatar"      => "".$_POST['account_avatar']."",
+  			"registered"     => "".$_POST['account_registered']."",
+  			"permissions"     => "".$_POST['account_permissions']."",
+  			"theme"     => "".$_POST['account_theme']."",
+  			"interest"     => "".$_POST['account_interest']."",
+  		));
+        $user_data = json_encode($user_data);
+		
+		$conn = new mysqli($servername, $username, $password, $dbname);
+	   	// Check connection
+		if ($conn->connect_error) {
+		    die("Connection failed: " . $conn->connect_error);
+		} 
+		
+		$sql = "UPDATE pb_users SET contact_info='$contact_info', user_data='$user_data' WHERE user_id='$user_id'";
+
+		if ($conn->query($sql) === TRUE) {
+			print "<script>$('#userThemeCSS').attr('href', '/includes/css/themes/".$_POST['account_theme'].".css');</script>";
+		} else {
+		    echo "Error updating record: " . $conn->error;
+		}
+
+		
+		$conn->close();
+	}
 	
 ?>
