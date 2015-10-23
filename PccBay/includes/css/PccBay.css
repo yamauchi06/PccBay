@@ -149,8 +149,10 @@ a:hover{
 
 .border-bottom-input, .border-bottom-input:hover, .border-bottom-input:focus, .border-bottom-input:active:focus{
 	border-bottom: 1px #E6E9ED solid !important;
+	border-left: 1px #E6E9ED solid !important;
 	border-radius: 3px !important;
 	box-shadow: none !important;
+	margin-top: 3px;
 }
 
 #NewProductbtn, #MyCardbtn, #accSettings, #LogOnBtn, #accLogout{
@@ -505,6 +507,7 @@ legend{
 	height: 50px;
 	width: 90px;
 	box-shadow: 2px 2px 15px rgba(64, 64, 64, 0.59);
+	z-index: 999999;
 }
 .pb-sticky-btn{
 	display: inline-block;

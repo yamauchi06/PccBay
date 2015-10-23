@@ -43,6 +43,6 @@ if($user_data){
 	foreach($user_data as $data){
 		$pb_user['theme']=$data['theme'];
 	} 
-	print '<link rel="stylesheet" href="/includes/css/themes/'.$pb_user['theme'].'.css" type="text/css" >'; 
+	print '<link id="userThemeCSS" rel="stylesheet" href="/includes/css/themes/'.$pb_user['theme'].'.css" type="text/css" >'; 
 }
 ?>

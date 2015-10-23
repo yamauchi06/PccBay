@@ -26,9 +26,11 @@
 .noScroll{
 	overflow: hidden !important
 }
+/*
 #pb-j{
 	padding: 20px;
 }
+*/
 
 
 /* Content Styles */
@@ -126,7 +128,7 @@
    color: #ffffff;
    display: block;
    position: absolute;
-   top: 5px;
+   top: 4px;
    left: 8px;
 }
 [data-theme="default"]{ background: #e67e22; }

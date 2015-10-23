@@ -24,12 +24,12 @@ foreach($contact_info as $data){
 			<legend>Contact Info</legend>
 			<div class="row">
 				<div class="col-md-2" style="padding-top:6px;margin-left:7px;">Email</div>
-				<div class="col-md-5"><input class="form-control pb-rule-below" rows="3" name="account_email" placeholder="Email" value="<?php print $pb_user['email']; ?>"></div>
+				<div class="col-md-5"><input class="form-control border-bottom-input" rows="3" name="account_email" placeholder="Email" value="<?php print $pb_user['email']; ?>"></div>
 			</div>
 			
 			<div class="row">
 				<div class="col-md-2" style="padding-top:6px;margin-left:7px;">Phone</div>
-				<div class="col-md-5"><input class="form-control pb-rule-below" rows="3" name="account_phone" placeholder="Phone" value="<?php print $pb_user['phone']; ?>"></div>
+				<div class="col-md-5"><input class="form-control border-bottom-input" rows="3" name="account_phone" placeholder="Phone" value="<?php print $pb_user['phone']; ?>"></div>
 			</div>
 		</fieldset>
 		
@@ -44,12 +44,12 @@ foreach($contact_info as $data){
 			<div id="account_resedence_op">
 				<div class="row">
 					<div class="col-md-2" style="padding-top:6px;margin-left:7px;">Building</div>
-					<div class="col-md-5"><input class="form-control pb-rule-below" rows="3" name="account_building" placeholder="Building" value="<?php print $pb_user['building']; ?>"></div>
+					<div class="col-md-5"><input class="form-control border-bottom-input" rows="3" name="account_building" placeholder="Building" value="<?php print $pb_user['building']; ?>"></div>
 				</div>
 				
 				<div class="row">
 					<div class="col-md-2" style="padding-top:6px;margin-left:7px;">Room</div>
-					<div class="col-md-5"><input class="form-control pb-rule-below" rows="3" name="account_room" placeholder="Room #" value="<?php print $pb_user['room']; ?>"></div>
+					<div class="col-md-5"><input class="form-control border-bottom-input" rows="3" name="account_room" placeholder="Room #" value="<?php print $pb_user['room']; ?>"></div>
 				</div>
 			</div>
 		</fieldset>
@@ -74,7 +74,6 @@ foreach($contact_info as $data){
 		<input class="form-control tags" rows="3" placeholder="things I’m interested in" value="<?php print $pb_user['interest']; ?>">
 		
 		<div class="pb-full-rule"></div>
-
 		
 		<div style="text-align: right;width: 100%;">
 			<div style="float:left;margin:5px;padding-top: 5px;">Themes</div>
@@ -91,13 +90,13 @@ foreach($contact_info as $data){
 		
 	</form>
 		
-	
-	
 </div>
 <script>
+// Sets theme value and show the user a live preview	
 $('body').on('click', '.themeOption', function(){
 	$('.themeOption.active').removeClass('active');
 	$(this).addClass('active');
 	$('[name="account_theme"]').val( $(this).data('theme') );
+	$('#userThemeCSS').attr('href', '/includes/css/themes/'+$(this).data('theme')+'.css');
 });
 </script>
