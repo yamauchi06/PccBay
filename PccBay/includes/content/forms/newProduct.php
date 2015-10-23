@@ -32,7 +32,10 @@
 				</td>
 			</tr>
 		</table>
+		
+		<br />
 
+<!--
 		<div class="checkbox" style="margin-left: 10px;">
             <input id="checkbox1" class="styled" type="checkbox" checked>
             <label for="checkbox1">
@@ -46,6 +49,7 @@
                 Lock my images <sup><a href="#"data-toggle="tooltip" title="Helps  prevent people from saving your images."><i class="zmdi zmdi-help-outline"></i></a></sup>
             </label>
         </div>
+-->
 		
 		
 		<div class="uploadBlock pb-rule-above-thick">

@@ -44,7 +44,11 @@ function overHead(that, just_close, temp){
 	    	marginBottom: -docsize,
 	    	opacity: 0
 	  	}, 300, function() {
-	    	$('#HiddenFrames .HiddenFrame').hide();
+	    	$('#HiddenFrames .HiddenFrame').each(function(){
+		    	if( $(this).attr('id') != inner){
+			    	$(this).hide();
+		    	}
+	    	});
 	    	$( ".overHeadPullout" ).css({marginBottom:0, height: 0});
 	  	});
 	  	$('body').removeClass('noScroll');
@@ -57,7 +61,7 @@ function overHead(that, just_close, temp){
 		    	opacity: 1
 		  	}, 300, function() {
 			  	$('.overHead-close').show();
-		    	
+			  	$(inner).show();
 		  	});
 			$(that).attr('data-overHead_state', 'open');
 			$('body').addClass('noScroll');

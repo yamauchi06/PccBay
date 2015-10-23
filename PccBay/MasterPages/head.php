@@ -31,6 +31,7 @@
 <link rel="stylesheet" href="/includes/css/awesome-bootstrap-checkbox.css">
 <link rel="stylesheet" href="/includes/plugins/dropzone/dropzone.css" type="text/css" />
 <link rel="stylesheet" href="/includes/plugins/nstSlider/jquery.nstSlider.min.css" type="text/css" />
+<link href="/includes/css/bootstrap-switch.css" rel="stylesheet">
 
 <!-- Main Styles and jQuery -->
 <link rel="stylesheet" href="/includes/css/PccBay.css" type="text/css" >

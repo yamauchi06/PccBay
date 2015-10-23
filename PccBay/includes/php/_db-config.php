@@ -31,5 +31,4 @@
 		
 		$localhost=false;
 	}
-	
 ?>

@@ -94,8 +94,8 @@
 		}
 	}
 	
-	function sessionSet($session='', $isset='', $unset=''){
-		if(isset($_SESSION[$session])){ print $isset; }else{ print $unset; }
+	function pb_isset($var, $isset='', $unset=''){
+		if(isset($var) || !empty($var) ){ print $isset; }else{ print $unset; }
 	}
 	
 	

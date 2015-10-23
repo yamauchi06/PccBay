@@ -7,6 +7,7 @@
 	width: 100%; 
 	bottom:0px; 
 	left:0px;
+	overflow-y: auto;
 }
 
 .overHead-close{

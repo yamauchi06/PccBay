@@ -8,9 +8,9 @@ foreach($user_data as $data){
 } 
 ?>
 <div class="pb-page-divider">
-	<a href="#" data-overHead="#accSettingsBox" id="accSettings"><i class="zmdi zmdi-settings-square"></i></a>
+	<a href="#" data-overHead="#userAccountSettingBox" id="accSettings"><i class="zmdi zmdi-settings-square"></i></a>
 	
-	<a href="/?sessionUnSet=userLogged" id="accSettings" style="float: left;"><i class="zmdi zmdi-minus-square"></i></a>
+	<a href="/?sessionUnSet=userLogged" id="accLogout" style="float: left;"><i class="zmdi zmdi-minus-square"></i></a>
 </div>
 <div class="pb-center">
 	<img src="<?php print $pb_user['avatar']; ?>">

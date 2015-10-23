@@ -5,8 +5,8 @@
 </div>	
 	<div class="col-md-2 col-md-offset-3" id="headerBtns">
 	<?php 
-		sessionSet(
-			'userLogged',
+		pb_isset(
+			$_SESSION['userLogged'],
 			'
 				<a href="#" class="transition-300" id="MyCardbtn" data-overHead="#MyCardBox"><i class="zmdi zmdi-card"></i></a>
 				<a href="#" id="NewProductbtn" class="transition-300" data-overHead="#NewProductBox"><i class="zmdi zmdi-plus-square"></i></a>

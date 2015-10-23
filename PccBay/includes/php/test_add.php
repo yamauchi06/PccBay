@@ -6,7 +6,7 @@ include_once('commonFunctions.php');
 	$product_info = array();
 	
 		array_push($product_info, array(
-			'timestamp'=>'10/21/2015',
+			'timestamp'=>'mm/dd/yyyy',
 			'title'=>'test Item',
 			'desc'=>'this is cool',
 			'tags'=>'["tag1","tag2","tag3","tag4","tag5"]',

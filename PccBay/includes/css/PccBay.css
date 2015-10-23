@@ -146,13 +146,19 @@ a:hover{
 	box-shadow: inset 1px 0px 3px rgba(44,62,80,0.1) !important;
 }
 
-#NewProductbtn, #MyCardbtn, #accSettings, #LogOnBtn{
+.border-bottom-input, .border-bottom-input:hover, .border-bottom-input:focus, .border-bottom-input:active:focus{
+	border-bottom: 1px #E6E9ED solid !important;
+	border-radius: 3px !important;
+	box-shadow: none !important;
+}
+
+#NewProductbtn, #MyCardbtn, #accSettings, #LogOnBtn, #accLogout{
 	color: #ffffff;
 	font-size: 30px;
 	float: right;
 	padding: 0px 13px;
 }
-#NewProductbtn:hover,#MyCardbtn:hover, #accSettings:hover, #LogOnBtn:hover{
+#NewProductbtn:hover,#MyCardbtn:hover, #accSettings:hover, #LogOnBtn:hover, #accLogout:hover{
 	background: rgba(255, 255, 255, 0.10);
 	border-radius: 2px;
 	text-decoration: none;
@@ -247,7 +253,27 @@ a:hover{
 	background: #E6E9ED;
 	margin: 0px auto;
 }
+.pb-full-rule{
+	width: 100%;
+	height: 1px;
+	background: #E6E9ED;
+	margin: 0px auto;
+}
+.pb-rule-around{
+	border: 1px #E6E9ED solid;
+	padding: 3px;
+}
+.pb-rule-around-thick{
+	border: 2px #E6E9ED solid;
+	padding: 3px;
+}
 
+legend{
+	font-size: 15px;
+	font-weight: bold;z
+	margin: 0px;
+	border: 0px;
+}
 
 /* Post Boxes */
 .pb-post{
