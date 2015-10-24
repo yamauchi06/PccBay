@@ -290,21 +290,20 @@
 		global $password;
 		global $dbname;
 		global $_POST;
-		if(isset($_POST['account_residence'])){ $account_residence = true; }else{ $account_residence = false; }
-		if(isset($_POST['account_note_desktop'])){ $account_note_desktop = true; }else{ $account_note_desktop = false; }
-		if(isset($_POST['account_note_mobile'])){ $account_note_mobile = true; }else{ $account_note_mobile = false; }
+		//var_dump($_POST);
+		if(isset($_POST['account_residence'])){ $account_residence = 'true'; }else{ $account_residence = 'false'; }
+		if(isset($_POST['account_note_desktop'])){ $account_note_desktop = 'true'; }else{ $account_note_desktop = 'false'; }
+		if(isset($_POST['account_note_mobile'])){ $account_note_mobile = 'true'; }else{ $account_note_mobile = 'false'; }
 		
 		$contact_info = array();
   		array_push($contact_info, array(
-  			"resident" => $account_residence,
+  			"resident" => "".$account_residence."",
   			"building"     => "".$_POST['account_building']."",
   			"room"      => "".$_POST['account_room']."",
   			"phone"      => "".$_POST['account_phone']."",
   			"email"     => "".$_POST['account_email']."",
-  			"notifications" => array(
-  				"desktop" => $account_note_desktop,
-  				"mobile" => $account_note_mobile
-  			)
+  			"notify_d" => "".$account_note_desktop."",
+  			"notify_m" => "".$account_note_mobile.""
   		));
         $contact_info = json_encode($contact_info);
         
@@ -335,7 +334,6 @@
 		    echo "Error updating record: " . $conn->error;
 		}
 
-		
 		$conn->close();
 	}
 	

@@ -22,12 +22,9 @@ foreach($contact_info as $data){
 	$pb_user['building']=$data['building'];
 	$pb_user['room']=$data['room'];
 	$pb_user['resident']=$data['resident'];
-	$pb_user['notifications']=$data['notifications'];
-} 
-foreach($pb_user['notifications'] as $note){
-	$pb_user['note_desktop']=$note['desktop'];
-	$pb_user['note_mobile']=$note['mobile'];
-} 
+	$pb_user['notify_d']=$data['notify_d'];
+	$pb_user['notify_m']=$data['notify_m'];
+}  
 ?>
 <div class="oh-section oh-section-half">
 	
@@ -42,7 +39,7 @@ foreach($pb_user['notifications'] as $note){
 			<input type="hidden" name="account_registered" value="<?php print $pb_user['registered']; ?>">
 			<input type="hidden" name="account_permissions" value="<?php print $pb_user['permissions']; ?>">
 		</div>
-		
+			
 		<fieldset class="pb-rule-around">
 			<legend>Contact Info</legend>
 			<div class="row">
@@ -62,7 +59,7 @@ foreach($pb_user['notifications'] as $note){
 			<legend>Residence Info</legend>
 			<div class="row">
 				<div class="col-md-4" style="padding-top:6px;margin-left:7px;">Dorm Student?</div>
-				<div class="col-md-3"><input type="checkbox" name="account_residence" value="true" data-on-text="YES"data-off-text="NO" data-toggleswitch <?php if($pb_user['resident']) print 'checked' ?> data-on-color="theme"></div>
+				<div class="col-md-3"><input type="checkbox" name="account_residence" value="true" data-on-text="YES"data-off-text="NO" data-toggleswitch <?php if($pb_user['resident']=='true') print 'checked' ?> data-on-color="theme"></div>
 			</div>
 			<div id="account_resedence_op">
 				<div class="row">
@@ -83,12 +80,12 @@ foreach($pb_user['notifications'] as $note){
 			<legend>Notifications</legend>
 			<div class="row">
 				<div class="col-md-4" style="padding-top:6px;margin-left:7px;">Desktop Notifications?</div>
-				<div class="col-md-3"><input type="checkbox" name="account_note_desktop" value="true" data-toggleswitch <?php if($pb_user['note_desktop']) print 'checked' ?> data-on-color="theme"></div>
+				<div class="col-md-3"><input type="checkbox" name="account_note_desktop" value="true" data-toggleswitch <?php if($pb_user['notify_d']=='true') print 'checked' ?> data-on-color="theme"></div>
 			</div>
 			<br />
 			<div class="row">
 				<div class="col-md-4" style="padding-top:6px;margin-left:7px;">Mobile Notifications?</div>
-				<div class="col-md-3"><input type="checkbox" name="account_note_mobile" value="true" data-toggleswitch <?php if($pb_user['note_mobile']) print 'checked' ?> data-on-color="theme"></div>
+				<div class="col-md-3"><input type="checkbox" name="account_note_mobile" value="true" data-toggleswitch <?php if($pb_user['notify_m']=='true') print 'checked' ?> data-on-color="theme"></div>
 			</div>
 		</fieldset>
 

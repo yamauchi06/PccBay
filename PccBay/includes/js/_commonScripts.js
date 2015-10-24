@@ -86,7 +86,17 @@ $(document).ready(function(){
 	});
 	
 	$('[data-toggle="tooltip"]').tooltip();
-	$("[data-toggleswitch]").bootstrapSwitch();
+	
+	
+	$("[data-toggleswitch]").bootstrapSwitch({
+		onSwitchChange: function(event, state) {
+			if(state){
+				$(this).attr('checked', 'checked');
+			}else{
+				$(this).removeAttr('checked');
+			}
+		}
+	});
 	
 });
 
