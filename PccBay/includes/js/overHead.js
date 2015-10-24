@@ -15,9 +15,11 @@ $(document).ready(function(){
 	$('body').on('click', '.overHead-close', function(event){
 		overHead(this, true);
 	});
+/*
 	$('.MainSideBar').click(function(event){
 		overHead(this, true);
 	});
+*/
 });
 
 function overHead(that, just_close, temp){

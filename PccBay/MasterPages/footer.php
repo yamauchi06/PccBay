@@ -1,4 +1,4 @@
-<footer class="<?php pb_isset($_SESSION['userLogged'], 'col-md-9', 'col-md-12') ?>">
+<footer class="<?php pb_isset(pb_isset_session('user_id'), 'col-md-9', 'col-md-12'); ?>">
 	<div style="float: left;">
 		<a href="#">Privacy Policy</a> |
 		<a href="#">FAQ's</a>
@@ -9,6 +9,7 @@
 
 
 <script src="/includes/js/bootstrap.min.js"></script>
+<script src="/includes/plugins/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
 <script src="/includes/js/bootstrap-tagsinput.min.js"></script>
 <script src="/includes/plugins/flexslider/jquery.flexslider-min.js"></script>
 <script src="/includes/plugins/freewall/freewall.js"></script>
@@ -19,5 +20,7 @@
 <script src="/includes/js/autosize.js"></script>	
 <script src="/includes/plugins/nstSlider/jquery.nstSlider.min.js"></script>	
 <script src="/includes/js/bootstrap-switch.min.js"></script>
+<script src="/includes/js/menu.js"></script>
+
 <!-- All included scripts go above here -->
 <script src="/includes/js/_commonScripts.js"></script>

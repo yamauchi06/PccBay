@@ -79,7 +79,9 @@ a:hover{
 }
 @media (max-width: 992px) {
   .MainSideBar {
-    display: none;
+/*     display: none; */
+	width: 350px;
+	margin-right: -350px;
   }
   #headerBtns{
 	  position: absolute;
@@ -97,6 +99,35 @@ a:hover{
     padding: 3px;
   }
 }
+
+
+
+.pb-flat-btn{
+	color: #ffffff;
+	font-size: 30px;
+	float: right;
+	padding: 0px 13px;
+}
+.pb-flat-btn:hover, .pb-flat-btn:hover, .pb-flat-btn:hover, .pb-flat-btn:hover, .pb-flat-btn:hover
+.pb-flat-btn:active, .pb-flat-btn:active, .pb-flat-btn:active, .pb-flat-btn:active, .pb-flat-btn:active
+.pb-flat-btn:visited, .pb-flat-btn:visited, .pb-flat-btn:visited, .pb-flat-btn:visited, .pb-flat-btn:visited
+{
+	background: rgba(255, 255, 255, 0.10);
+	border-radius: 2px;
+	text-decoration: none;
+	color: #ffffff !important;
+}
+#SearchBtn{
+	font-size: 22px;
+	padding: 6px 13px;
+	display: none;
+}
+#MobMenu{
+	display: none;
+}
+
+
+
 .MainSearchBox{
 	background: rgba(255, 255, 255, 0.10);
 	border-radius: 2px;
@@ -139,6 +170,9 @@ a:hover{
   .MainSearchBox {
     display: none;
   }
+  #SearchBtn, #MobMenu{
+	  display: block;
+  }
 }
 
 .bordered-input, .bordered-input:hover, .bordered-input:focus, .bordered-input:active:focus{
@@ -155,17 +189,8 @@ a:hover{
 	margin-top: 3px;
 }
 
-#NewProductbtn, #MyCardbtn, #accSettings, #LogOnBtn, #accLogout{
-	color: #ffffff;
-	font-size: 30px;
-	float: right;
-	padding: 0px 13px;
-}
-#NewProductbtn:hover,#MyCardbtn:hover, #accSettings:hover, #LogOnBtn:hover, #accLogout:hover{
-	background: rgba(255, 255, 255, 0.10);
-	border-radius: 2px;
-	text-decoration: none;
-}
+
+
 
 #HiddenFrames .HiddenFrame{
 	display: none;
@@ -529,6 +554,12 @@ legend{
 .pb-sticky-btn:hover{
 	color: #ffffff;
 	opacity: 0.8;
+}
+@media (max-width: 992px) {
+	.pb-sticky-side{
+		height: 95px;
+	    width: 45px;
+	}
 }
 
 

@@ -32,11 +32,12 @@
 <link rel="stylesheet" href="/includes/plugins/dropzone/dropzone.css" type="text/css" />
 <link rel="stylesheet" href="/includes/plugins/nstSlider/jquery.nstSlider.min.css" type="text/css" />
 <link href="/includes/css/bootstrap-switch.css" rel="stylesheet">
+<link href="/includes/css/bootstrap-social.css" rel="stylesheet">
 
 <!-- Main Styles and jQuery -->
 <link rel="stylesheet" href="/includes/css/PccBay.css" type="text/css" >
 <script src="/includes/js/jquery.js"></script>
-<?php  
+<?php
 $user_data = json_decode(pb_user_data($_SESSION['user_id'], 'user_data'), true);
 if($user_data){
 	$pb_user['theme'] = 'default';

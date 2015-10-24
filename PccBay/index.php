@@ -12,7 +12,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<!-- Begin Content -->
-			<div class="<?php pb_isset($_SESSION['user_id'], 'col-md-9', 'col-md-12') ?> MainFeed">
+			<div class="<?php pb_isset(pb_isset_session('user_id'), 'col-md-9', 'col-md-12') ?> MainFeed">
 				<div id="freewall">
 					<?php pb_feed(1); ?>
 				</div>
@@ -20,7 +20,7 @@
 			
 			<!-- Begin SideBar -->
 			<?php
-			pb_isset($_SESSION['user_id'], 
+			pb_isset(pb_isset_session('user_id'), 
 				'
 				<div class="col-md-3 MainSideBar">
 					<nav>
@@ -58,7 +58,7 @@
 	</div>
 	
 	<!-- Sticky side buttons -->
-	<div class="pb-sticky-side <?php pb_isset($_SESSION['user_id'], '', 'hide') ?>">
+	<div class="pb-sticky-side <?php pb_isset(pb_isset_session('user_id'), '', 'hide') ?>">
 		<a href="#" class="pb-sticky-btn feedback" data-overHead="#feedbackBox">
 			<i class="zmdi zmdi-assignment-check"></i>
 		</a>
@@ -69,12 +69,12 @@
 	
 
 	<!-- Place Hidden Popups and lightbox frames here -->
-	<div class="overHeadPullout col-md-12">
-		<div class="col-md-9" id="overHead-close">
+	<div class="overHeadPullout" style="width: 100%">
+		<div class="<?php pb_isset(pb_isset_session('user_id'), 'col-md-9', 'col-md-12') ?>" id="overHead-close">
 			<span class="overHead-close col-md-1 col-md-offset-11">X</span>
 		</div>
 		<div id="pb-j"></div>
-		<div id="HiddenFrames" class="col-md-9">
+		<div id="HiddenFrames" class="<?php pb_isset(pb_isset_session('user_id'), 'col-md-9', 'col-md-12') ?>">
 			<div id="NewProductBox" class="HiddenFrame">
 				<?php pb_include('/includes/content/forms/newProduct.php'); ?>
 			</div>
@@ -95,6 +95,9 @@
 			</div>
 			<div id="userAccountSettingBox" class="HiddenFrame">
 				<?php pb_include('/includes/content/forms/accountSettings.php'); ?>
+			</div>
+			<div id="userLoginBox" class="HiddenFrame">
+				<?php pb_include('/includes/content/forms/UserLogin.php'); ?>
 			</div>
 		</div>
 	</div>

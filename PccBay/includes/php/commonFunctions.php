@@ -94,8 +94,17 @@
 		}
 	}
 	
+	function pb_isset_session($sessionName){
+		if(isset($_SESSION[$sessionName])){
+			return $_SESSION[$sessionName];
+		}else{
+			return 'session_unset';
+		}
+	}
+	
 	function pb_isset($var, $isset='', $unset=''){
-		if( isset($var) ){ print $isset; }else{ print $unset; }
+		if($var == 'session_unset'){ unset($var); }
+		if( isset($var)){ print $isset; }else{ print $unset; }
 	}
 	
 	
@@ -150,7 +159,7 @@
 		while($i<=$loop){
 			foreach ($jsonIterator as $key => $val) {
 			    ?>
-			    <div class="col-md-<?php if(isset($_SESSION['userLogged'])){ print '4'; }else{ print '3'; } ?> pb-post grid-item" id="pb_post_<?php print $val['id']; ?>">
+			    <div class="<?php pb_isset(pb_isset_session('user_id'), 'col-md-4', 'col-md-3') ?> pb-post grid-item" id="pb_post_<?php print $val['id']; ?>">
 					<div class="pb-post-block">
 						<div class="pb-post-head">
 							<img src="<?php print $val['author_avatar']; ?>" class="pb-post-avatar" />

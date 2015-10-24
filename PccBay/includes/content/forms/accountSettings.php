@@ -28,7 +28,16 @@ foreach($contact_info as $data){
 ?>
 <div class="oh-section oh-section-half">
 	
-	<h3 class="pb-rule-below"><img src="<?php print $pb_user['avatar']; ?>" class="pb-post-avatar" /> My Account</h3>
+	<h3 class="pb-rule-below"><img src="<?php print $pb_user['avatar']; ?>" class="pb-post-avatar" /> 
+	My Account
+	
+	<div class="col-md-3" style="float: right;">
+		<a class="btn btn-block btn-social btn-reddit"href="/?sessionUnSet=user_id">
+			<i class="zmdi zmdi-close"></i> Sign Out
+		</a>
+	</div>
+	
+	</h3>
 	<form method="post" action="/">
 		
 		<div class="hide">
