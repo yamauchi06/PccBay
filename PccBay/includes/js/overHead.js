@@ -28,6 +28,10 @@ function overHead(that, just_close, temp){
 	var header = $('header').height();
 	var docsize = $(window).height();
 	
+	if(temp == 'full'){
+		$( ".overHeadPullout" ).css('z-index', '999999');
+	}
+	
 	
 	$('#HiddenFrames .HiddenFrame').each(function(){
     	if( $(this).attr('id') != inner){
