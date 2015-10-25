@@ -68,3 +68,4 @@ header{
   background: #e67e22;
 }
 
+.oh-top-menu li a:hover, .oh-top-menu li a.active{ background: #e67e22; }

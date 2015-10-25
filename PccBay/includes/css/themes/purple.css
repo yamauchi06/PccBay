@@ -104,3 +104,6 @@ a {
   background: #9b59b6;
 }
 
+
+.oh-top-menu li a:hover, .oh-top-menu li a.active{ background: #9b59b6; }
+

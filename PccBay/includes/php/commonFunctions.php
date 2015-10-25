@@ -214,7 +214,7 @@
 							<div class="row">
 								<div class="col-xs-6 pb-va-rule text-center">
 								  <a href="#" class="feed-post-tab-link transition-300">
-								    <span class="feed-post-tab"><i class="zmdi zmdi-format-valign-bottom"></i> Place bid</span>
+								    <span class="feed-post-tab"><i class="zmdi zmdi-comment-outline"></i> Comment</span>
 								  </a>
 								</div>
 								<div class="col-xs-6 text-center">
