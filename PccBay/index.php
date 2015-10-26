@@ -14,7 +14,7 @@
 			<!-- Begin Content -->
 			<div class="<?php pb_isset(pb_isset_session('user_id'), 'col-md-9', 'col-md-12') ?> MainFeed">
 				<div id="freewall">
-					<?php pb_feed(1); ?>
+					<?php pb_feed(2); ?>
 				</div>
 			</div>
 			

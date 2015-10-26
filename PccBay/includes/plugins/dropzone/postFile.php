@@ -1,4 +1,9 @@
-<?php	 
+<?php
+session_name('com_pccbay_user');
+session_start('');	
+
+include_once('../../php/_db-config.php');	
+	 
 $backStep = '../../../';
 
 $date_format = 'Y_j_m';
@@ -69,6 +74,37 @@ if(!file_exists($albumURL)){
 	    die('Failed to create folders...');
 	}
 }
+
+
+function addToDb($title, $size, $type, $file, $string){
+		global $servername;
+		global $username;
+		global $password;
+		global $dbname;
+		global $_POST;
+		
+		$uid = generateRandomString();
+		$alt = $title;
+		$date = date("F j, Y, g:i a");
+		$author = $_SESSION['user_id'];
+		$conn = new mysqli($servername, $username, $password, $dbname);
+		if ($conn->connect_error) {
+		    die("Connection failed: " . $conn->connect_error);
+		} 
+
+		$sql = "INSERT INTO pb_safe_image (uid, title, alt, size, type, date, author, file, string) 
+		VALUES ('$uid', '$title', '$alt', '$size', '$type', '$date', '$author', '$file', '$string')";
+		
+		if ($conn->query($sql) === TRUE) {
+			//print 'done';
+		} else {
+		    echo "Error updating record: " . $conn->error;
+		}
+   	
+   	$conn->close();
+   	
+   	return $uid;
+}
 	 
 if(isset($_FILES['file'])){
 	
@@ -106,7 +142,10 @@ if(isset($_FILES['file'])){
 			$image->save($Thumb);	
 		}
 		
-	    echo $imagePath.$newName.'.'.$ext;
+		
+		
+		echo addToDb($_FILES['file']['name'], $info[0].':'.$info[1], $ext, $newName.'.'.$ext, $imagePath.$newName.'.'.$ext);
+	    //echo $imagePath.$newName.'.'.$ext;
     }else{
 	    echo exit_status('Move failed');
     }

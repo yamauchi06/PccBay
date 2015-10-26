@@ -1,8 +1,4 @@
-<?php
-   if(isset($_POST['add_product'])) {
-      pb_add_product($_SESSION['user_id']);
-   }  
-?>
+
 
 <div class="oh-section oh-section-half">
 	

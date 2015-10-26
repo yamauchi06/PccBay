@@ -107,6 +107,12 @@
 		if( isset($var)){ print $isset; }else{ print $unset; }
 	}
 	
+	function pb_parse_json($json, $find){
+		foreach ($json as $key => $val) {
+			
+		}
+	}
+	
 	
 	function pb_json_feed($retrieve='*', $loop=0){
 		global $servername;
@@ -120,33 +126,27 @@
 			if ($conn->connect_error) {
 			    die("Connection failed: " . $conn->connect_error);
 			} 
-			$sql = "SELECT * FROM pb_post Where status='open'";
+			$sql = "SELECT * FROM pb_product Where status='open'";
 			$result = $conn->query($sql);
 			if ($result->num_rows > 0) {
 			    while($val = $result->fetch_assoc()) {
 					$entity = array(
-						'id' => $val['id'],
-						'uid' => $val['uid'],
-						'type' => $val['type'],
-						'author_id' => $val['author_id'],
-						'author_name' => $val['author_name'],
-						'author_avatar' => $val['author_avatar'],
-						'title' => $val['title'],
-						'description' => $val['description'],
-						'price' => $val['price'],
-						'allow_bids' => $val['allow_bids'],
-						'bids' => $val['bids'],
-						'categories' => $val['categories'],
-						'images' => $val['images'],
-						'date' => $val['date'],
+						'id' => $val['product_id'],
+						'author_id' => $val['user_id'],
+						'product_info' => $val['product_info'],
+						'trans_info' => $val['trans_info'],
 						'status' => $val['status']
 					);
 					array_push($mainJson, $entity);
+					
+					$product_info = json_decode($val['product_info']);
+					$trans_info = json_decode($val['trans_info']);
 			    }
 			}
 			$conn->close();
 		$l++;	
 		}//end
+		
 		return json_encode($mainJson);
 		
 	}	
@@ -158,18 +158,34 @@
 		$i=1;
 		while($i<=$loop){
 			foreach ($jsonIterator as $key => $val) {
+				$product_info = json_decode($val['product_info']);
+				foreach($product_info as $entity){
+					$val['price'] = $entity->price;
+					$val['Condition'] = $entity->condition;
+					$val['categories'] = $entity->tags;
+					$val['images'] = $entity->images;
+					$val['date'] = $entity->timestamp;
+				}
+				$user_data = json_decode(pb_user_data($val['author_id'], 'user_data'), true);
+				foreach($user_data as $data){
+					$pb_user['name']=$data['name'];
+					$pb_user['avatar']=$data['avatar'];
+					$pb_user['registered']=date("F d, Y", strtotime($data['registered']));
+					$pb_user['theme']=$data['theme'];
+				} 
+				
 			    ?>
 			    <div class="<?php pb_isset(pb_isset_session('user_id'), 'col-md-4', 'col-md-3') ?> pb-post grid-item" id="pb_post_<?php print $val['id']; ?>">
 					<div class="pb-post-block">
 						<div class="pb-post-head">
-							<img src="<?php print $val['author_avatar']; ?>" class="pb-post-avatar" />
+							<img src="<?php print $pb_user['avatar']; ?>" class="pb-post-avatar" />
 							<div class="pb-post-author">
-								<strong><a href="profile/<?php print $val['author_name']; ?>"><?php print $val['author_name']; ?></a></strong><br />
+								<strong><a href="profile/<?php print $pb_user['avatar']; ?>"><?php print $pb_user['name']; ?></a></strong><br />
 								<span class="pb-post-timestamp"> <i class="pb-post-timestamp-o">
 								<?php  print time_ago( strtotime($val['date']) ); ?>
 								</i></span>
 							</div>
-							<div class="pb-post-price">$<?php print $val['price']; ?>.00</div>
+							<div class="pb-post-price">$<?php print $val['price']; ?></div>
 						</div>
 						<div class="pb-post-content">
 							<div class="pb-post-slider flexslider">
@@ -180,7 +196,6 @@
 									foreach ($imgArr as $index => $imgID) {
 										if($imgIDCount==0){
 											print '<li>';
-												//print '[safe_image]';
 												safe_image($imgID, 'image-lazy', 'class="pb-post-product lazy" data-overHead="#postViewer" data-overHead-temp="open-veiw-trans"');
 											print '</li>';
 											$imgIDCount++;
@@ -191,19 +206,18 @@
 							</div>
 							<p>
 								<ul class="no-bullet" style="padding-left: 10px;">
-									<li><strong><i class="zmdi zmdi-money"></i> price</strong> <?php print $val['price']; ?>.00</li>
-									<li><strong><i class="zmdi zmdi-plaster"></i> Condition</strong> <span class="pb-theme-green">Excellent</span></li>
-									<li><strong class="pb-theme-green"><i class="zmdi zmdi-star"></i> Open to bids</strong></li>
+									<li><strong><i class="zmdi zmdi-plaster"></i> Condition</strong> <?php print $val['Condition']; ?></li>
 								</ul>
-<!-- 								<?php print strip_tags( implode(' ', array_slice(explode(' ', preg_replace("/<img[^>]+\>/i", "", $val['description'])), 0, 20)) ); ?> -->
 							</p>
 							
 							<div class="pb-post-tags">
 								<ul>
 									<?php
-									$cats = json_decode($val['categories']);
-									foreach ($cats as $index => $category) {
-										print '<li><a href="/category/'.str_replace(' ', '+', $category).'">'.$category.'</a></li>';
+									$cats = explode(',', $val['categories']);
+									if(count($cats) > 0){
+										foreach ($cats as $index => $category) {
+											print '<li><a href="/category/'.str_replace(' ', '+', $category).'">'.ucwords($category).'</a></li>';
+										}
 									}
 									?>
 								</ul>
@@ -285,7 +299,7 @@
             ));
       		
       	$trans_info = json_encode($trans_info);
-		$sql = "INSERT INTO pb_product (user_id, product_info, trans_info) VALUES ('$user_id','$product_info','$trans_info')";
+		$sql = "INSERT INTO pb_product (user_id, product_info, trans_info, status) VALUES ('$user_id','$product_info','$trans_info', 'open')";
 		
 		if ($conn->query($sql) === TRUE) {
 			//print 'done';

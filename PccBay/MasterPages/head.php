@@ -47,4 +47,6 @@ if($user_data){
 	} 
 	print '<link id="userThemeCSS" rel="stylesheet" href="/includes/css/themes/'.$pb_user['theme'].'.css" type="text/css" >'; 
 }
+
+pb_include('/includes/php/ext_forms.php');
 ?>

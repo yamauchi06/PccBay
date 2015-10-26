@@ -1,8 +1,6 @@
 <?php 
 	
-if(isset($_POST['account_submit'])){
-	pb_update_account($_SESSION['user_id']);
-}	
+
 	
 	 
 $user_data = json_decode(pb_user_data($_SESSION['user_id'], 'user_data'), true);
