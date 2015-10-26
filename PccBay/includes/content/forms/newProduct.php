@@ -28,7 +28,7 @@
 				
 			<textarea class="form-control no-resize" rows="3" data-maxtext="400" name="product_desc" placeholder="Tell us about it."></textarea>
 	
-			<input class="form-control tags" rows="3" placeholder="Tag it.">
+			<input class="form-control tags" rows="3" name="product_tags" placeholder="Tag it.">
 			<br />
 			
 			<div class="row">
@@ -36,23 +36,25 @@
 					<span>Condition</span>
 				</div>
 				<div class="col-md-3">
-					<div style="margin-left: 10px;" class="nstSlider" data-range_min="-100" data-range_max="100" data-cur_min="50" data-cur_max="0" name="condition">
+					<div style="margin-left: 10px;" class="nstSlider" data-range_min="-100" data-range_max="100" data-cur_min="50" data-cur_max="0">
 						<div class="highlightPanel"></div>
 						<div class="bar"></div>
 						<div class="leftGrip"></div>
+						<input type="hidden" name="product_condition" />
 					</div>
 				</div>
 			</div>
 			
 			<br />
 	
-			<div class="uploadBlock pb-rule-above-thick pb-rule-below-thick">
+			<div class="uploadBlock pb-rule-above-thick pb-rule-below-thick pb-dropzone" id="Post_Upload_photos">
 				<div class="dz-message">
 					<br />
 					<i class="zmdi zmdi-image-o"></i><br />
 					Click or Drop photos here!
 				</div>
 			</div>
+			<input type="hidden" name="product_images">
 	
 			<div style="text-align: right;width: 100%;">
 				<input type="submit" class="btn btn-default" name="add_product" value="Post it!">
@@ -84,4 +86,16 @@ $('body').on('click', '#NowPostMenu a', function(){
 	$( '#'+$(this).data('form') ).removeClass('hidden').show();
 	
 });	
+$(document).ready(function(){
+	var uploaded_images = [];
+	$("div#Post_Upload_photos").dropzone({ 
+		url: "/includes/plugins/dropzone/postFile.php",
+		success: function(file, response){
+            uploaded_images.push( response.replace(/"/, '').replace(/ /, '') );
+            $('[name="product_images"]').val(uploaded_images);
+        }
+	});
+	
+	$('[name="product_price"]').number( true, 2 );
+});
 </script>

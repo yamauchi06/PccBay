@@ -20,7 +20,10 @@
 <script src="/includes/js/autosize.js"></script>	
 <script src="/includes/plugins/nstSlider/jquery.nstSlider.min.js"></script>	
 <script src="/includes/js/bootstrap-switch.min.js"></script>
-<script src="/includes/js/menu.js"></script>
+<script src="/includes/plugins/formatter/jquery.number.min.js"></script>
+
+
 
 <!-- All included scripts go above here -->
+<script src="/includes/js/menu.js"></script>
 <script src="/includes/js/_commonScripts.js"></script>

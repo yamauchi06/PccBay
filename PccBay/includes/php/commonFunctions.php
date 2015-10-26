@@ -270,7 +270,8 @@
       			"desc"      => "".$_POST['product_desc']."",
       			"tags"      => "".$_POST['product_tags']."",
       			"price"     => "".$_POST['product_price']."",
-      			"condition" => "".$_POST['condition'].""
+      			"condition" => "".$_POST['product_condition']."",
+      			"images" => "".$_POST['product_images'].""
       		));
       		
          $product_info = json_encode($product_info);
@@ -284,8 +285,13 @@
             ));
       		
       	$trans_info = json_encode($trans_info);
-		$sql = "INSERT INTO pb_product user_id, product_info, trans_info VALUES (".$user_id.",".$product_info.",".$trans_info.")";
-		$result = $conn->$query($sql);
+		$sql = "INSERT INTO pb_product (user_id, product_info, trans_info) VALUES ('$user_id','$product_info','$trans_info')";
+		
+		if ($conn->query($sql) === TRUE) {
+			//print 'done';
+		} else {
+		    echo "Error updating record: " . $conn->error;
+		}
    	
    	$conn->close();
 	}

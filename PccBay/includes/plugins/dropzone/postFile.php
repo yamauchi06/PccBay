@@ -1,7 +1,27 @@
- <?php
+<?php	 
+$backStep = '../../../';
+
+$date_format = 'Y_j_m';
+
+$cropImagesWidth = 900;
+
+$albumURL = $backStep.'/images/user-data/'.date($date_format).'/';
+
+$imagePath = '/images/user-data/'.date($date_format).'/';
+
+
 function exit_status($str){
 	echo json_encode(array('status'=>$str));
 	exit;
+}
+
+function countFolder($dir) {
+	return (count(scandir($dir)) - 2);
+}
+
+function lastDir($path){
+	$files = scandir($path, SCANDIR_SORT_DESCENDING);
+	return $files[0];
 }
 
 function get_extension($file_name){
@@ -10,10 +30,28 @@ function get_extension($file_name){
 	return strtolower($ext);
 }
 
-function png2jpg($originalFile, $outputFile, $quality) {
-    $image = imagecreatefrompng($originalFile);
-    imagejpeg($image, $outputFile, $quality);
-    imagedestroy($image);
+function convertImage($originalImage, $outputImage, $quality)
+{
+    // jpg, png, gif or bmp?
+    $exploded = explode('.',$originalImage);
+    $ext = $exploded[count($exploded) - 1]; 
+
+    if (preg_match('/jpg|jpeg/i',$ext))
+        $imageTmp=imagecreatefromjpeg($originalImage);
+    else if (preg_match('/png/i',$ext))
+        $imageTmp=imagecreatefrompng($originalImage);
+    else if (preg_match('/gif/i',$ext))
+        $imageTmp=imagecreatefromgif($originalImage);
+    else if (preg_match('/bmp/i',$ext))
+        $imageTmp=imagecreatefrombmp($originalImage);
+    else
+        return 0;
+
+    // quality is a value from 0 (worst) to 100 (best)
+    imagejpeg($imageTmp, $outputImage, $quality);
+    imagedestroy($imageTmp);
+
+    return 1;
 }
 
 function generateRandomString($length = 10) {
@@ -26,74 +64,53 @@ function generateRandomString($length = 10) {
     return $randomString;
 }
 
-
-$uploadAlbum = $_POST['album'];
-if(empty($uploadAlbum)){
-	$uploadAlbum = '_ImageDump';
-}	 
-$albumURL = 'albums/'.$uploadAlbum.'/';
+if(!file_exists($albumURL)){
+	if (!mkdir($albumURL, 0777)) {
+	    die('Failed to create folders...');
+	}
+}
 	 
 if(isset($_FILES['file'])){
-	include('SimpleImage.php'); 
 	
-	
-	if (!file_exists($albumURL)) {
-		$oldmask = umask(0);
-	    mkdir($albumURL, 0777, true);
-	    umask($oldmask);
-	}
+    $file_name =$_FILES['file']['name'];
+    $file_size =$_FILES['file']['size'];
+    $file_tmp =$_FILES['file']['tmp_name'];
+    $file_type=$_FILES['file']['type']; 
+    
+    $move = move_uploaded_file($file_tmp, $albumURL.$_FILES['file']['name']);
+    if($move){
+	    $ext = get_extension($_FILES['file']['name']);
+	    $newName = md5(date("F-j-Y_g-i-a:s").'_').generateRandomString();	 
+	    rename(''.$albumURL.''.$_FILES['file']['name'], ''.$albumURL.''.$newName.'.'.$ext);
 
-	foreach($_FILES['file']['tmp_name'] as $key => $tmp_name)
-	{
-	    $file_name = $key.$_FILES['file']['name'][$key];
-	    $file_size =$_FILES['file']['size'][$key];
-	    $file_tmp =$_FILES['file']['tmp_name'][$key];
-	    $file_type=$_FILES['file']['type'][$key]; 
-	    
-	    move_uploaded_file($file_tmp,''.$albumURL.''.$_FILES['file']['name'][$key]);
-	    
-	    $ext = get_extension($_FILES['file']['name'][$key]);
-	    
-	    $newName = date("F-j-Y_g-i-a").'_'.generateRandomString();	 
-	    
-	    rename(''.$albumURL.''.$_FILES['file']['name'][$key], ''.$albumURL.''.$newName.'.'.$ext);
-	    
+/*
+	    if($ext !== 'jpg'){
+		    convertImage($albumURL.$newName.'.'.$ext, $albumURL.$newName.'.jpg', 100);
+		    unlink($albumURL.$newName.'.'.$ext);
+		    $ext = 'jpg';
+	    }
+*/
 
-	    if( copy(''.$albumURL.''.$newName.'.'.$ext, ''.$albumURL.'thumb/'.$newName.'.'.$ext) ){
-				
-			$Thumb = ''.$albumURL.'thumb/'.$newName.'.'.$ext;
-			
-			$imageFileType = pathinfo($Thumb,PATHINFO_EXTENSION);
-			
-			$imageFile = $Thumb;
-
-			$width = 200;
-
-			$info = getimagesize($imageFile);
-
+		$width = $cropImagesWidth;		
+		$Thumb = $albumURL.$newName.'.'.$ext;
+		$imageFileType = pathinfo($Thumb,PATHINFO_EXTENSION);
+		$imageFile = $Thumb;
+		$info = getimagesize($imageFile);
+		if($info[0] >= $cropImagesWidth){
+			include('tinyImage.php'); 
 			$aspectRatio = $info[1] / $info[0];
-
 			$newHeight = (int)($aspectRatio * $width);
-
 			$image = new SimpleImage(); 
 			$image->load($Thumb); 
 			$image->resize($width,$newHeight); 
-			$image->save($Thumb);
-		
+			$image->save($Thumb);	
 		}
-
-	    
-	    
-	    
-	    echo json_encode('files uploaded');
-	}
+		
+	    echo $imagePath.$newName.'.'.$ext;
+    }else{
+	    echo exit_status('Move failed');
+    }
 }else{
-	echo json_encode('No files');
+	echo exit_status('No files');
 }
-
-
-
-
-
-
 ?>

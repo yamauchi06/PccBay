@@ -82,6 +82,7 @@ $(document).ready(function(){
 	            b = 0;
 	        $container.find('.leftLabel').text(leftValue);
 	        $(this).find('.bar').css('background', 'rgb(' + [r, g, b].join(',') + ')');
+			$(this).find('input').val(leftValue);
 	    }
 	});
 	

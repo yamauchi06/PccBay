@@ -1,3 +1,0 @@
-[18-May-2015 00:08:31 America/New_York] PHP Warning:  copy(../../../zp/albums/CamperUploaded/tumb/Screen Shot 2015-05-11 at 11.49.32 PM.png): failed to open stream: No such file or directory in /home/campmand/public_html/test/plugins/dropzone/postFile.php on line 45
-[18-May-2015 00:10:19 America/New_York] PHP Warning:  copy(../../../zp/albums/CamperUploads/tumb/AllGirlsWeek.jpg): failed to open stream: No such file or directory in /home/campmand/public_html/test/plugins/dropzone/postFile.php on line 45
-[18-May-2015 00:33:32 America/New_York] PHP Parse error:  syntax error, unexpected '.', expecting ')' in /home/campmand/public_html/test/plugins/dropzone/postFile.php on line 57
