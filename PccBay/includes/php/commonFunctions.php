@@ -196,7 +196,7 @@
 							<div class="pb-post-price">
 								<?php 
 									if($val['type']=='product'){ 
-										print '<img src="/images/graphics/pb_icon_box.svg" class="svg pb-icon-box" />';
+										print '<i class="zmdi zmdi-dropbox" style="font-size:30px"></i>';
 									}
 									else if($val['type']=='question'){
 										print '<i class="zmdi zmdi-pin-help" style="font-size:30px"></i>';
