@@ -1,5 +1,3 @@
-
-
 <div class="oh-section oh-section-half">
 	
 	<h3 class="pb-rule-below">
@@ -17,6 +15,7 @@
 	
 	<div id="New_Post_Product" class="not-hidden new-post-toggle">
 		<form method="post" action="">
+			<input type="hidden" name="post_type" value="product">
 			
 			<input class="form-control" rows="3" name="product_title" placeholder="What is is?">
 			
@@ -61,11 +60,67 @@
 	</div>
 	
 	<div id="New_Post_Question" class="hidden new-post-toggle">
-		Question
+		
+		<form method="post" action="">
+			<input type="hidden" name="post_type" value="question">
+			<input type="hidden" name="product_condition" value="null" />
+			
+			<input class="form-control" rows="3" name="product_title" placeholder="Question Title?">
+				
+			<textarea class="form-control no-resize" rows="3" data-maxtext="400" name="product_desc" placeholder="What is your question?"></textarea>
+	
+			<input class="form-control tags" rows="3" name="product_tags" placeholder="Give it some tags.">
+			<br />
+			
+	
+			<div class="uploadBlock pb-rule-above-thick pb-rule-below-thick pb-dropzone" id="Post_Upload_photos">
+				<div class="dz-message">
+					<br />
+					<i class="zmdi zmdi-image-o"></i><br />
+					Click or Drop photos here!
+				</div>
+			</div>
+			<input type="hidden" name="product_images">
+	
+			<div style="text-align: right;width: 100%;">
+				<input type="submit" class="btn btn-default" name="add_product" value="Ask">
+				<a href="#" style="float: left;margin: 5px;">Privacy Policy </a>
+			</div>
+			
+		</form>
+		
 	</div>
 	
 	<div id="New_Post_Discussion" class="hidden new-post-toggle">
-		Discussion
+		
+		<form method="post" action="">
+			<input type="hidden" name="post_type" value="discussion">
+			<input type="hidden" name="product_condition" value="null" />
+			
+			<input class="form-control" rows="3" name="product_title" placeholder="What's it about?">
+				
+			<textarea class="form-control no-resize" rows="3" data-maxtext="400" name="product_desc" placeholder="Start talking"></textarea>
+	
+			<input class="form-control tags" rows="3" name="product_tags" placeholder="Topics">
+			<br />
+			
+	
+			<div class="uploadBlock pb-rule-above-thick pb-rule-below-thick pb-dropzone" id="Post_Upload_photos">
+				<div class="dz-message">
+					<br />
+					<i class="zmdi zmdi-image-o"></i><br />
+					Click or Drop photos here!
+				</div>
+			</div>
+			<input type="hidden" name="product_images">
+	
+			<div style="text-align: right;width: 100%;">
+				<input type="submit" class="btn btn-default" name="add_product" value="Start Talking">
+				<a href="#" style="float: left;margin: 5px;">Privacy Policy </a>
+			</div>
+			
+		</form>
+		
 	</div>
 	
 		

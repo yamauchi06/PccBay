@@ -76,7 +76,7 @@
 		        if($method=='base64'){ print $row['string']; }
 		        if($method=='image'){  print '<img src="'.$row['string'].'" alt="'.$row['alt'].'" title="'.$row['title'].'" '.$attr.' />';}
 		        if($method=='image-lazy'){
-			        print '<img src="'.$row['string'].'" data-original="'.$row['string'].'" alt="'.$row['alt'].'" title="'.$row['title'].'" '.$attr.' />';
+			        print '<img src="'.$row['string'].'" data-original="'.$row['string'].'" '.$attr.' />';
 		        }
 		    }
 		}
@@ -107,6 +107,10 @@
 		if( isset($var)){ print $isset; }else{ print $unset; }
 	}
 	
+	function pb_ifset($var){
+		if( isset($var)){ return $var; }else{ return false; }
+	}
+	
 	function pb_parse_json($json, $find){
 		foreach ($json as $key => $val) {
 			
@@ -126,12 +130,13 @@
 			if ($conn->connect_error) {
 			    die("Connection failed: " . $conn->connect_error);
 			} 
-			$sql = "SELECT * FROM pb_product Where status='open'";
+			$sql = "SELECT * FROM pb_post Where status='open' ORDER BY product_id DESC";
 			$result = $conn->query($sql);
 			if ($result->num_rows > 0) {
 			    while($val = $result->fetch_assoc()) {
 					$entity = array(
 						'id' => $val['product_id'],
+						'type' => $val['type'],
 						'author_id' => $val['user_id'],
 						'product_info' => $val['product_info'],
 						'trans_info' => $val['trans_info'],
@@ -149,7 +154,8 @@
 		
 		return json_encode($mainJson);
 		
-	}	
+	}
+		
 	
 
 	function pb_feed($loop=1, $retrieve='*'){
@@ -165,6 +171,8 @@
 					$val['categories'] = $entity->tags;
 					$val['images'] = $entity->images;
 					$val['date'] = $entity->timestamp;
+					$val['title'] = $entity->title;
+					$val['desc'] = $entity->desc;
 				}
 				$user_data = json_decode(pb_user_data($val['author_id'], 'user_data'), true);
 				foreach($user_data as $data){
@@ -185,7 +193,19 @@
 								<?php  print time_ago( strtotime($val['date']) ); ?>
 								</i></span>
 							</div>
-							<div class="pb-post-price">$<?php print $val['price']; ?></div>
+							<div class="pb-post-price">
+								<?php 
+									if($val['type']=='product'){ 
+										print '<img src="/images/graphics/pb_icon_box.svg" class="svg pb-icon-box" />';
+									}
+									else if($val['type']=='question'){
+										print '<i class="zmdi zmdi-pin-help" style="font-size:30px"></i>';
+									}
+									else if($val['type']=='discussion'){
+										print '<i class="zmdi zmdi-comment-text-alt" style="font-size:30px"></i>';
+									}
+								?>
+							</div>
 						</div>
 						<div class="pb-post-content">
 							<div class="pb-post-slider flexslider">
@@ -205,9 +225,12 @@
 							  </ul>
 							</div>
 							<p>
-								<ul class="no-bullet" style="padding-left: 10px;">
-									<li><strong><i class="zmdi zmdi-plaster"></i> Condition</strong> <?php print $val['Condition']; ?></li>
-								</ul>
+								<strong><?php print $val['title']; ?></strong> 
+								<?php
+								if($val['type']=='question' || $val['type']=='discussion'){
+									print '<br />'.$val['desc'].'';
+								}	
+								?>
 							</p>
 							
 							<div class="pb-post-tags">
@@ -273,6 +296,7 @@
 		global $password;
 		global $dbname;
 		global $_POST;
+		$post_type = $_POST['post_type'];
 		$conn = new mysqli($servername, $username, $password, $dbname);
 		if ($conn->connect_error) {
 		    die("Connection failed: " . $conn->connect_error);
@@ -299,7 +323,7 @@
             ));
       		
       	$trans_info = json_encode($trans_info);
-		$sql = "INSERT INTO pb_product (user_id, product_info, trans_info, status) VALUES ('$user_id','$product_info','$trans_info', 'open')";
+		$sql = "INSERT INTO pb_post (type, user_id, product_info, trans_info, status) VALUES ('$post_type', '$user_id','$product_info','$trans_info', 'open')";
 		
 		if ($conn->query($sql) === TRUE) {
 			//print 'done';

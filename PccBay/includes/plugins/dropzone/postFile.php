@@ -6,7 +6,7 @@ include_once('../../php/_db-config.php');
 	 
 $backStep = '../../../';
 
-$date_format = 'Y_j_m';
+$date_format = 'Y_m_j';
 
 $cropImagesWidth = 900;
 
@@ -92,8 +92,8 @@ function addToDb($title, $size, $type, $file, $string){
 		    die("Connection failed: " . $conn->connect_error);
 		} 
 
-		$sql = "INSERT INTO pb_safe_image (uid, title, alt, size, type, date, author, file, string) 
-		VALUES ('$uid', '$title', '$alt', '$size', '$type', '$date', '$author', '$file', '$string')";
+		$sql = "INSERT INTO pb_safe_image (uid, size, type, date, author, file, string) 
+		VALUES ('$uid', '$size', '$type', '$date', '$author', '$file', '$string')";
 		
 		if ($conn->query($sql) === TRUE) {
 			//print 'done';
@@ -116,7 +116,7 @@ if(isset($_FILES['file'])){
     $move = move_uploaded_file($file_tmp, $albumURL.$_FILES['file']['name']);
     if($move){
 	    $ext = get_extension($_FILES['file']['name']);
-	    $newName = md5(date("F-j-Y_g-i-a:s").'_').generateRandomString();	 
+	    $newName = sha1( md5(date("F-j-Y_g-i-a:s").'_').generateRandomString() );	 
 	    rename(''.$albumURL.''.$_FILES['file']['name'], ''.$albumURL.''.$newName.'.'.$ext);
 
 /*
@@ -141,7 +141,7 @@ if(isset($_FILES['file'])){
 			$image->resize($width,$newHeight); 
 			$image->save($Thumb);	
 		}
-		
+		$info = getimagesize($imageFile);
 		
 		
 		echo addToDb($_FILES['file']['name'], $info[0].':'.$info[1], $ext, $newName.'.'.$ext, $imagePath.$newName.'.'.$ext);

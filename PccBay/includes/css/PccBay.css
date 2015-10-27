@@ -573,5 +573,25 @@ form hr{
 	min-width: 150px;
 }
 
+.pb-condition-wrapper{
+	width: 98%;
+	height: 8px;
+	background: #E6E9ED;
+	border-radius: 3px;
+}
+.pb-condition-bar{
+	height: 8px;
+	background: no-repeat url('/images/graphics/condition_level.png');
+	opacity: 0.5;
+	border-radius: 3px;
+}
+
+
+
+.pb-icon-box{
+	fill: #27ae60;
+	width: 35px;
+}
+
 
 
