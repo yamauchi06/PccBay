@@ -4,19 +4,16 @@
 
 	<div style="margin: 20px auto;width: 220px">
 		<a class="btn btn-block btn-social btn-facebook" href="/?sessionSet=user_id&value=100006044469574">
-			<i class="fa fa-facebook"></i> Sign in with Facebook
+			<i class="fa fa-facebook"></i> Sign in as Josh
 		</a>
 		
-<!--
-		<a class="btn btn-block btn-social btn-twitter">
-			<i class="fa fa-twitter"></i> Sign in with Twitter
+		<a class="btn btn-block btn-social btn-twitter" href="/?sessionSet=user_id&value=100001056120276">
+			<i class="fa fa-twitter"></i> Sign in as Joseph
 		</a>
 		
-		<a class="btn btn-block btn-social btn-google">
-			<i class="fa fa-google"></i> Sign in with Google
+		<a class="btn btn-block btn-social btn-google" href="/?sessionSet=user_id&value=1000010567262775">
+			<i class="fa fa-google"></i> Sign in as Test User
 		</a>
--->
-		
 	</div>
 	
 </div>

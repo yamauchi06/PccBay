@@ -365,8 +365,9 @@ legend{
 	width: 100%;
 	min-height: 20px;
 }
-.pb-post-content p{
+.pb-post-content p, .pb-post-content h4{
 	padding: 5px;
+	margin: 0px;
 }
 .pb-post-product{
 	width: 100%;
@@ -382,7 +383,7 @@ legend{
 }
 .pb-post-foot{
 	width: 100%;
-	padding: 10px;
+	padding: 10px 0px;
 	border-top: 2px #E6E9ED solid;
 }
 .pb-va-rule{
@@ -421,6 +422,31 @@ legend{
 	text-decoration: none;
 	opacity: 0.9;
 }
+.pb-post-input{
+	background: #F5F7FA;
+	text-align: center;
+}
+.pb-post-input form{
+	margin: 0px;
+	padding: 0px;
+}
+.pb-post-input-text{
+	width: 95%;
+	margin: 0px auto;
+	height: 40px;
+	padding: 7px;
+	margin: 0px;
+	border: 1px #F5F7FA solid;
+	outline: none;
+	box-shadow: inset 1px 1px 3px rgba(222,222,222,0.58);
+}
+
+.pb-post-input-text:focus{
+	border-color: #d1d1d1;
+}
+
+
+
 .feed-post-tab-link, .feed-post-tab-link-Cancel, .feed-post-tab-link-Accept{
 	border: 1px solid #f7cca6;
 	font-weight: 500;

@@ -76,14 +76,14 @@
 		        if($method=='base64'){ print $row['string']; }
 		        if($method=='image'){  print '<img src="'.$row['string'].'" alt="'.$row['alt'].'" title="'.$row['title'].'" '.$attr.' />';}
 		        if($method=='image-lazy'){
-			        print '<img src="'.$row['string'].'" data-original="'.$row['string'].'" '.$attr.' />';
+			        print '<img src="'.$row['string'].'" data-overHead-img="'.$row['string'].'" data-original="'.$row['string'].'" '.$attr.' />';
 		        }
 		    }
 		}
 		$conn->close();
 	}
 	
-	function pb_include($include, $root=true, $includeTimes=''){	
+	function pb_include($include, $root=true, $includeTimes='', $Global=''){	
 		if($root){ $include = $_SERVER['DOCUMENT_ROOT'].$include; }
 		if(file_exists($include)){
 			if($includeTimes == 'once'){
@@ -177,6 +177,7 @@
 				$user_data = json_decode(pb_user_data($val['author_id'], 'user_data'), true);
 				foreach($user_data as $data){
 					$pb_user['name']=$data['name'];
+					$pb_user['username']=$data['username'];
 					$pb_user['avatar']=$data['avatar'];
 					$pb_user['registered']=date("F d, Y", strtotime($data['registered']));
 					$pb_user['theme']=$data['theme'];
@@ -188,7 +189,7 @@
 						<div class="pb-post-head">
 							<img src="<?php print $pb_user['avatar']; ?>" class="pb-post-avatar" />
 							<div class="pb-post-author">
-								<strong><a href="profile/<?php print $pb_user['avatar']; ?>"><?php print $pb_user['name']; ?></a></strong><br />
+								<strong><a href="/@<?php print $pb_user['username']; ?>"><?php print $pb_user['name']; ?></a></strong><br />
 								<span class="pb-post-timestamp"> <i class="pb-post-timestamp-o">
 								<?php  print time_ago( strtotime($val['date']) ); ?>
 								</i></span>
@@ -208,6 +209,11 @@
 							</div>
 						</div>
 						<div class="pb-post-content">
+							<?php
+							if($val['type']=='product'){
+								print '<h4>'.$val['title'].'</h4>';
+							}	
+							?>
 							<div class="pb-post-slider flexslider">
 							  <ul class="slides">
 								  <?php
@@ -216,7 +222,7 @@
 									foreach ($imgArr as $index => $imgID) {
 										if($imgIDCount==0){
 											print '<li>';
-												safe_image($imgID, 'image-lazy', 'class="pb-post-product lazy" data-overHead="#postViewer" data-overHead-temp="open-veiw-trans"');
+												safe_image($imgID, 'image-lazy', 'class="pb-post-product lazy" data-overHead-temp="open-veiw-trans"');
 											print '</li>';
 											$imgIDCount++;
 										}
@@ -225,10 +231,9 @@
 							  </ul>
 							</div>
 							<p>
-								<strong><?php print $val['title']; ?></strong> 
 								<?php
 								if($val['type']=='question' || $val['type']=='discussion'){
-									print '<br />'.$val['desc'].'';
+									print '<strong>'.$val['title'].'</strong> <br />'.$val['desc'].'';
 								}	
 								?>
 							</p>
@@ -239,29 +244,14 @@
 									$cats = explode(',', $val['categories']);
 									if(count($cats) > 0){
 										foreach ($cats as $index => $category) {
-											print '<li><a href="/category/'.str_replace(' ', '+', $category).'">'.ucwords($category).'</a></li>';
+											print '<li><a href="/'.$val['type'].'/#'.str_replace(' ', '+', $category).'">'.ucwords($category).'</a></li>';
 										}
 									}
 									?>
 								</ul>
 							</div>
 						</div>
-						<div class="pb-post-foot">
-							
-							<div class="row">
-								<div class="col-xs-6 pb-va-rule text-center">
-								  <a href="#" class="feed-post-tab-link transition-300">
-								    <span class="feed-post-tab"><i class="zmdi zmdi-comment-outline"></i> Comment</span>
-								  </a>
-								</div>
-								<div class="col-xs-6 text-center">
-								  <a href="#" class="feed-post-tab-link transition-300">
-								    <span class="feed-post-tab"><i class="zmdi zmdi-money-box"></i> Get this</span>
-								  </a>
-								</div>
-							</div>
-							
-						</div>
+						<?php pb_include('/includes/php/postParts/postFooter.php', true, '', $val); ?>
 					</div>
 				</div>
 			    <?php
