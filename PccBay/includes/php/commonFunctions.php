@@ -196,7 +196,7 @@
 							<div class="pb-post-price">
 								<?php 
 									if($val['type']=='product'){ 
-										print '<i class="zmdi zmdi-dropbox" style="font-size:30px"></i>';
+										print '$ '.$val['price'];
 									}
 									else if($val['type']=='question'){
 										print '<i class="zmdi zmdi-pin-help" style="font-size:30px"></i>';
