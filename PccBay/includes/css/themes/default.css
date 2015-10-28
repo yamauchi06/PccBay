@@ -5,6 +5,16 @@ header{
 	box-shadow: 1px 0px 6px #d3711a;
 }
 
+.themeBG{
+	background: #e67e22;
+}
+.themeBG-dark{
+	background: #d3711a;
+}
+.themeColor{
+	color: #e67e22;
+}
+
 .MainSideBar nav a:hover{
 	color: #e67e22;
 }

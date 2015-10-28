@@ -11,7 +11,7 @@
 			<i class="fa fa-twitter"></i> Sign in as Joseph
 		</a>
 		
-		<a class="btn btn-block btn-social btn-google" href="/?sessionSet=user_id&value=1000010567262775">
+		<a class="btn btn-block btn-social btn-google" href="/?sessionSet=user_id&value=10000607254332">
 			<i class="fa fa-google"></i> Sign in as Test User
 		</a>
 	</div>

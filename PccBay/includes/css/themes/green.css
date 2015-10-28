@@ -9,6 +9,16 @@ a {
     color: #2ecc71;
 }
 
+.themeBG{
+	background: #2ecc71;
+}
+.themeBG-dark{
+	background: #27ae60;
+}
+.themeColor{
+	color: #2ecc71;
+}
+
 .MainSideBar nav a:hover{
 	color: #2ecc71;
 }

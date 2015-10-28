@@ -5,6 +5,16 @@ header{
 	box-shadow: 1px 0px 6px #2c3e50;
 }
 
+.themeBG{
+	background: #34495e;
+}
+.themeBG-dark{
+	background: #2c3e50;
+}
+.themeColor{
+	color: #34495e;
+}
+
 a {
     color: #34495e;
 }
