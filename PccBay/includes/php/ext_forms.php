@@ -8,4 +8,9 @@
 	if(isset($_POST['account_submit'])){
 		pb_update_account($_SESSION['user_id']);
 	}	
+	
+	// Commenting
+	if(isset($_POST['add_comment'])) {
+   	pb_add_comment($_SESSION['user_id']);
+	}
 ?>

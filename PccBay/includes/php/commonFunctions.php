@@ -380,4 +380,36 @@
 		$conn->close();
 	}
 	
+	function pb_add_comment($user_id) {
+      global $servername;
+		global $username;
+		global $password;
+		global $dbname;
+		global $_POST;
+		
+		$conn = new mysqli($servername, $username, $password, $dbname);
+		if ($conn->connect_error) {
+		    die("Connection failed: " . $conn->connect_error);
+		}
+      
+      $current_date = date("F j, Y, g:i a");
+		/*$comment = array();
+		   array_push($comments, array(
+   		   "comment" => "".$_POST['comment'].""
+   		   "comment" => "".$_POST['comment'].""
+		   ));*/
+		$comment = htmlspecialchars($_POST['comment']);
+		$post_id = $_POST['post_id'];
+		
+      $sql = "INSERT INTO pb_comments (post_id, date, author, status, comment) VALUES ('$post_id', '$current_date','$user_id','1', '$comment')";
+		
+		if ($conn->query($sql) === TRUE) {
+			//print 'done';
+		} else {
+		    echo "Error adding commenting: " . $conn->error;
+		}
+   	
+   	$conn->close(); 
+	}
+	
 ?>

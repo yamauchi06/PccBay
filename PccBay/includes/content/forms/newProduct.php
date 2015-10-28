@@ -122,12 +122,8 @@
 		</form>
 		
 	</div>
-	
 		
-	
-	
 </div>
-
 
 <script>
 $('body').on('click', '#NowPostMenu a', function(){
