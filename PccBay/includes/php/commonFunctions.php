@@ -102,7 +102,7 @@
 		$conn->close();
 	}
 	
-	function pb_include($include, $root=true, $includeTimes='', $Global=''){	
+	function pb_include($include, $root=true, $includeTimes='', $Global='', $useif='false'){	
 		if($root){ $include = $_SERVER['DOCUMENT_ROOT'].$include; }
 		if(file_exists($include)){
 			if($includeTimes == 'once'){

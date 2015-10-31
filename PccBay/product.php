@@ -40,11 +40,6 @@
 	<head>
 		<title>PCCbay | The eBay for PCC</title>
 		<?php pb_include('/MasterPages/head.php'); ?>
-		<style>
-		.MainFeed{
-			padding-top: 55px;
-		}	
-		</style>
 	</head>	
 <body>
 	<header>		
@@ -138,20 +133,8 @@
 						<input type="hidden" name="product_id" value="<?php print $product_id; ?>">
 						<button class="pb-addtocart themeBG">Get This</button>
 					</form>
-					
-					<div id="disqus_thread"></div>
-					<script>
-					    (function() {  // DON'T EDIT BELOW THIS LINE
-					        var d = document, s = d.createElement('script');
-					        
-					        s.src = '//pccbay.disqus.com/embed.js';
-					        
-					        s.setAttribute('data-timestamp', +new Date());
-					        (d.head || d.body).appendChild(s);
-					    })();
-					</script>
-					<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-					
+
+					<div id="product_comemnts"></div>
 				</div>
 				<div id="side_notifications" class="pb-sidebar-group">
 					<?php pb_include('/includes/content/pbRightBar/side_notifications.php'); ?>
@@ -211,6 +194,39 @@ $(document).ready(function(){
 	$('body').on('click', '.figureOp', function(){
 		$('.pb-product-gallery').find('img:eq(0)').attr('src', $(this).attr('src'));
 	});
+});
+$(window).ready(function(){
+	$.ajax({
+	    url: '/includes/json/comments?q=<?php print $product_id; ?>',
+	    dataType: 'json',
+	    type: 'GET',
+	    error: function(xhr, error){
+		    console.debug(xhr); console.debug(error); console.log('Craw URL:', jsonURL);
+		},
+	    success: function(data) {
+			$.each(data, function(i,json) {
+				var sql = "SELECT * FROM pb_users WHERE user_id="+json.author;
+				$.getJSON( "/includes/json/crawdb.php?get=user_data&sql="+sql, function( user_data ) {
+					$('#product_comemnts').append(
+					'<div class="col-md-12 pb-post pb-comment">'+
+				    	'<div class="pb-post-block">'+
+				            '<div class="pb-post-head">'+
+				                '<img class="pb-post-avatar" src="'+user_data[0].avatar+'">'+
+				                '<div class="pb-post-author">'+
+				                   ' <strong><a href="/@'+user_data[0].username+'">'+user_data[0].name+'</a></strong><br>'+
+				                    '<span class="pb-post-timestamp"><i class="pb-post-timestamp-o">'+data[i].date+'</i></span>'+
+				                '</div>'+
+				            '</div>'+
+				            '<div class="pb-post-content">'+
+								''+data[i].comment+''+
+				            '</div>'+
+				        '</div>'+
+				   ' </div>'
+				   );	
+				});//end user get
+			});//end each
+	    }//end success
+	});// end agax
 });
 </script>
 </body>

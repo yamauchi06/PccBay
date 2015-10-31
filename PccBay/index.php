@@ -9,7 +9,11 @@
 	<header>		
 		<?php pb_include('/MasterPages/header.php'); ?>
 	</header>
-	<?php pb_include('/MasterPages/MainMenu.php'); ?>
+	<?php 
+	if(isset($_SESSION['user_id'])){
+		//pb_include('/MasterPages/MainMenu.php');
+	}	
+	?>
 	<div class="container-fluid">
 		<div class="row">
 			<!-- Begin Content -->

@@ -31,6 +31,7 @@ footer{
 	text-align: right;
 	padding: 20px;
 }
+	
 
 /* Menu */
 .pb-menu{
@@ -71,6 +72,9 @@ a:hover{
 }
 */
 
+.MainFeed{
+	padding-top: 55px;
+}
 .MainSideBar{
 	background-color: #ffffff;
 	height: 100vh;
@@ -336,6 +340,10 @@ legend{
 .pb-post{
 	padding: 0px;	
 	vertical-align: top;
+}
+.pb-comment{
+	box-shadow: 1px 1px 6px rgba(0,0,0,0.20);
+	margin-bottom:12px;
 }
 .pb-post-block{
 	background: #ffffff;
