@@ -24,6 +24,21 @@
 	  return $matches[0];
 	}
 	
+	function pb_page(){
+		return 'index.php';
+	}
+	function pb_do_function($function, $attr){
+		return $function($attr);
+	}
+	
+	function pb_if($if, $doif='', $doelse=''){
+		if($if){
+			return $doif;
+		}else{
+			return $doelse;
+		}
+	}
+	
 	function time_ago($ptime)
 	{
 	    $etime = time() - $ptime;
@@ -59,7 +74,8 @@
 	    }
 	}
 	
-	function safe_image($unique_id, $method='image', $attr=''){
+	function pb_safe_image($unique_id, $method='image', $attr='', $popup='true'){
+		
 		global $servername;
 		global $username;
 		global $password;
@@ -73,10 +89,13 @@
 		if ($result->num_rows > 0) {
 		    while($row = $result->fetch_assoc()) {
 			    $size=explode(':', $row['size']);
+			    if($popup=='true'){
+					$attr .= 'data-overHead-img="'.$row['string'].'" data-original="'.$row['string'].'"';
+				}
 		        if($method=='base64'){ print $row['string']; }
 		        if($method=='image'){  print '<img src="'.$row['string'].'" alt="'.$row['alt'].'" title="'.$row['title'].'" '.$attr.' />';}
 		        if($method=='image-lazy'){
-			        print '<img src="'.$row['string'].'" data-overHead-img="'.$row['string'].'" data-original="'.$row['string'].'" '.$attr.' />';
+			        print '<img src="'.$row['string'].'" '.$attr.' />';
 		        }
 		    }
 		}
@@ -90,7 +109,7 @@
 				include_once($include); }else{
 				include($include); }
 		}else{
-			print 'path [ '.$include.' ] not found';	
+			print '<b>The path [ '.$include.' ] was not not found</b>';	
 		}
 	}
 	
@@ -130,7 +149,7 @@
 			if ($conn->connect_error) {
 			    die("Connection failed: " . $conn->connect_error);
 			} 
-			$sql = "SELECT * FROM pb_post Where status='open' ORDER BY product_id DESC";
+			$sql = "SELECT * FROM pb_post Where status='open' AND type='product' ORDER BY product_id DESC";
 			$result = $conn->query($sql);
 			if ($result->num_rows > 0) {
 			    while($val = $result->fetch_assoc()) {
@@ -197,44 +216,42 @@
 							<div class="pb-post-price">
 								<?php 
 									if($val['type']=='product'){ 
-										print '$ '.$val['price'];
+										print '<span class="themeColor">$ '.$val['price'].'</span>';
 									}
 									else if($val['type']=='question'){
-										print '<i class="zmdi zmdi-pin-help" style="font-size:30px"></i>';
+										print '<i class="zmdi zmdi-pin-help themeColor" style="font-size:30px"></i>';
 									}
 									else if($val['type']=='discussion'){
-										print '<i class="zmdi zmdi-comment-text-alt" style="font-size:30px"></i>';
+										print '<i class="zmdi zmdi-comment-text-alt themeColor" style="font-size:30px"></i>';
 									}
 								?>
 							</div>
 						</div>
 						<div class="pb-post-content">
 							<?php
-							if($val['type']=='product'){
-								print '<h4>'.$val['title'].'</h4>';
-							}	
+								print pb_if(
+									$val['type']=='product',
+									'<h4>'.$val['title'].'</h4>'
+								);	
 							?>
 							<div class="pb-post-slider flexslider">
 							  <ul class="slides">
-								  <?php
-									$imgIDCount=0;
-									$imgArr = explode(',', $val['images']); 
-									foreach ($imgArr as $index => $imgID) {
-										if($imgIDCount==0){
-											print '<li>';
-												safe_image($imgID, 'image-lazy', 'class="pb-post-product lazy" data-overHead-temp="open-veiw-trans"');
-											print '</li>';
-											$imgIDCount++;
-										}
-									}
+								  <li>
+								  	<?php 
+									pb_safe_image(
+										explode(',', $val['images'])[0], 
+										'image-lazy', ' class="pb-post-product lazy" '
+									); 
 									?>
+								  </li>
 							  </ul>
 							</div>
 							<p>
 								<?php
-								if($val['type']=='question' || $val['type']=='discussion'){
-									print '<strong>'.$val['title'].'</strong> <br />'.$val['desc'].'';
-								}	
+								print pb_if(
+									$val['type']=='question' || $val['type']=='discussion',
+									'<strong>'.$val['title'].'</strong> <br />'.$val['desc'].''
+								);	
 								?>
 							</p>
 							
@@ -294,8 +311,8 @@
 			$product_info = array();
       		array_push($product_info, array(
       			"timestamp" => "".date("F j, Y, g:i a")."",
-      			"title"     => "".$_POST['product_title']."",
-      			"desc"      => "".$_POST['product_desc']."",
+      			"title"     => "".preg_replace('/\s+/', '', $_POST['product_title'])."",
+      			"desc"      => "".preg_replace('/\s+/', '', $_POST['product_desc'])."",
       			"tags"      => "".$_POST['product_tags']."",
       			"price"     => "".$_POST['product_price']."",
       			"condition" => "".$_POST['product_condition']."",

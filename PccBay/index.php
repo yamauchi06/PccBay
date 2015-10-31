@@ -81,9 +81,6 @@
 			<div id="MyCardBox" class="HiddenFrame">
 				<?php pb_include('/includes/content/forms/myPCCcard.php'); ?>
 			</div>
-			<div id="accSettingsBox" class="HiddenFrame">
-				<?php pb_include('/includes/content/forms/accountSettings.php'); ?>
-			</div>
 			<div id="postViewer" class="HiddenFrame">
 				<?php pb_include('/includes/content/forms/postViewer.php'); ?>
 			</div>

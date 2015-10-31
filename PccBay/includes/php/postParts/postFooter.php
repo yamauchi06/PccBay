@@ -3,14 +3,9 @@
 		?>
 		<div class="pb-post-foot">
 			<div class="row">
-				<div class="col-xs-6 pb-va-rule text-center">
-				  <a href="#" class="feed-post-tab-link transition-300">
-				    <span class="feed-post-tab"><i class="zmdi zmdi-comment-outline"></i> Comment</span>
-				  </a>
-				</div>
-				<div class="col-xs-6 text-center">
-				  <a href="#" class="feed-post-tab-link transition-300">
-				    <span class="feed-post-tab"><i class="zmdi zmdi-money-box"></i> Get this</span>
+				<div class="col-xs-12 text-center">
+				  <a href="/product?product_id=<?php print $Global['id']; ?>" class="feed-post-tab-link transition-300">
+				    <span class="feed-post-tab"><i class="zmdi zmdi-money-box"></i> View Product</span>
 				  </a>
 				</div>
 			</div>

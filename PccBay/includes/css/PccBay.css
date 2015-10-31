@@ -5,6 +5,7 @@ body{
 	background-color: #E6E9ED;
 	font-family: 'Raleway', sans-serif;
 	color: #2c3e50;
+	overflow-x: hidden;
 }
 
 .pb-sidebar-group.activeSet{
@@ -30,6 +31,31 @@ footer{
 	text-align: right;
 	padding: 20px;
 }
+
+/* Menu */
+.pb-menu{
+	background: #ffffff;
+	height: 60px;
+	margin-top: 50px;
+}
+.pb-menu li{
+	list-style: none;
+	display: inline-block;
+}
+.pb-menu li a{
+	color: #34495E;
+	text-decoration: none;
+	padding: 15px;
+	display: inline-block;
+}
+.pb-menu li a:hover{
+	color: #34495E;
+	text-decoration: underline;
+}
+.pb-menu li a.active{
+	border-bottom: #34495E solid 2px;
+}
+
 footer em{
 	font-size: 11px;
 }
@@ -448,7 +474,7 @@ legend{
 
 
 .feed-post-tab-link, .feed-post-tab-link-Cancel, .feed-post-tab-link-Accept{
-	border: 1px solid #f7cca6;
+/* 	border: 1px solid #f7cca6; */
 	font-weight: 500;
 	color: #7f8c8d;
 	padding: 6px 22px;
@@ -619,5 +645,57 @@ form hr{
 	width: 35px;
 }
 
+
+
+.pb-addtocart{
+	display: inline-block;
+	border: none;
+	width: 98%;
+	margin: 9px auto;
+	color: #ffffff;
+	font-size: 20px;
+	padding: 10px;
+	position: relative;
+}
+.pb-addtocart:hover{
+	opacity: 0.9;
+}
+.pb-addtocart:before{
+	display: block;
+	position: absolute;
+	font-family: Material-Design-Iconic-Font;
+	content: "\f1cb";
+	font-size: 20px;
+	padding: 3px 9px;
+	background: #ffffff;
+	color: #E6E9ED;
+	top: 7px;
+}
+
+.pb-product-gallery{
+	width: 100%;
+	height: auto;
+}
+.pb-product-gallery .figure{
+	width: 100%;
+	background: #ffffff;
+}
+.pb-product-gallery ul{
+	padding: 0px;
+}
+.pb-product-gallery li{
+	list-style: none;
+	display: inline-block;
+	width: 100px;
+	margin: 2px 1px 0px 0px;
+	vertical-align: middle;
+	background: #ffffff;
+}
+.pb-product-gallery li img{
+	display: inline-block;
+	width: 100px;
+	border: 1px #ffffff solid;
+	cursor: pointer;
+}	
 
 

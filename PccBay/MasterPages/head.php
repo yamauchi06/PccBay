@@ -43,7 +43,7 @@ $user_data = json_decode(pb_user_data($_SESSION['user_id'], 'user_data'), true);
 if($user_data){
 	$pb_user['theme'] = 'default';
 	foreach($user_data as $data){
-		$pb_user['theme']=$data['theme'];
+		if(!empty($pb_user['theme']))$pb_user['theme']=$data['theme'];
 	} 
 	print '<link id="userThemeCSS" rel="stylesheet" href="/includes/css/themes/'.$pb_user['theme'].'.css" type="text/css" >'; 
 }
