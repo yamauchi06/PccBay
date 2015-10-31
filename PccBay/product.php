@@ -40,20 +40,17 @@
 	<head>
 		<title>PCCbay | The eBay for PCC</title>
 		<?php pb_include('/MasterPages/head.php'); ?>
+		<style>
+		.MainFeed{
+			padding-top: 55px;
+		}	
+		</style>
 	</head>	
 <body>
 	<header>		
 		<?php pb_include('/MasterPages/header.php'); ?>
 	</header>
-	<div class="row">
-		<div class="col-md-9 pb-menu">
-			<ul>
-				<li><a href="/">Home</a></li>
-				<li><a href="/questions/">Questions</a></li>
-				<li><a href="/conversations/">Conversations</a></li>
-			</ul>
-		</div>
-	</div>
+	<?php pb_include('/MasterPages/MainMenu.php'); ?>
 	
 	<div class="container-fluid">
 		<div class="row">

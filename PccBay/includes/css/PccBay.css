@@ -65,9 +65,11 @@ a{
 a:hover{
 	color: #d3711a;
 }
+/*
 .MainFeed, .MainSideBar{
 	padding-top: 55px;
 }
+*/
 
 .MainSideBar{
 	background-color: #ffffff;
