@@ -133,8 +133,20 @@
 						<input type="hidden" name="product_id" value="<?php print $product_id; ?>">
 						<button class="pb-addtocart themeBG">Get This</button>
 					</form>
+					
+					<form action="" method="post">
+						<div class="pb-comment-area">
+							<input type="hidden" name="post_id" value="<?php print $product_id; ?>">
+							<textarea name="comment" placeholder="Leave a comment" class="fixedHeight"></textarea>
+							<div class="pb-comment-area-lower">
+								<input type="submit" name="add_comment" value="Comment">
+							</div>
+						</div>
+					</form>
 
-					<div id="product_comemnts"></div>
+					<div id="product_comemnts"><!-- Comments go here --></div>
+					
+					
 				</div>
 				<div id="side_notifications" class="pb-sidebar-group">
 					<?php pb_include('/includes/content/pbRightBar/side_notifications.php'); ?>
@@ -194,8 +206,46 @@ $(document).ready(function(){
 	$('body').on('click', '.figureOp', function(){
 		$('.pb-product-gallery').find('img:eq(0)').attr('src', $(this).attr('src'));
 	});
+	
+	$('body').on('click', '.pb-comment-area', function(event){
+		event.stopPropagation();
+		var commenter = $(this).find('textarea');
+		commenter.removeClass('fixedHeight').attr('pos', 'open').next('.pb-comment-area-lower').show(200);
+	});
+	$('body').on('click', function(){
+		var commenter = $('.pb-comment-area textarea');
+		if( commenter.attr('pos')=='open' ){
+			commenter.addClass('fixedHeight').attr('pos', 'closed').next('.pb-comment-area-lower').hide(400);
+		}
+	});
+	
+	$('body').on('click', '[name="add_comment"]', function(event){
+		event.preventDefault();
+		var textarea=$('.pb-comment-area textarea')
+		var comment = textarea.val();
+		$.ajax({
+		  type: "POST",
+		  url: '/includes/php/async.php?function=pb_add_comment',
+		  data: "comment="+comment+'&post_id=<?php print $product_id; ?>',
+			success: function(data, textStatus, jqXHR)
+		    {
+			    textarea.val('');
+			    $('body').trigger('click');
+		        loadedComments();
+		    },
+		    error: function (jqXHR, textStatus, errorThrown)
+		    {
+				alert('error')
+				console.log(jqXHR, textStatus, errorThrown);
+		    }
+		});
+	});
 });
 $(window).ready(function(){
+	loadedComments();
+});
+
+function loadedComments(){
 	$.ajax({
 	    url: '/includes/json/comments?q=<?php print $product_id; ?>',
 	    dataType: 'json',
@@ -204,6 +254,7 @@ $(window).ready(function(){
 		    console.debug(xhr); console.debug(error); console.log('Craw URL:', jsonURL);
 		},
 	    success: function(data) {
+		    $('#product_comemnts').empty();
 			$.each(data, function(i,json) {
 				var sql = "SELECT * FROM pb_users WHERE user_id="+json.author;
 				$.getJSON( "/includes/json/crawdb.php?get=user_data&sql="+sql, function( user_data ) {
@@ -227,7 +278,7 @@ $(window).ready(function(){
 			});//end each
 	    }//end success
 	});// end agax
-});
+}
 </script>
 </body>
 </html>

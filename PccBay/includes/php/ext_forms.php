@@ -11,6 +11,6 @@
 	
 	// Commenting
 	if(isset($_POST['add_comment'])) {
-   	pb_add_comment($_SESSION['user_id']);
+   		pb_add_comment($_SESSION['user_id']);
 	}
 ?>

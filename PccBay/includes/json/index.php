@@ -8,7 +8,7 @@
 		if($_GET['page']=='products'){ $slq_table = 'pb_post'; $sql = "SELECT * FROM pb_post WHERE type='product'"; }
 		if($_GET['page']=='questions'){ $slq_table = 'pb_post'; $sql = "SELECT * FROM pb_post WHERE type='question'";}
 		if($_GET['page']=='discussions'){ $slq_table = 'pb_post';  $sql = "SELECT * FROM pb_post WHERE type='discussion'";}
-		if($_GET['page']=='comments'){ $slq_table = 'pb_comments';  $sql = "SELECT * FROM pb_comments WHERE post_id='$query'";}
+		if($_GET['page']=='comments'){ $slq_table = 'pb_comments';  $sql = "SELECT * FROM pb_comments WHERE post_id='$query' ORDER BY id DESC";}
 		if($_GET['page']=='feed'){ $slq_table = 'pb_post';  $sql = "SELECT * FROM pb_post";}
 		if($_GET['page']=='users'){ $slq_table = 'pb_users'; }
 		if($_GET['page']=='images'){ $slq_table = 'pb_safe_image'; }

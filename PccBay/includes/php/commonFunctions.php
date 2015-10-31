@@ -418,7 +418,7 @@
 		$comment = htmlspecialchars($_POST['comment']);
 		$post_id = $_POST['post_id'];
 		
-      $sql = "INSERT INTO pb_comments (post_id, date, author, status, comment) VALUES ('$post_id', '$current_date','$user_id','1', '$comment')";
+      $sql = "INSERT INTO pb_comments (post_id, date, author, status, comment) VALUES ('$post_id', '$current_date','$user_id','open', '$comment')";
 		
 		if ($conn->query($sql) === TRUE) {
 			//print 'done';
