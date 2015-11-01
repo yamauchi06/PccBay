@@ -23,6 +23,12 @@
 <script src="/includes/plugins/formatter/jquery.number.min.js"></script>
 
 
+<script src="/includes/plugins/bootstrap-wysiwyg/wysihtml5-0.3.0.js"></script>
+<script src="/includes/plugins/bootstrap-wysiwyg/prettify.js"></script>
+<script src="/includes/plugins/bootstrap-wysiwyg/bootstrap-wysihtml5.js"></script>
+
+
+
 
 <!-- All included scripts go above here -->
 <script src="/includes/js/menu.js"></script>

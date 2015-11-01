@@ -128,25 +128,23 @@
 			);	
 			?>
 				<div id="side_shopping" class="pb-sidebar-group activeSet">
-					
-					<form action="" method="post">
-						<input type="hidden" name="product_id" value="<?php print $product_id; ?>">
-						<button class="pb-addtocart themeBG">Get This</button>
-					</form>
-					
-					<form action="" method="post">
-						<div class="pb-comment-area">
-							<input type="hidden" name="post_id" value="<?php print $product_id; ?>">
-							<textarea name="comment" placeholder="Leave a comment" class="fixedHeight"></textarea>
-							<div class="pb-comment-area-lower">
-								<input type="submit" name="add_comment" value="Comment">
+					<div class="side_shopping">
+						<form action="" method="post">
+							<input type="hidden" name="product_id" value="<?php print $product_id; ?>">
+							<button class="pb-addtocart themeBG">Get This</button>
+						</form>
+						
+						<form action="" method="post">
+							<div class="pb-comment-area">
+								<input type="hidden" name="post_id" value="<?php print $product_id; ?>">
+								<textarea name="comment" placeholder="Leave a comment" class="fixedHeight autosize"></textarea>
+								<div class="pb-comment-area-lower">
+									<input type="submit" name="add_comment" value="Comment">
+								</div>
 							</div>
-						</div>
-					</form>
-
-					<div id="product_comemnts"><!-- Comments go here --></div>
-					
-					
+						</form>
+						<div id="product_comemnts"><!-- Comments go here --></div>
+					</div>
 				</div>
 				<div id="side_notifications" class="pb-sidebar-group">
 					<?php pb_include('/includes/content/pbRightBar/side_notifications.php'); ?>
@@ -201,6 +199,13 @@
 <script src="/includes/js/pb-product-slider.js"></script>
 <?php pb_include('/MasterPages/footer.php'); ?>
 <script>
+$( window ).resize(function() {
+	if( $(window).width() < 992 ){
+		$('.side_shopping').appendTo('.MainFeed');
+	}else{
+		$('.side_shopping').appendTo('#side_shopping');
+	}
+});	
 $(document).ready(function(){
 	$('.pb-product-gallery').find('img:eq(0)').attr('src', $('.pb-product-gallery').find('img:eq(1)').attr('src'));
 	$('body').on('click', '.figureOp', function(){
@@ -222,7 +227,8 @@ $(document).ready(function(){
 	$('body').on('click', '[name="add_comment"]', function(event){
 		event.preventDefault();
 		var textarea=$('.pb-comment-area textarea')
-		var comment = textarea.val();
+		var comment = textarea.val().replace(/'/, '&#39;').replace(/"/, '&#34;').replace(/&/, '&#38;').replace(/\?/, '&#63;');
+		alert(comment)
 		$.ajax({
 		  type: "POST",
 		  url: '/includes/php/async.php?function=pb_add_comment',
@@ -247,7 +253,7 @@ $(window).ready(function(){
 
 function loadedComments(){
 	$.ajax({
-	    url: '/includes/json/comments?q=<?php print $product_id; ?>',
+	    url: '/includes/json/comments?q=<?php print $product_id; ?>&timeago=true',
 	    dataType: 'json',
 	    type: 'GET',
 	    error: function(xhr, error){
@@ -262,6 +268,7 @@ function loadedComments(){
 					'<div class="col-md-12 pb-post pb-comment">'+
 				    	'<div class="pb-post-block">'+
 				            '<div class="pb-post-head">'+
+				            	'<div class="pb-menu-icon"><i class="zmdi zmdi-chevron-down"></i></div>'+
 				                '<img class="pb-post-avatar" src="'+user_data[0].avatar+'">'+
 				                '<div class="pb-post-author">'+
 				                   ' <strong><a href="/@'+user_data[0].username+'">'+user_data[0].name+'</a></strong><br>'+

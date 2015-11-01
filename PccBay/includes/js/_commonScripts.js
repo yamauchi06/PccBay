@@ -54,8 +54,10 @@ $(document).ready(function(){
 		}
 	});
 	
-	autosize( $('textarea') );
+	autosize( $('textarea.autosize') );
+	$('textarea.wysihtml5').wysihtml5();
 	
+/*
 	$('[data-maxtext]').each(function(){
 		var mainset = $(this).attr('data-maxtext');
 		$(this).wrap('<div style="position:relative;"></div>');
@@ -71,6 +73,7 @@ $(document).ready(function(){
 		    }
 		})
 	});
+*/
 	
 	$('.nstSlider').nstSlider({
 	    "left_grip_selector": ".leftGrip",
@@ -136,4 +139,15 @@ $('img.svg').each(function(){
     }, 'xml');
 
 });
+
+
+function htmlentities(string){
+	string
+	.replace(/'/, '&#39;')
+	.replace(/"/, '&#34;')
+	.replace(/;/, '&#59;')
+	.replace(/:/, '&#58;')
+	.replace(/`/, '&#96;')
+	return string;
+}
 

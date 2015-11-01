@@ -1,6 +1,8 @@
 <?php
 	header("Content-Type: application/json");	
 	include_once("../php/_db-config.php");
+	
+	function time_ago($ptime){$etime = time() - $ptime;if ($etime < 1){return '0 seconds';}$a = array( 365 * 24 * 60 * 60  =>  'year',30 * 24 * 60 * 60  =>  'month',24 * 60 * 60  =>  'day',60 * 60  =>  'hour',60  =>  'minute',1  =>  'second');$a_plural = array( 'year'   => 'years','month'  => 'months','day'    => 'days','hour'   => 'hours','minute' => 'minutes','second' => 'seconds');foreach ($a as $secs => $str){$d = $etime / $secs;if ($d >= 1){$r = round($d);return $r . ' ' . ($r > 1 ? $a_plural[$str] : $str) . ' ago';}}}
 
 	$mainJson = array();
 	$query='';if(isset($_GET['q'])){$query=$_GET['q'];}
@@ -8,7 +10,9 @@
 		if($_GET['page']=='products'){ $slq_table = 'pb_post'; $sql = "SELECT * FROM pb_post WHERE type='product'"; }
 		if($_GET['page']=='questions'){ $slq_table = 'pb_post'; $sql = "SELECT * FROM pb_post WHERE type='question'";}
 		if($_GET['page']=='discussions'){ $slq_table = 'pb_post';  $sql = "SELECT * FROM pb_post WHERE type='discussion'";}
-		if($_GET['page']=='comments'){ $slq_table = 'pb_comments';  $sql = "SELECT * FROM pb_comments WHERE post_id='$query' ORDER BY id DESC";}
+		if($_GET['page']=='comments'){ 
+			$slq_table = 'pb_comments';  $sql = "SELECT * FROM pb_comments WHERE post_id='$query' ORDER BY id DESC";
+		}
 		if($_GET['page']=='feed'){ $slq_table = 'pb_post';  $sql = "SELECT * FROM pb_post";}
 		if($_GET['page']=='users'){ $slq_table = 'pb_users'; }
 		if($_GET['page']=='images'){ $slq_table = 'pb_safe_image'; }
@@ -61,6 +65,7 @@
 				
 				//pb_safe_image
 				if($slq_table=='pb_comments'){
+					if(isset($_GET['timeago'])){ $val['date']=time_ago(strtotime($val['date'])); }
 					$entity = array(
 						'id' => $val['id'],
 						'post_id' => $val['post_id'],

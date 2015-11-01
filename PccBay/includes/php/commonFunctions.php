@@ -311,8 +311,8 @@
 			$product_info = array();
       		array_push($product_info, array(
       			"timestamp" => "".date("F j, Y, g:i a")."",
-      			"title"     => "".preg_replace('/\s+/', '', $_POST['product_title'])."",
-      			"desc"      => "".preg_replace('/\s+/', '', $_POST['product_desc'])."",
+      			"title"     => "".htmlentities( preg_replace('/\s+/', '', $_POST['product_title']) )."",
+      			"desc"      => "".htmlentities( preg_replace('/\s+/', '', $_POST['product_desc']) )."",
       			"tags"      => "".$_POST['product_tags']."",
       			"price"     => "".$_POST['product_price']."",
       			"condition" => "".$_POST['product_condition']."",
@@ -415,7 +415,7 @@
    		   "comment" => "".$_POST['comment'].""
    		   "comment" => "".$_POST['comment'].""
 		   ));*/
-		$comment = htmlspecialchars($_POST['comment']);
+		$comment = htmlentities( $_POST['comment'] );
 		$post_id = $_POST['post_id'];
 		
       $sql = "INSERT INTO pb_comments (post_id, date, author, status, comment) VALUES ('$post_id', '$current_date','$user_id','open', '$comment')";

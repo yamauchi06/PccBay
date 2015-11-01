@@ -35,6 +35,8 @@
 <link href="/includes/css/bootstrap-social.css" rel="stylesheet">
 <link rel="stylesheet" href="/includes/plugins/dropzone/dropzone.css" type="text/css" />
 
+<link rel="stylesheet" href="/includes/plugins/bootstrap-wysiwyg/bootstrap-wysihtml5.css" type="text/css" />
+
 <!-- Main Styles and jQuery -->
 <link rel="stylesheet" href="/includes/css/PccBay.css" type="text/css" >
 <script src="/includes/js/jquery.js"></script>

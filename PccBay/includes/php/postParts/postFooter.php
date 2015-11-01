@@ -5,7 +5,7 @@
 			<div class="row">
 				<div class="col-xs-12 text-center">
 				  <a href="/product?product_id=<?php print $Global['id']; ?>" class="feed-post-tab-link transition-300">
-				    <span class="feed-post-tab"><i class="zmdi zmdi-money-box"></i> View This Product</span>
+				    <span class="feed-post-tab"><i class="zmdi zmdi-money-box"></i> View This Item</span>
 				  </a>
 				</div>
 			</div>

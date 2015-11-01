@@ -32,6 +32,9 @@ footer{
 	padding: 20px;
 }
 	
+.nopadding{
+	padding: 0px !important;
+}	
 
 /* Menu */
 .pb-menu{
@@ -292,6 +295,26 @@ a:hover{
 	float: right;
 	margin: 10px;
 }
+/*
+[data-wysihtml5-command]:before{
+	font-family: Material-Design-Iconic-Font;
+	color: black;
+	display: inline-block;
+	font-size: 20px;
+}
+[data-wysihtml5-command="insertUnorderedList"]:before{
+	content: '\f247';
+}
+[data-wysihtml5-command="change_view"]:before{
+	content: '\f13a';
+	background: gray;
+	width: 20px;
+	height: 20px;
+}
+[data-wysihtml5-command="createLink"]:before{
+	content: '\f18e';
+}
+*/
 
 
 /* Horazontal Rules */
@@ -519,8 +542,20 @@ legend{
 
 /* Comments */
 .pb-comment{
-	box-shadow: 1px 1px 6px rgba(0,0,0,0.20);
+	box-shadow: 1px 1px 6px rgba(0,0,0,0.15);
 	margin-bottom:12px;
+}
+.pb-comment .pb-post-head{
+	padding: 0px;
+}
+.pb-comment .pb-menu-icon{
+	padding: 0px 4px;
+	float: right;
+	color: #737F85;
+}
+.pb-comment .pb-menu-icon:hover{
+	background: #F6F8F9;
+	cursor: pointer;
 }
 .pb-comment-area{
 	width: 100%;
@@ -528,6 +563,7 @@ legend{
 	margin-bottom: 20px;
 	border: 2px #CCD3D7 solid;
 	border-radius: 3px;
+	background: #ffffff;
 }
 .pb-comment-area-lower{
 	background: #F6F8F9;
@@ -535,6 +571,7 @@ legend{
 	height: 35px;
 	position: relative;
 	display: none;
+	border-top: 2px #CCD3D7 solid;
 }
 .pb-comment-area textarea.fixedHeight{
 	height: 35px !important;
@@ -567,6 +604,15 @@ legend{
 }
 .pb-comment-area-lower input[type="submit"]:hover{
 	opacity: 0.9;
+}
+
+@media (max-width: 992px) {
+	.pb-comment{
+		box-shadow: none;
+	}
+	.pb-comment .pb-post-head{
+		padding: 5px;
+	}
 }
 
 
@@ -642,7 +688,7 @@ legend{
 	bottom: -5px;
 	height: 50px;
 	width: 90px;
-	box-shadow: 2px 2px 15px rgba(64, 64, 64, 0.59);
+	box-shadow: 2px 2px 15px rgba(64,64,64,0.59);
 	z-index: 999999;
 }
 .pb-sticky-btn{
@@ -708,7 +754,7 @@ form hr{
 .pb-addtocart{
 	display: inline-block;
 	border: none;
-	width: 98%;
+	width: 100%;
 	margin: 9px auto;
 	color: #ffffff;
 	font-size: 20px;
