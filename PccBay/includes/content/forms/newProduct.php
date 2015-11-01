@@ -17,13 +17,13 @@
 		<form method="post" action="">
 			<input type="hidden" name="post_type" value="product">
 			
-			<input class="form-control" rows="3" name="product_title" placeholder="What is is?">
+			<input class="form-control" rows="3" name="product_title" placeholder="Item Name">
+				
+			<textarea class="form-control no-resize wysihtml5" rows="3" data-maxtext="400" name="product_desc" placeholder="Item Description"></textarea>
 			
 			<input class="form-control" rows="3" name="product_price" placeholder="Price.">
-				
-			<textarea class="form-control no-resize wysihtml5" rows="3" data-maxtext="400" name="product_desc" placeholder="Tell us about it."></textarea>
 	
-			<input class="form-control tags" rows="3" name="product_tags" placeholder="Tag it.">
+			<input class="form-control tags" rows="3" name="product_tags" placeholder="Tags (tag1, tag2, tag3)">
 			<br />
 			
 			<div class="row">

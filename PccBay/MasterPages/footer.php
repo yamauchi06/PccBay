@@ -1,4 +1,4 @@
-<footer class="<?php pb_isset(pb_isset_session('user_id'), 'col-md-9', 'col-md-12'); ?>">
+<footer class="<?php pb_isset(pb_isset_session('user_id'), 'col-md-9', 'col-md-12'); print ' '.$include_cmd; ?>">
 	<div style="float: left;">
 		<a href="#">Privacy Policy</a> |
 		<a href="#">FAQ's</a>

@@ -15,24 +15,31 @@
 		    $product['product_info'] = json_decode($row['product_info']);
 		    $product['trans_info']   = json_decode($row['trans_info']);
 	    }
+	    $allowed=true;
+	}else{
+		$allowed=false;
 	}
 	$conn->close();
-	foreach($product['product_info'] as $data){
-		$product['timestamp']  = $data->timestamp;
-		$product['title']      = $data->title;
-		$product['description'] = $data->desc;
-		$product['tags']       = $data->tags;
-		$product['price']      = $data->price;
-		$product['condition']  = $data->condition;
-		$product['images']     = $data->images;
-	}
-	
-	$user_data = json_decode(pb_user_data($product['user_id'], 'user_data'), true);
-	foreach($user_data as $data){
-		$pb_user['name']=$data['name'];
-		$pb_user['avatar']=$data['avatar'];
-		$pb_user['registered']=date("F d, Y", strtotime($data['registered']));
-		$pb_user['theme']=$data['theme'];
+	if($allowed){
+		foreach($product['product_info'] as $data){
+			$product['timestamp']   = $data->timestamp;
+			$product['title']       = htmlspecialchars_decode($data->title);
+			$product['description'] = htmlspecialchars_decode($data->desc);
+			$product['tags']        = $data->tags;
+			$product['price']       = $data->price;
+			$product['condition']   = $data->condition;
+			$product['images']      = $data->images;
+		}
+		
+		$user_data = json_decode(pb_user_data($product['user_id'], 'user_data'), true);
+		foreach($user_data as $data){
+			$pb_user['name']=$data['name'];
+			$pb_user['avatar']=$data['avatar'];
+			$pb_user['registered']=date("F d, Y", strtotime($data['registered']));
+			$pb_user['theme']=$data['theme'];
+		}
+	}else{
+		header('Location: /404');
 	}	
 ?>
 <!DOCTYPE html>
@@ -53,27 +60,35 @@
 			<!-- Begin Content -->
 			<div class="col-md-9 MainFeed">
 
-				<div class="col-md-5">
-					<div class="pb-product-gallery">
-						<img src="" class="figure" />
-						<ul>
-							<?php
-								$images = explode(',', $product['images']);
-								foreach($images as $image){
-									print '<li>';
-									pb_safe_image(
-										$image, 
-										'image-lazy', ' class="lazy figureOp"',
-										'false'
-									);
-									print '</li>';
-								} 
-							?>
-						</ul>
-					</div>
-				</div>
-				
-				<div class="col-md-7">
+				<?php
+					if(!empty($images)){
+						?>
+						<div class="col-md-5">
+							<div class="pb-product-gallery">
+								<img src="" class="figure" />
+								<ul>
+									<?php
+										$images = explode(',', $product['images']);
+										foreach($images as $image){
+											print '<li>';
+											pb_safe_image(
+												$image, 
+												'image-lazy', ' class="lazy figureOp"',
+												'false'
+											);
+											print '</li>';
+										} 
+									?>
+								</ul>
+							</div>
+						</div>
+						
+						<div class="col-md-7">
+						<?php
+					}else{
+						print '<div class="col-md-12">';
+					}	
+				?>
 					
 					<div class="col-md-12">
 						<h2 style="margin:0px"><?php print $product['title']; ?></h2>

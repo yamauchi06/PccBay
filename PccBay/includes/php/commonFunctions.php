@@ -102,7 +102,10 @@
 		$conn->close();
 	}
 	
-	function pb_include($include, $root=true, $includeTimes='', $Global='', $useif='false'){	
+	function pb_include($include, $root=true, $includeTimes='', $Global='', $useif='false'){
+		$includeEX = explode('~', $include);
+		$include=$includeEX[0];
+		if(!empty($includeEX[1])){$include_cmd=$includeEX[1];}
 		if($root){ $include = $_SERVER['DOCUMENT_ROOT'].$include; }
 		if(file_exists($include)){
 			if($includeTimes == 'once'){
@@ -231,7 +234,7 @@
 							<?php
 								print pb_if(
 									$val['type']=='product',
-									'<h4>'.$val['title'].'</h4>'
+									'<h4>'.htmlspecialchars_decode($val['title']).'</h4>'
 								);	
 							?>
 							<div class="pb-post-slider flexslider">
@@ -250,7 +253,7 @@
 								<?php
 								print pb_if(
 									$val['type']=='question' || $val['type']=='discussion',
-									'<strong>'.$val['title'].'</strong> <br />'.$val['desc'].''
+									'<strong>'.htmlspecialchars_decode($val['title']).'</strong> <br />'.htmlspecialchars_decode($val['desc']).''
 								);	
 								?>
 							</p>
