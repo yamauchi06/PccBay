@@ -5,7 +5,7 @@
 	<a href="/"><img src="/images/favicon/pccBay-logo.svg" height="40px" alt="PccBay" /></a>
 </div>	
 	<div class="col-md-2 col-md-offset-3" id="headerBtns">
-		<a href="#" class="transition-300 pb-flat-btn" id="MobMenu"><i class="zmdi zmdi-menu"></i></a>
+		<a href="#" class="transition-300 pb-flat-btn" id="MobMenu"><span></span></a>
 		<a href="#" class="transition-300 pb-flat-btn" id="SearchBtn"><i class="glyphicon glyphicon-search"></i></a>
 	<?php 
 		pb_isset(

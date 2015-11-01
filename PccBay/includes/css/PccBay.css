@@ -60,6 +60,42 @@ footer{
 	border-bottom: #34495E solid 2px;
 }
 
+#MobMenu { margin-top: 8px; position: relative; }
+
+#MobMenu { cursor: pointer; padding: 10px 35px 16px 0px; }
+#MobMenu span, #MobMenu span:before, #MobMenu span:after {
+  cursor: pointer;
+  border-radius: 1px;
+  height: 4px;
+  width: 35px;
+  background: white;
+  position: absolute;
+  display: block;
+  content: '';
+}
+#MobMenu span:before {
+  top: -10px; 
+}
+#MobMenu span:after {
+  bottom: -10px;
+}
+
+#MobMenu span, #MobMenu span:before, #MobMenu span:after {
+  transition: all 200ms ease-in-out;
+}
+#MobMenu.active span {
+  background-color: transparent;
+}
+#MobMenu.active span:before, #MobMenu.active span:after {
+  top: 0;
+}
+#MobMenu.active span:before {
+  transform: rotate(45deg);
+}
+#MobMenu.active span:after {
+  transform: rotate(-45deg);
+}
+
 footer em{
 	font-size: 11px;
 }
