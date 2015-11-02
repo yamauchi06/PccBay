@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 01, 2015 at 06:05 AM
+-- Generation Time: Nov 02, 2015 at 02:46 PM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `pb_comments` (
   `author` varchar(200) NOT NULL,
   `status` varchar(200) NOT NULL,
   `comment` longtext NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pb_comments`
@@ -41,7 +41,30 @@ CREATE TABLE IF NOT EXISTS `pb_comments` (
 
 INSERT INTO `pb_comments` (`id`, `post_id`, `date`, `author`, `status`, `comment`) VALUES
 (1, '10', 'October 31, 2015, 11:40 pm', '100006044469574', 'open', 'Can you budge on the price at all?'),
-(2, '10', 'October 31, 2015, 11:41 pm', '10000607254332', 'open', 'Nah this is a good price, Ill Take it!!');
+(2, '10', 'October 31, 2015, 11:41 pm', '10000607254332', 'open', 'Nah this is a good price, Ill Take it!!'),
+(8, '13', 'November 1, 2015, 11:37 pm', '100006044469574', 'open', 'The html in this page description is all messed up. I think I fixed the problem.'),
+(9, '13', 'November 2, 2015, 1:12 am', '100006044469574', 'open', 'this is a test comment using the plugin comment version.'),
+(10, '6', 'November 2, 2015, 1:19 am', '100006044469574', 'open', 'This is a long comment. Im a writing this random thing just to make sure that comments still look super awesome even if they are long. Long comments are so long and awesome.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pb_developers`
+--
+
+CREATE TABLE IF NOT EXISTS `pb_developers` (
+  `id` int(200) NOT NULL,
+  `app_id` varchar(200) NOT NULL,
+  `user` varchar(200) NOT NULL,
+  `user_data` longtext NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pb_developers`
+--
+
+INSERT INTO `pb_developers` (`id`, `app_id`, `user`, `user_data`) VALUES
+(1, '9827354187582375129873', 'root', '');
 
 -- --------------------------------------------------------
 
@@ -56,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `pb_post` (
   `product_info` longtext NOT NULL COMMENT 'Product title, description, price, date created',
   `trans_info` varchar(1024) NOT NULL COMMENT 'sold to, date sold, payment method, transaction complete flag',
   `status` varchar(200) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pb_post`
@@ -72,7 +95,8 @@ INSERT INTO `pb_post` (`product_id`, `type`, `user_id`, `product_info`, `trans_i
 (7, 'question', '100006044469574', '[{"timestamp":"October 27, 2015, 12:01 am","title":"How to use PCCbay","desc":"Does anyone know how to use this?","tags":"FAQ,PCCbay,help","price":"","condition":"null","images":""}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
 (8, 'discussion', '100006044469574', '[{"timestamp":"October 27, 2015, 12:15 am","title":"Fine Arts","desc":"How About that child Prodigy","tags":"Prodigy,Fine Arts,Ethan Bortnick","price":"","condition":"null","images":"G6gbX9ICnT"}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
 (9, 'discussion', '100001056120276', '[{"timestamp":"October 27, 2015, 8:53 pm","title":"The Big Idea Behind PCCbay","desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec venenatis vehicula eros in dapibus. Nunc mattis neque porttitor tempor congue. Pellentesque convallis feugiat pretium. Donec maximus imperdiet ligula efficitur convallis. Proin hendrerit semper augue,","tags":"Lorem,ipsum,PCCbay","price":"","condition":"null","images":""}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
-(10, 'product', '100006044469574', '[{"timestamp":"October 31, 2015, 3:35 am","title":"2015 MacBook Pro with Retina display","desc":"<ol><li>2.7GHz Processor</li><li>2.7GHz dual-core Intel Core</li><li>i5 Turbo Boost up to 3.1GHz</li><li>8GB 1866MHz LPDDR3 memory 128GB PCIe-based flash storage</li></ol><ul><li>Intel Iris Graphics 6100</li><li>Built-in battery (10 hours)</li><li>2 Force Touch trackpad</li><li>Power adapter and power cord</li><li>AC Wall Plug</li></ul><p>A Mac includes 90 days of free telephone technical support and a one-year limited warranty. If you purchase the AppleCare Protection Plan, you can extend that coverage to three years from the original purchase date of your Mac 128 GB Storage</p>","tags":"MacBook Pro,Laptop,Computer,Mac,Apple","price":"1,299.00","condition":"80","images":"3dhALzY0OI,pBAXPpOsOR,9dbJWlQABt"}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open');
+(10, 'product', '100006044469574', '[{"timestamp":"October 31, 2015, 3:35 am","title":"2015 MacBook Pro with Retina display","desc":"<ol><li>2.7GHz Processor</li><li>2.7GHz dual-core Intel Core</li><li>i5 Turbo Boost up to 3.1GHz</li><li>8GB 1866MHz LPDDR3 memory 128GB PCIe-based flash storage</li></ol><ul><li>Intel Iris Graphics 6100</li><li>Built-in battery (10 hours)</li><li>2 Force Touch trackpad</li><li>Power adapter and power cord</li><li>AC Wall Plug</li></ul><p>A Mac includes 90 days of free telephone technical support and a one-year limited warranty. If you purchase the AppleCare Protection Plan, you can extend that coverage to three years from the original purchase date of your Mac 128 GB Storage</p>","tags":"MacBook Pro,Laptop,Computer,Mac,Apple","price":"1,299.00","condition":"80","images":"3dhALzY0OI,pBAXPpOsOR,9dbJWlQABt"}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
+(13, 'product', '10000607254332', '[{"timestamp":"November 1, 2015, 9:51 pm","title":"iPhone Collection","desc":"&lt;span&gt;Availableingold,silver,spacegray,androsegold,iPhone&amp;nbsp;6sfeaturesanA9chip,3D&amp;nbsp;Touch,ultrafastLTE&amp;nbsp;Advancedwireless,Touch&amp;nbsp;ID,a12MPiSightcamera,andiOS&amp;nbsp;9.&lt;br&gt;&lt;br&gt;&lt;/span&gt;A9chipwith64-bitarchitecture&lt;span&gt;EmbeddedM9motioncoprocessor&lt;br&gt;&lt;br&gt;&lt;/span&gt;&lt;span&gt;Second-generationfingerprintsensorbuiltintotheHomebutton&lt;br&gt;&lt;/span&gt;&lt;br&gt;Videoformatssupported:H.264videoupto1080p,60framespersecond,HighProfilelevel4.2withAAC-LCaudioupto160Kbps,48kHz,stereoaudioin.m4v,.mp4,and.movfileformats;MPEG-4videoupto2.5Mbps,640by480pixels,30framespersecond,SimpleProfilewithAAC-LCaudioupto160Kbpsperchannel,48kHz,stereoaudioin.m4v,.mp4,and.movfileformats;MotionJPEG(M-JPEG)upto35Mbps,1280by720pixels,30framespersecond,audioinulaw,PCMstereoaudioin.avifileformat&lt;span&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;/span&gt;","tags":"iphone,phone,apple","price":"300.00","condition":"100","images":"D5cOZeP8sO,23XGOCWxuW,5ckAZ8hxM6"}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open');
 
 -- --------------------------------------------------------
 
@@ -89,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `pb_safe_image` (
   `author` varchar(200) NOT NULL,
   `file` varchar(200) NOT NULL,
   `string` longtext NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pb_safe_image`
@@ -110,7 +134,10 @@ INSERT INTO `pb_safe_image` (`id`, `uid`, `size`, `type`, `date`, `author`, `fil
 (14, '3dhALzY0OI', '769:517', 'jpg', 'October 31, 2015, 3:35 am', '100006044469574', '52ca1ef1dfacb161a8f23998938da9e010ef9ce0.jpg', '/images/user-data/2015_10_31/52ca1ef1dfacb161a8f23998938da9e010ef9ce0.jpg'),
 (15, 'pBAXPpOsOR', '900:530', 'jpg', 'October 31, 2015, 3:35 am', '100006044469574', '197a50d9c6a1f915025561bda761ad1f7af4abf6.jpg', '/images/user-data/2015_10_31/197a50d9c6a1f915025561bda761ad1f7af4abf6.jpg'),
 (16, '9dbJWlQABt', '534:312', 'png', 'October 31, 2015, 3:35 am', '100006044469574', '7bcf2c52e082f824b7f6067ae5eeddd936cbe953.png', '/images/user-data/2015_10_31/7bcf2c52e082f824b7f6067ae5eeddd936cbe953.png'),
-(17, '57BXJb3A7W', '235:235', 'jpg', 'October 31, 2015, 3:41 am', '100006044469574', 'a8c99d09a3cd14b42bc7b7bb47a203a427d64e30.jpg', '/images/user-data/2015_10_31/a8c99d09a3cd14b42bc7b7bb47a203a427d64e30.jpg');
+(17, '57BXJb3A7W', '235:235', 'jpg', 'October 31, 2015, 3:41 am', '100006044469574', 'a8c99d09a3cd14b42bc7b7bb47a203a427d64e30.jpg', '/images/user-data/2015_10_31/a8c99d09a3cd14b42bc7b7bb47a203a427d64e30.jpg'),
+(18, 'D5cOZeP8sO', '900:720', 'jpg', 'November 1, 2015, 9:51 pm', '10000607254332', '7d99da6a0535dc62d4396ace86557e23861420e5.jpg', '/images/user-data/2015_11_1/7d99da6a0535dc62d4396ace86557e23861420e5.jpg'),
+(19, '23XGOCWxuW', '900:675', 'jpg', 'November 1, 2015, 9:51 pm', '10000607254332', 'd1ee0ecc37adb651dea60af31df2f25c241458d2.jpg', '/images/user-data/2015_11_1/d1ee0ecc37adb651dea60af31df2f25c241458d2.jpg'),
+(20, '5ckAZ8hxM6', '900:600', 'jpg', 'November 1, 2015, 9:51 pm', '10000607254332', '396a269a3516dc79150b888cb390ed1bed9778b6.jpg', '/images/user-data/2015_11_1/396a269a3516dc79150b888cb390ed1bed9778b6.jpg');
 
 -- --------------------------------------------------------
 
@@ -131,6 +158,54 @@ CREATE TABLE IF NOT EXISTS `pb_short_url` (
 
 INSERT INTO `pb_short_url` (`id`, `open`, `short`, `long`) VALUES
 (3, 'true', 'Xt5y22i', '/?gift=Xt5y22i');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pb_tags`
+--
+
+CREATE TABLE IF NOT EXISTS `pb_tags` (
+  `tag_id` int(11) NOT NULL,
+  `tag` varchar(200) NOT NULL,
+  `count` varchar(200) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pb_tags`
+--
+
+INSERT INTO `pb_tags` (`tag_id`, `tag`, `count`) VALUES
+(1, 'hats', '1'),
+(2, 'style', '1'),
+(3, 'mens', '1'),
+(4, 'apparel', '1'),
+(5, 'textbooks', '1'),
+(6, ' science', '1'),
+(7, ' history', '1'),
+(8, 'snacks', '1'),
+(9, 'food', '1'),
+(10, 'tech', '1'),
+(11, 'camera', '1'),
+(12, 'photography', '1'),
+(13, 'phone', '2'),
+(14, 'iphone', '2'),
+(15, 'k-cups', '1'),
+(16, 'coffee', '1'),
+(17, 'drink', '1'),
+(18, 'faq', '1'),
+(19, 'pccbay', '2'),
+(20, 'help', '1'),
+(21, 'prodigy', '1'),
+(22, 'fine arts', '1'),
+(23, 'ethan bortnick', '1'),
+(24, 'lorem', '1'),
+(25, 'ipsum', '1'),
+(26, 'macbook pro', '1'),
+(27, 'laptop', '1'),
+(28, 'computer', '1'),
+(29, 'mac', '1'),
+(30, 'apple', '2');
 
 -- --------------------------------------------------------
 
@@ -188,6 +263,12 @@ ALTER TABLE `pb_comments`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `pb_developers`
+--
+ALTER TABLE `pb_developers`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `pb_post`
 --
 ALTER TABLE `pb_post`
@@ -204,6 +285,12 @@ ALTER TABLE `pb_safe_image`
 --
 ALTER TABLE `pb_short_url`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pb_tags`
+--
+ALTER TABLE `pb_tags`
+  ADD PRIMARY KEY (`tag_id`);
 
 --
 -- Indexes for table `pb_users`
@@ -225,22 +312,32 @@ ALTER TABLE `pb_user_points`
 -- AUTO_INCREMENT for table `pb_comments`
 --
 ALTER TABLE `pb_comments`
-  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `pb_developers`
+--
+ALTER TABLE `pb_developers`
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `pb_post`
 --
 ALTER TABLE `pb_post`
-  MODIFY `product_id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+  MODIFY `product_id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `pb_safe_image`
 --
 ALTER TABLE `pb_safe_image`
-  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `pb_short_url`
 --
 ALTER TABLE `pb_short_url`
   MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `pb_tags`
+--
+ALTER TABLE `pb_tags`
+  MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `pb_user_points`
 --
