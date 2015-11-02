@@ -67,21 +67,23 @@
 						?>
 						<div class="col-md-5">
 							<div class="pb-product-gallery">
-								<img src="" class="figure" />
-								<ul>
-									<?php
-										$images = explode(',', $product['images']);
-										foreach($images as $image){
-											print '<li>';
-											pb_safe_image(
-												$image, 
-												'image-lazy', ' class="lazy figureOp"',
-												'false'
-											);
-											print '</li>';
-										} 
-									?>
-								</ul>
+								<div class="figure-feature"></div>
+								<div class="figureOptions">
+									<ul>
+										<?php
+											$images = explode(',', $product['images']);
+											foreach($images as $image){
+												print '<li>';
+												pb_safe_image(
+													$image, 
+													'image-lazy', ' class="lazy figureOp"',
+													'false'
+												);
+												print '</li>';
+											} 
+										?>
+									</ul>
+								</div>
 							</div>
 						</div>
 						
@@ -151,16 +153,19 @@
 							<button class="pb-addtocart themeBG">Get This</button>
 						</form>
 						
-						<form action="" method="post" class="pb-comment-form">
+						<!-- Begin Comments -->
+						<form class="pb-comment-form" id="ProductComments">
 							<div class="pb-comment-area">
-								<input type="hidden" name="post_id" value="<?php print $product_id; ?>">
+								<input type="hidden" name="id" value="<?php print $product_id; ?>">
 								<textarea name="comment" placeholder="Leave a comment" class="fixedHeight autosize"></textarea>
 								<div class="pb-comment-area-lower">
+									<input type="file" name="file" />
 									<input type="submit" name="add_comment" value="Comment">
 								</div>
 							</div>
 						</form>
-						<div id="product_comemnts"><!-- Comments go here --></div>
+						<div id="product_comemnts" data-form="#ProductComments" data-id="<?php print $product_id; ?>"><!-- Comments go here --></div>
+						<!-- End Comments -->
 					</div>
 				</div>
 				<div id="side_notifications" class="pb-sidebar-group">
@@ -225,11 +230,25 @@ $( window ).resize(function() {
 	}
 });	
 $(document).ready(function(){
-	$('.pb-product-gallery').find('img:eq(0)').attr('src', $('.pb-product-gallery').find('img:eq(1)').attr('src'));
-	$('body').on('click', '.figureOp', function(){
-		$('.pb-product-gallery').find('img:eq(0)').attr('src', $(this).attr('src'));
+	
+	$('#product_comemnts').pbcomments({
+		uploads: false,
+		form: true
 	});
 	
+	var ffHeight = $('.figure-feature').width(); 
+	$('.pb-product-gallery').find('.figure-feature').css({
+		'background': 'no-repeat center top url('+$('.pb-product-gallery').find('img:eq(0)').attr('src')+')',
+		'background-size': 'contain',
+		height: ffHeight
+	});
+	$('body').on('click', '.figureOp', function(){
+		$('.pb-product-gallery').find('.figure-feature').css({
+			'background': 'no-repeat center top url('+$(this).attr('src')+')',
+			'background-size': 'contain',
+			height: ffHeight
+		});
+	});
 });
 </script>
 </body>

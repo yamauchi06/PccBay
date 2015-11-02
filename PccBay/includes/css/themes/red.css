@@ -1,0 +1,119 @@
+
+header{
+	background-color: #e74c3c;
+	border-bottom: 2px #c0392b solid;
+	box-shadow: 1px 0px 6px #c0392b;
+}
+
+a {
+    color: #e74c3c;
+}
+
+.themeBG{
+	background: #e74c3c;
+}
+.themeBG-dark{
+	background: #c0392b;
+}
+.themeColor{
+	color: #e74c3c;
+}
+
+.MainSideBar nav a:hover{
+	color: #e74c3c;
+}
+.MainSideBar nav a.activeSet{
+	color: #e74c3c;
+	border-bottom: 2px #e74c3c solid;
+}
+
+.btn-default{
+	color: #ffffff;
+	background-color: #c0392b;
+	border-color: #c0392b;
+}
+.btn-default:hover{
+	color: #ffffff;
+	background-color: #c0392b;
+	border-color: #c0392b;
+}
+
+
+.pb-page-divider{
+	background: #e74c3c;
+}
+
+
+.pb-post-author{
+	color: #e74c3c;
+}
+
+.pb-post-timestamp .zmdi{
+	color: #e74c3c;
+}
+
+.pb-post-tag{
+	background: #e74c3c;
+	border-bottom: 2px #e74c3c solid;
+}
+.feed-post-tab-link{
+	border-color: #e74c3c;
+}
+.feed-post-tab-link:hover, .feed-post-tab-link-Cancel:hover, .feed-post-tab-link-Accept:hover{
+	color: #ffffff;
+	background: #e74c3c;
+	border-color: #e74c3c;
+}
+ 
+.pb-sidebar-group::-webkit-scrollbar-thumb {
+  background-color: #e74c3c
+}
+
+.pb-sidebar-group h3{
+	color: #e74c3c;
+}
+
+.pb-sticky-btn.feedback{
+	background: #e74c3c;
+}
+
+
+
+
+
+
+
+
+
+
+/* overHead */
+.overHeadPullout{
+	background: #e74c3c;
+}
+.oh-section h3{
+	color: #e74c3c;
+}
+
+#ex1Slider .slider-selection {
+	background: #e74c3c;
+}
+
+.dz-message i{
+	color: #e74c3c
+}
+
+
+
+
+
+
+/* Toggle Buttons */
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-theme,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-theme {
+  color: #ffffff;
+  background: #e74c3c;
+}
+
+
+.oh-top-menu li a:hover, .oh-top-menu li a.active{ background: #e74c3c; }
+

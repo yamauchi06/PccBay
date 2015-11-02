@@ -262,7 +262,7 @@
 								<ul>
 									<?php
 									$cats = explode(',', $val['categories']);
-									if(count($cats) > 0){
+									if(count($cats) >= 1){
 										foreach ($cats as $index => $category) {
 											print '<li><a href="/'.$val['type'].'/#'.str_replace(' ', '+', $category).'">'.ucwords($category).'</a></li>';
 										}
@@ -314,8 +314,8 @@
 			$product_info = array();
       		array_push($product_info, array(
       			"timestamp" => "".date("F j, Y, g:i a")."",
-      			"title"     => "".htmlentities( preg_replace('/\s+/', '', $_POST['product_title']) )."",
-      			"desc"      => "".htmlentities( preg_replace('/\s+/', '', $_POST['product_desc']) )."",
+      			"title"     => "".htmlentities( $_POST['product_title'] )."",
+      			"desc"      => "".htmlentities( $_POST['product_desc'] )."",
       			"tags"      => "".$_POST['product_tags']."",
       			"price"     => "".$_POST['product_price']."",
       			"condition" => "".$_POST['product_condition']."",

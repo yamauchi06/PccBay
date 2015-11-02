@@ -46,7 +46,7 @@
 				<div class="dz-message">
 					<br />
 					<i class="zmdi zmdi-image-o"></i><br />
-					Click or Drop photos here!
+					Click or Drop photos here!<br /><small>be sure to add photos in order of importance.</small>
 				</div>
 			</div>
 			<input type="hidden" name="product_images">

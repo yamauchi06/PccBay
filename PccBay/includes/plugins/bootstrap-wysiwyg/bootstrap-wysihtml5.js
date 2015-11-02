@@ -389,7 +389,7 @@
         "color": false,
         "emphasis": true,
         "lists": true,
-        "html": true,
+        "html": false,
         "link": false,
         "image": false,
         events: {},

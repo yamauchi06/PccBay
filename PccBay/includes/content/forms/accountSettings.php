@@ -109,11 +109,13 @@ foreach($contact_info as $data){
 			<div style="float:left;margin:5px;padding-top: 5px;">Themes</div>
 			<div style="float:left;margin:5px;">
 				<input type="hidden" name="account_theme" value="<?php print $pb_user['theme']; ?>">
+				<span class="transition-200 themeOption <?php if($pb_user['theme']=='red') print 'active' ?>" data-theme="red"></span>
+				<span class="transition-200 themeOption <?php if($pb_user['theme']=='yellow') print 'active' ?>" data-theme="yellow"></span>
 				<span class="transition-200 themeOption  <?php if($pb_user['theme']=='default') print 'active' ?>" data-theme="default"></span>
-				<span class="transition-200 themeOption <?php if($pb_user['theme']=='blue') print 'active' ?>" data-theme="blue"></span>
-				<span class="transition-200 themeOption <?php if($pb_user['theme']=='dark') print 'active' ?>" data-theme="dark"></span>
 				<span class="transition-200 themeOption <?php if($pb_user['theme']=='green') print 'active' ?>" data-theme="green"></span>
+				<span class="transition-200 themeOption <?php if($pb_user['theme']=='blue') print 'active' ?>" data-theme="blue"></span>
 				<span class="transition-200 themeOption <?php if($pb_user['theme']=='purple') print 'active' ?>" data-theme="purple"></span>
+				<span class="transition-200 themeOption <?php if($pb_user['theme']=='dark') print 'active' ?>" data-theme="dark"></span>
 			</div>
 			<input type="submit" name="account_submit" class="btn btn-default" value="Save">
 		</div>
