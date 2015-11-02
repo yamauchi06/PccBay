@@ -34,7 +34,7 @@
 	<header>		
 		<div class="row">	
 			<div class="col-md-3">
-				<a href="/"><img src="/images/favicon/pccBay-logo.svg" height="40px" alt="PccBay" /></a>
+				<a href="/"><img src="/images/favicon/pccBay-icon.svg" height="40px" alt="PccBay" /></a>
 			</div>	
 			<div class="col-md-2 col-md-offset-3" id="headerBtns"></div>
 			<div class="col-md-4">

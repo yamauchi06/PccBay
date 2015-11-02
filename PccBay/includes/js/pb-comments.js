@@ -27,7 +27,7 @@
 
 	    function loadedComments(){
 		$.ajax({
-		    url: '/includes/json/comments?q='+defaults.parent_id+'&timeago=true',
+		    url: '/graph/comments?q='+defaults.parent_id+'&timeago=true',
 		    dataType: 'json',
 		    type: 'GET',
 		    error: function(xhr, error){

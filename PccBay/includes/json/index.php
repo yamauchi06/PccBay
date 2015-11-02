@@ -6,14 +6,16 @@
 
 	$mainJson = array();
 	$query='';if(isset($_GET['q'])){$query=$_GET['q'];}
+	$listBy='DESC';if(isset($_GET['l'])){$listBy=$_GET['l'];}
 	if(isset($_GET['page'])){
 		if($_GET['page']=='products'){ $slq_table = 'pb_post'; $sql = "SELECT * FROM pb_post WHERE type='product'"; }
 		if($_GET['page']=='questions'){ $slq_table = 'pb_post'; $sql = "SELECT * FROM pb_post WHERE type='question'";}
 		if($_GET['page']=='discussions'){ $slq_table = 'pb_post';  $sql = "SELECT * FROM pb_post WHERE type='discussion'";}
 		if($_GET['page']=='comments'){ 
-			$slq_table = 'pb_comments';  $sql = "SELECT * FROM pb_comments WHERE post_id='$query' ORDER BY id DESC";
+			$slq_table = 'pb_comments';  $sql = "SELECT * FROM pb_comments WHERE post_id='$query' ORDER BY id $listBy";
 		}
 		if($_GET['page']=='feed'){ $slq_table = 'pb_post';  $sql = "SELECT * FROM pb_post";}
+		if($_GET['page']=='tags'){ $slq_table = 'pb_tags';  $sql = "SELECT * FROM pb_tags ORDER BY $query $listBy";}
 		if($_GET['page']=='users'){ $slq_table = 'pb_users'; }
 		if($_GET['page']=='images'){ $slq_table = 'pb_safe_image'; }
 	}else{
@@ -73,6 +75,17 @@
 						'author' => $val['author'],
 						'status' => $val['status'],
 						'comment' => $val['comment'],
+					);
+					array_push($mainJson, $entity);
+				}
+				// end pb_safe_image
+				
+				//pb_safe_image
+				if($slq_table=='pb_tags'){
+					$entity = array(
+						'id' => $val['tag_id'],
+						'tag' => $val['tag'],
+						'count' => $val['count'],
 					);
 					array_push($mainJson, $entity);
 				}
