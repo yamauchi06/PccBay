@@ -25,9 +25,9 @@
 		    });
 	    }
 
-	    function loadedComments(){
-		$.ajax({
-		    url: '/graph/comments?q='+defaults.parent_id+'&timeago=true',
+	function loadedComments(){
+	    $.ajax({
+		    url: '/graph/comments?accessToken=rootbypass_9827354187582375129873&q='+defaults.parent_id+'&timeago=true',
 		    dataType: 'json',
 		    type: 'GET',
 		    error: function(xhr, error){
