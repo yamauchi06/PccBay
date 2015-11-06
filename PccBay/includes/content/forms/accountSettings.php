@@ -113,8 +113,10 @@ foreach($contact_info as $data){
 				<span class="transition-200 themeOption  <?php if($pb_user['theme']=='default') print 'active' ?>" data-theme="default"></span>
 				<span class="transition-200 themeOption <?php if($pb_user['theme']=='yellow') print 'active' ?>" data-theme="yellow"></span>
 				<span class="transition-200 themeOption <?php if($pb_user['theme']=='green') print 'active' ?>" data-theme="green"></span>
-				<span class="transition-200 themeOption <?php if($pb_user['theme']=='blue') print 'active' ?>" data-theme="blue"></span>
+				<span class="transition-200 themeOption <?php if($pb_user['theme']=='darkgreen') print 'active' ?>" data-theme="darkgreen"></span>
 				<span class="transition-200 themeOption <?php if($pb_user['theme']=='purple') print 'active' ?>" data-theme="purple"></span>
+				<span class="transition-200 themeOption <?php if($pb_user['theme']=='blue') print 'active' ?>" data-theme="blue"></span>
+				<span class="transition-200 themeOption <?php if($pb_user['theme']=='darkblue') print 'active' ?>" data-theme="darkblue"></span>
 				<span class="transition-200 themeOption <?php if($pb_user['theme']=='dark') print 'active' ?>" data-theme="dark"></span>
 			</div>
 			<input type="submit" name="account_submit" class="btn btn-default" value="Save">
@@ -129,6 +131,6 @@ $('body').on('click', '.themeOption', function(){
 	$('.themeOption.active').removeClass('active');
 	$(this).addClass('active');
 	$('[name="account_theme"]').val( $(this).data('theme') );
-	$('#userThemeCSS').attr('href', '/includes/css/themes/'+$(this).data('theme')+'.css');
+	$('#userThemeCSS').attr('href', '/includes/css/themes/?t='+$(this).data('theme'));
 });
 </script>

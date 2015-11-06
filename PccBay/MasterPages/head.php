@@ -42,14 +42,13 @@
 <link rel="stylesheet" href="/includes/css/PccBay.css" type="text/css" >
 <script src="/includes/js/jquery.js"></script>
 <?php
+pb_include('/includes/php/ext_forms.php');
 $user_data = json_decode(pb_user_data($_SESSION['user_id'], 'user_data'), true);
+$pb_user['theme'] = 'darkblue';
 if($user_data){
-	$pb_user['theme'] = 'default';
 	foreach($user_data as $data){
 		if(!empty($pb_user['theme']))$pb_user['theme']=$data['theme'];
-	} 
-	print '<link id="userThemeCSS" rel="stylesheet" href="/includes/css/themes/'.$pb_user['theme'].'.css" type="text/css" >'; 
+	}  
 }
-
-pb_include('/includes/php/ext_forms.php');
+print '<link id="userThemeCSS" rel="stylesheet" href="/includes/css/themes/?t='.$pb_user['theme'].'" type="text/css" >';
 ?>

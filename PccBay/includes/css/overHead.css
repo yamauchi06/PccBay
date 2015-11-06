@@ -150,8 +150,10 @@
 }
 [data-theme="default"]{ background: #e67e22; }
 [data-theme="blue"]{ background: #3498db; }
+[data-theme="darkblue"]{ background: #3A5795; }
 [data-theme="dark"]{ background: #34495e; }
 [data-theme="green"]{ background: #2ecc71; }
+[data-theme="darkgreen"]{ background: #27ae60; }
 [data-theme="purple"]{ background: #9b59b6; }
 [data-theme="red"]{ background: #e74c3c; }
 [data-theme="yellow"]{ background: #f1c40f; }
