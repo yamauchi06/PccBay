@@ -1,4 +1,5 @@
 <?php
+	header("Content-Type: application/json");
 	if(!empty($_GET['app_id'])){
 		$app_id = $_GET['app_id'];
 		include_once("../includes/php/_db-config.php");

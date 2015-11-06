@@ -72,8 +72,11 @@
 									<ul>
 										<?php
 											$images = explode(',', $product['images']);
+											if(count($images) <= 1){
+												$hidImages = 'hide';
+											}else{$hidImages='';}
 											foreach($images as $image){
-												print '<li>';
+												print '<li class="'.$hidImages.'">';
 												pb_safe_image(
 													$image, 
 													'image-lazy', ' class="lazy figureOp"',
