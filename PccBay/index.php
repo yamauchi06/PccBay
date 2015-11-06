@@ -11,7 +11,7 @@
 	</header>
 	<?php 
 	if(isset($_SESSION['user_id'])){
-		//pb_include('/MasterPages/MainMenu.php');
+		pb_include('/MasterPages/MainMenu.php');
 	}	
 	?>
 	<div class="container-fluid">

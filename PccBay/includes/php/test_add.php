@@ -1,8 +1,12 @@
 <?php
-	include('_db-config.php');
+	include('commonFunctions.php');
 	
 	$tagArr = array();
 	
+	
+	print domain();
+	
+/*
 	function pb_add_tag($tag, $count){
 		global $servername;
 		global $username;
@@ -55,6 +59,7 @@
 	foreach ($counts as $tag => $count) {
 		pb_add_tag($tag, $count);
 	}
+*/
 	
 	
 	

@@ -4,6 +4,10 @@
 	if(!empty($_GET['sessionSet'])){ $_SESSION[$_GET['sessionSet']] = $_GET['value']; }
 	if(!empty($_GET['sessionUnSet'])){ unset( $_SESSION[$_GET['sessionUnSet']] ); }
 	
+	function domain(){
+		return $_SERVER['HTTP_HOST'];
+	}
+	
 	function rand_str($kind='mixed', $length = 10) {
 	    if($kind=='mixed'){
 		    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; }
@@ -74,6 +78,19 @@
 	    }
 	}
 	
+	function htmlify($str){
+		$str=str_replace('–', '&#8211;', $str);
+		$str=str_replace('—', '&#8212;', $str);
+		$str=str_replace('"', '&#34;',  $str);
+		$str=str_replace('“', '&#8220;', $str);
+		$str=str_replace('”', '&#8221;', $str);
+		$str=str_replace("'", '&rsquo;',   $str);
+		$str=str_replace("'", '&rsquo;',   $str);
+		$str=str_replace("‘", '&#8216;', $str);
+		$str=str_replace("’", '&#8217;', $str);
+		return $str;
+	}
+	
 	function pb_safe_image($unique_id, $method='image', $attr='', $popup='true'){
 		
 		global $servername;
@@ -140,11 +157,22 @@
 	}
 	
 	
-	function pb_json_feed($retrieve='*', $loop=0){
+	function pb_json_feed($Posttype='product', $retrieve='*', $loop=0){
 		global $servername;
 		global $username;
 		global $password;
 		global $dbname;
+		$type_sql = " AND type='$Posttype' ";
+/*
+		$typeex=explode(',', $type);
+		if(count($typeex)>0){
+			$type_sql='';
+			foreach($typeex as $t){
+				$type_sql .= "AND type='$t'";
+			}
+		}
+*/
+	
 		$mainJson = array();
 		$l=0;
 		while($l <= $loop){
@@ -152,7 +180,7 @@
 			if ($conn->connect_error) {
 			    die("Connection failed: " . $conn->connect_error);
 			} 
-			$sql = "SELECT * FROM pb_post Where status='open' AND type='product' ORDER BY product_id DESC";
+			$sql = "SELECT * FROM pb_post Where status='open' AND type='product' OR type='question' ORDER BY product_id DESC";
 			$result = $conn->query($sql);
 			if ($result->num_rows > 0) {
 			    while($val = $result->fetch_assoc()) {
@@ -180,8 +208,8 @@
 		
 	
 
-	function pb_feed($loop=1, $retrieve='*'){
-		$json = pb_json_feed();
+	function pb_feed($loop=1, $show='*', $retrieve='*'){
+		$json = pb_json_feed($show);
 		$jsonIterator = json_decode($json, TRUE);
 		$i=1;
 		while($i<=$loop){
@@ -223,6 +251,7 @@
 									}
 									else if($val['type']=='question'){
 										print '<i class="zmdi zmdi-pin-help themeColor" style="font-size:30px"></i>';
+										print '<sub>'. pb_comment_count($val['id']).'</sub>';
 									}
 									else if($val['type']=='discussion'){
 										print '<i class="zmdi zmdi-comment-text-alt themeColor" style="font-size:30px"></i>';
@@ -314,8 +343,8 @@
 			$product_info = array();
       		array_push($product_info, array(
       			"timestamp" => "".date("F j, Y, g:i a")."",
-      			"title"     => "".htmlentities( $_POST['product_title'] )."",
-      			"desc"      => "".htmlentities( $_POST['product_desc'] )."",
+      			"title"     => "".htmlify( $_POST['product_title'] )."",
+      			"desc"      => "".htmlify( $_POST['product_desc'] )."",
       			"tags"      => "".$_POST['product_tags']."",
       			"price"     => "".$_POST['product_price']."",
       			"condition" => "".$_POST['product_condition']."",
@@ -418,7 +447,7 @@
    		   "comment" => "".$_POST['comment'].""
    		   "comment" => "".$_POST['comment'].""
 		   ));*/
-		$comment = htmlentities( $_POST['comment'] );
+		$comment = htmlify($_POST['comment']);
 		$post_id = $_POST['post_id'];
 		
       $sql = "INSERT INTO pb_comments (post_id, date, author, status, comment) VALUES ('$post_id', '$current_date','$user_id','open', '$comment')";
@@ -430,6 +459,42 @@
 		}
    	
    	$conn->close(); 
+	}
+	function pb_comment_count($post_id){
+		$json = json_decode( file_get_contents('http://'.domain().'/graph/index.php?page=comments&accessToken=rootbypass_9827354187582375129873&q='.$post_id.'&timeago=true') );$c=0;foreach($json as $data){ if(!empty($data->id)){$c++;} }return $c;
+	}
+	function pb_recent_comments($post_id, $count){
+		$json = json_decode( file_get_contents('http://'.domain().'/graph/index.php?page=comments&accessToken=rootbypass_9827354187582375129873&q='.$post_id.'&timeago=true') );
+		$result='';
+		$s=0;
+			foreach($json as $data){
+				if(!empty($data->id)){
+					$user_data = json_decode(pb_user_data($data->author, 'user_data'), true);
+					foreach($user_data as $udata){
+						$pb_user['name']=$udata['name'];
+						$pb_user['username']=$udata['username'];
+						$pb_user['avatar']=$udata['avatar'];
+					}
+					$result.='
+					<div class="col-md-12 pb-post pb-comment-inline">'.
+				    	'<div class="pb-post-block">'.
+				            '<div class="pb-post-head-noB">'.
+				                '<img class="pb-post-avatar" src="'.$pb_user['avatar'].'">'.
+				                '<div class="pb-post-author">'.
+				                   	'<strong><a href="/@'.$pb_user['username'].'">'.$pb_user['name'].'</a></strong><br>'.
+				                    '<span class="pb-post-timestamp"><i class="pb-post-timestamp-o">'.$data->date.'</i></span>'.
+				                '</div>'.
+				            '</div>'.
+				            '<div class="pb-post-content">'.
+								''.$data->comment.''.
+				            '</div>'.
+				        '</div>'.
+				   ' </div>';
+				$s++;
+				if($s == $count) {  break;  }
+				}
+			}
+		return $result;
 	}
 	
 ?>

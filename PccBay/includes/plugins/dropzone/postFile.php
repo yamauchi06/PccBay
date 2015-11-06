@@ -59,7 +59,7 @@ function convertImage($originalImage, $outputImage, $quality)
     return 1;
 }
 
-function generateRandomString($length = 10) {
+function generateRandomString($length = 20) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';
