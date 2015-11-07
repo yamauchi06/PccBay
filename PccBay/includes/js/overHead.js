@@ -28,7 +28,6 @@ function overHead(that, just_close, temp, img){
 	var inner = $(that).attr('data-overHead');
 	var header = $('header').height();
 	var docsize = $(window).height();
-	
 	if(temp == 'full'){
 		$( ".overHeadPullout" ).css('z-index', '999999');
 	}

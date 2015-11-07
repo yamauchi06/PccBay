@@ -1,7 +1,7 @@
 <?php 
 	include_once($_SERVER['DOCUMENT_ROOT'].'/MasterPages/overhead.php'); 
 	if( isset($_GET['product_id']) ){ $product_id=$_GET['product_id']; }else{$product_id='';}
-	if( !isset($_SESSION['user_id']) || empty($product_id) ){ header('Location: /'); }
+	if( !isset($_SESSION['user_id']) || empty($product_id) ){ header('Location: /#userLogin'); }
 	$conn = new mysqli($servername, $username, $password, $dbname);
 	if ($conn->connect_error) {
 	    die("Connection failed: " . $conn->connect_error);
@@ -115,7 +115,7 @@
 						<ul>
 							<?php
 							foreach (explode(',', $product['tags']) as $index => $category) {
-								print '<li><a href="/'.$product['type'].'/#'.str_replace(' ', '+', $category).'">'.ucwords($category).'</a></li>';
+								print '<li><a href="/s/'.str_replace(' ', '+', $category).'">'.ucwords($category).'</a></li>';
 							}
 							?>
 						</ul>
@@ -215,7 +215,7 @@
 			<div id="userAccountSettingBox" class="HiddenFrame">
 				<?php pb_include('/includes/content/forms/accountSettings.php'); ?>
 			</div>
-			<div id="userLoginBox" class="HiddenFrame">
+			<div id="userLogin" class="HiddenFrame">
 				<?php pb_include('/includes/content/forms/UserLogin.php'); ?>
 			</div>
 		</div>

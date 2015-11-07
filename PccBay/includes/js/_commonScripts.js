@@ -102,6 +102,13 @@ $(document).ready(function(){
 		}
 	});
 	
+	if(window.location.hash) {
+		handleHash(window.location.hash);
+	}
+	$(window).on('hashchange',function(){ 
+		handleHash(location.hash);
+	});
+	
 	
 });
 
@@ -150,4 +157,23 @@ function htmlentities(string){
 	.replace(/`/, '&#96;')
 	return string;
 }
+
+function handleHash(hash){
+	var hashName = hash.replace('#','');
+	var hashSplit = hashName.split('=');
+	hashName=hashSplit[0];
+	hashValue=hashSplit[1];
+	
+	if(hashName=='notify'){
+		$('#notify_'+hashValue).hide();
+		$.post( '/includes/php/async.php?function=pb_update_notifications&params='+hashValue+',1', function( data ) {  });
+	}else{
+		$('.HiddenFrame').each(function(){
+			if( this.id == hashName ){
+				$('[data-overHead="'+hash+'"]').trigger('click');
+			}
+		});
+	}
+}
+
 

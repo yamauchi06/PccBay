@@ -19,7 +19,13 @@
 			<!-- Begin Content -->
 			<div class="<?php pb_isset(pb_isset_session('user_id'), 'col-md-9', 'col-md-12') ?> MainFeed">
 				<div id="freewall">
-					<?php pb_feed(1); ?>
+					<?php  
+						if(isset($_GET['username'])){
+							pb_feed(1, pb_user_data(substr($_GET['username'],1), 'user_id'));
+						}else{
+							pb_feed(3);
+						}
+					?>
 				</div>
 			</div>
 			
@@ -98,7 +104,7 @@
 			<div id="userAccountSettingBox" class="HiddenFrame">
 				<?php pb_include('/includes/content/forms/accountSettings.php'); ?>
 			</div>
-			<div id="userLoginBox" class="HiddenFrame">
+			<div id="userLogin" class="HiddenFrame">
 				<?php pb_include('/includes/content/forms/UserLogin.php'); ?>
 			</div>
 		</div>

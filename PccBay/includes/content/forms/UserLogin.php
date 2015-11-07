@@ -1,6 +1,6 @@
 <div class="oh-section oh-section-half">
 	
-	<h3 class="pb-rule-below">Login</h3>
+	<h3 class="pb-rule-below">Sign in / Sign up</h3>
 
 	<div style="margin: 20px auto;width: 220px">
 		<a class="btn btn-block btn-social btn-facebook" href="/?sessionSet=user_id&value=100006044469574">

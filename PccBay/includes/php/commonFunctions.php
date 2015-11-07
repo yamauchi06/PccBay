@@ -91,32 +91,24 @@
 		return $str;
 	}
 	
-	function pb_safe_image($unique_id, $method='image', $attr='', $popup='true'){
-		
+	function pb_safe_image($unique_id, $method='image', $attr='', $popup='true', $html='{{image}}'){
 		global $servername;
 		global $username;
 		global $password;
 		global $dbname;
 		$conn = new mysqli($servername, $username, $password, $dbname);
-		if ($conn->connect_error) {
-		    die("Connection failed: " . $conn->connect_error);
-		} 
+		if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);} 
 		$sql = "SELECT * FROM pb_safe_image Where uid='$unique_id'";
 		$result = $conn->query($sql);
 		if ($result->num_rows > 0) {
 		    while($row = $result->fetch_assoc()) {
 			    $size=explode(':', $row['size']);
-			    if($popup=='true'){
-					$attr .= 'data-overHead-img="'.$row['string'].'" data-original="'.$row['string'].'"';
-				}
-		        if($method=='base64'){ print $row['string']; }
-		        if($method=='image'){  print '<img src="'.$row['string'].'" alt="'.$row['alt'].'" title="'.$row['title'].'" '.$attr.' />';}
-		        if($method=='image-lazy'){
-			        print '<img src="'.$row['string'].'" '.$attr.' />';
-		        }
-		    }
-		}
-		$conn->close();
+			    if($popup=='true'){$attr .= 'data-overHead-img="'.$row['string'].'" data-original="'.$row['string'].'"';}
+		        if($method=='base64'){ $results = $row['string']; }
+		        if($method=='image'){  $results = '<img src="'.$row['string'].'" alt="'.$row['alt'].'" title="'.$row['title'].'" '.$attr.' />';}
+		        if($method=='image-lazy'){$results = '<img src="'.$row['string'].'" '.$attr.' />';}
+		    }print str_replace('{{image}}', $results, $html);
+		}$conn->close();
 	}
 	
 	function pb_include($include, $root=true, $includeTimes='', $Global='', $useif='false'){
@@ -156,23 +148,35 @@
 		}
 	}
 	
+	function topTags($limit){
+		global $servername;
+		global $username;
+		global $password;
+		global $dbname;
+		$conn = new mysqli($servername, $username, $password, $dbname);
+		if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);} 
+		$sql = "SELECT * FROM pb_tags ORDER BY count DESC LIMIT $limit";
+		$result = $conn->query($sql);
+		if ($result->num_rows > 0) {
+		    while($row = $result->fetch_assoc()) {
+			 	print '<li><a href="/s/'.$row['tag'].'">'.ucwords($row['tag']).'</a></li>';   
+		    }
+		}$conn->close();
+	}
 	
-	function pb_json_feed($Posttype='product', $retrieve='*', $loop=0){
+	
+	function pb_json_feed($Posttype='product', $from='*', $retrieve='*', $loop=0){
 		global $servername;
 		global $username;
 		global $password;
 		global $dbname;
 		$type_sql = " AND type='$Posttype' ";
-/*
-		$typeex=explode(',', $type);
-		if(count($typeex)>0){
-			$type_sql='';
-			foreach($typeex as $t){
-				$type_sql .= "AND type='$t'";
-			}
+
+		if($from=='*'){
+			$sql = "SELECT * FROM pb_post Where status='open' AND (type='product' OR type='question') ORDER BY product_id DESC";
+		}else{
+			$sql = "SELECT * FROM pb_post Where user_id='$from' AND status='open' AND (type='product' OR type='question') ORDER BY product_id DESC";
 		}
-*/
-	
 		$mainJson = array();
 		$l=0;
 		while($l <= $loop){
@@ -180,7 +184,7 @@
 			if ($conn->connect_error) {
 			    die("Connection failed: " . $conn->connect_error);
 			} 
-			$sql = "SELECT * FROM pb_post Where status='open' AND type='product' OR type='question' ORDER BY product_id DESC";
+			
 			$result = $conn->query($sql);
 			if ($result->num_rows > 0) {
 			    while($val = $result->fetch_assoc()) {
@@ -208,8 +212,8 @@
 		
 	
 
-	function pb_feed($loop=1, $show='*', $retrieve='*'){
-		$json = pb_json_feed($show);
+	function pb_feed($loop=1, $from='*', $show='*', $retrieve='*'){
+		$json = pb_json_feed($show, $from);
 		$jsonIterator = json_decode($json, TRUE);
 		$i=1;
 		while($i<=$loop){
@@ -272,7 +276,8 @@
 								  	<?php 
 									pb_safe_image(
 										explode(',', $val['images'])[0], 
-										'image-lazy', ' class="pb-post-product lazy" '
+										'image-lazy', ' class="pb-post-product lazy" ',
+										$popup='false', $html='<a href="/product?product_id='.$val['id'].'">{{image}}</a>'
 									); 
 									?>
 								  </li>
@@ -293,7 +298,7 @@
 									$cats = explode(',', $val['categories']);
 									if(count($cats) >= 1){
 										foreach ($cats as $index => $category) {
-											print '<li><a href="/'.$val['type'].'/#'.str_replace(' ', '+', $category).'">'.ucwords($category).'</a></li>';
+											print '<li><a href="/s/'.str_replace(' ', '+', $category).'">'.ucwords($category).'</a></li>';
 										}
 									}
 									?>
@@ -319,12 +324,87 @@
 		if ($conn->connect_error) {
 		    die("Connection failed: " . $conn->connect_error);
 		} 
-		$sql = "SELECT * FROM  pb_users Where user_id='$user_id'";
+		$sql = "SELECT * FROM  pb_users Where (user_id='$user_id' OR username='$user_id' OR id_card_key='$user_id')";
 		$result = $conn->query($sql);
 		if ($result->num_rows > 0) {
 		    while($sqlrow = $result->fetch_assoc()) {
 				return $sqlrow[$row];
 		    }
+		}
+		$conn->close();
+	}
+	
+	function pb_user_permission($user_id, $get, $style){
+		$user_data = pb_user_data($user_id, 'permissions');
+		$allowedKind=array('permission', 'label');
+		if(in_array($get, $allowedKind)){
+			if($get=='permission'){
+				$return = $user_data;
+			}
+			if($get=='label'){
+				if($user_data <= 25){ $return = ''; $style=false; }
+				else if($user_data <= 50){ $return = 'staff'; }
+				else if($user_data <= 75){ $return = 'manager'; }
+				else if($user_data <= 100){ $return = 'admin'; }
+			}
+			
+			if($style==true){
+				return '<span class="pb-u-p-bubble pb-u-p-bubble_'.$return.'">'.$return.'</span>';
+			}else{
+				return $return;
+			}
+		}
+	}
+	
+	
+	function pb_my_notifications($user_id){
+		global $servername;
+		global $username;
+		global $password;
+		global $dbname;
+		$conn = new mysqli($servername, $username, $password, $dbname);
+		if ($conn->connect_error) {
+		    die("Connection failed: " . $conn->connect_error);
+		} 
+		$sql = "SELECT * FROM  pb_notify Where notify_to='$user_id' AND seen='0'";
+		$result = $conn->query($sql);
+		if ($result->num_rows > 0) {
+		    while($row = $result->fetch_assoc()) {
+			    
+			    $user_data = json_decode(pb_user_data($row['notify_from'], 'user_data'), true);
+				foreach($user_data as $data){
+					$pb_user['name']=$data['name'];
+					$pb_user['username']=$data['username'];
+					$pb_user['avatar']=$data['avatar'];
+				} 
+				print '<li class="pb-notify-item" id="notify_'.$row['id'].'">
+					<a href="'.$row['link'].'#notify='.$row['id'].'">
+						<img src="'.$pb_user['avatar'].'" class="pb-post-avatar">
+						<span><strong>'.$pb_user['name'].'</strong> '.$row['intro'].' "'.$row['content'].'"</span><br />
+						<span class="pb-post-timestamp pb-rule-above"> <i class="zmdi zmdi-calendar-note"></i> <i class="pb-post-timestamp-o">
+						'.time_ago(strtotime($row['date'])).'
+						</i></span>
+					</a>
+				</li>';
+		    }
+		}else{
+			print '<p style="text-align:center">No new notifications.</p>';
+		}
+		$conn->close();
+	}
+	
+	function pb_update_notifications($id, $seen){
+		global $servername;
+		global $username;
+		global $password;
+		global $dbname;
+		$conn = new mysqli($servername, $username, $password, $dbname);
+		if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); } 
+		$sql = "UPDATE pb_notify SET seen='$seen' WHERE id='$id'";
+		if ($conn->query($sql) === TRUE) {
+			//done
+		} else {
+		    echo "Error updating record: " . $conn->error;
 		}
 		$conn->close();
 	}
@@ -481,7 +561,7 @@
 				            '<div class="pb-post-head-noB">'.
 				                '<img class="pb-post-avatar" src="'.$pb_user['avatar'].'">'.
 				                '<div class="pb-post-author">'.
-				                   	'<strong><a href="/@'.$pb_user['username'].'">'.$pb_user['name'].'</a></strong><br>'.
+				                   	'<strong><a href="/@'.$pb_user['username'].'">'.$pb_user['name'].'</a></strong> '.pb_user_permission($data->author,'label', true).'<br>'.
 				                    '<span class="pb-post-timestamp"><i class="pb-post-timestamp-o">'.$data->date.'</i></span>'.
 				                '</div>'.
 				            '</div>'.

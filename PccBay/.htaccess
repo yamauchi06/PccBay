@@ -3,4 +3,8 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^(.*)$ $1.php
 
+RewriteCond %{REQUEST_URI} @
+RewriteRule ^(.+?)/?$ /index.php?username=$1 [L,QSA]
+
 ErrorDocument 404 /404.php?e=404
+

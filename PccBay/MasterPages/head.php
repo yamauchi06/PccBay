@@ -43,12 +43,14 @@
 <script src="/includes/js/jquery.js"></script>
 <?php
 pb_include('/includes/php/ext_forms.php');
-$user_data = json_decode(pb_user_data($_SESSION['user_id'], 'user_data'), true);
 $pb_user['theme'] = 'darkblue';
-if($user_data){
-	foreach($user_data as $data){
-		if(!empty($pb_user['theme']))$pb_user['theme']=$data['theme'];
-	}  
+if(isset($_SESSION['user_id'])){
+	$user_data = json_decode(pb_user_data($_SESSION['user_id'], 'user_data'), true);
+	if($user_data){
+		foreach($user_data as $data){
+			if(!empty($pb_user['theme']))$pb_user['theme']=$data['theme'];
+		}  
+	}
 }
 print '<link id="userThemeCSS" rel="stylesheet" href="/includes/css/themes/?t='.$pb_user['theme'].'" type="text/css" >';
 ?>
