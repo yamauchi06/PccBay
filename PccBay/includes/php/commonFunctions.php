@@ -277,7 +277,7 @@
 									pb_safe_image(
 										explode(',', $val['images'])[0], 
 										'image-lazy', ' class="pb-post-product lazy" ',
-										$popup='false', $html='<a href="/product?product_id='.$val['id'].'">{{image}}</a>'
+										$popup='false', $html='<a href="/item?id='.$val['id'].'">{{image}}</a>'
 									); 
 									?>
 								  </li>
@@ -356,6 +356,25 @@
 		}
 	}
 	
+	function pb_table_data($table, $row, $where){
+		global $servername;
+		global $username;
+		global $password;
+		global $dbname;
+		$conn = new mysqli($servername, $username, $password, $dbname);
+		if ($conn->connect_error) {
+		    die("Connection failed: " . $conn->connect_error);
+		} 
+		$sql = "SELECT * FROM  $table Where $where";
+		$result = $conn->query($sql);
+		if ($result->num_rows > 0) {
+		    while($sqlrow = $result->fetch_assoc()) {
+				return $sqlrow[$row];
+		    }
+		}
+		$conn->close();
+	}
+	
 	
 	function pb_my_notifications($user_id){
 		global $servername;
@@ -366,11 +385,15 @@
 		if ($conn->connect_error) {
 		    die("Connection failed: " . $conn->connect_error);
 		} 
-		$sql = "SELECT * FROM  pb_notify Where notify_to='$user_id' AND seen='0'";
+		$sql = "SELECT * FROM  pb_notify Where notify_to IN ($user_id) AND seen='0'";
 		$result = $conn->query($sql);
 		if ($result->num_rows > 0) {
 		    while($row = $result->fetch_assoc()) {
-			    
+			    $tm=$row['item'];
+			    $postTitle = json_decode(pb_table_data('pb_post', 'product_info', "product_id='$tm'"));
+			    foreach($postTitle as $data){
+					$item_t=$data->title;
+				} 
 			    $user_data = json_decode(pb_user_data($row['notify_from'], 'user_data'), true);
 				foreach($user_data as $data){
 					$pb_user['name']=$data['name'];
@@ -380,9 +403,9 @@
 				print '<li class="pb-notify-item" id="notify_'.$row['id'].'">
 					<a href="'.$row['link'].'#notify='.$row['id'].'">
 						<img src="'.$pb_user['avatar'].'" class="pb-post-avatar">
-						<span><strong>'.$pb_user['name'].'</strong> '.$row['intro'].' "'.$row['content'].'"</span><br />
+						<span><strong>'.$pb_user['name'].'</strong> '.$row['intro'].' <em>'.$item_t.' </em>&nbsp;"'.$row['content'].'"</span><br />
 						<span class="pb-post-timestamp pb-rule-above"> <i class="zmdi zmdi-calendar-note"></i> <i class="pb-post-timestamp-o">
-						'.time_ago(strtotime($row['date'])).'
+						'.time_ago( strtotime($row['date']) ).'
 						</i></span>
 					</a>
 				</li>';
@@ -407,6 +430,21 @@
 		    echo "Error updating record: " . $conn->error;
 		}
 		$conn->close();
+	}
+	
+	function pb_notify($to, $from, $item, $intro, $content, $link){
+		global $servername;global $username;global $password;global $dbname;
+		$conn = new mysqli($servername, $username, $password, $dbname);
+		if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); }
+		$date = date("F j, Y, g:i a");			
+		$sql = "INSERT INTO pb_notify (notify_to, notify_from, item, intro, content, link, date, seen) 
+		VALUES ('$to', '$from', '$item', '$intro', '$content', '$link', '$date', '0') ";
+		if ($conn->query($sql) === TRUE) {
+			//print 'done';
+		} else {
+			echo "Error notifying: " . $conn->error;
+		}
+		$conn->close(); 
 	}
 	
 	function pb_add_product($user_id) {
@@ -522,15 +560,13 @@
 		}
       
       $current_date = date("F j, Y, g:i a");
-		/*$comment = array();
-		   array_push($comments, array(
-   		   "comment" => "".$_POST['comment'].""
-   		   "comment" => "".$_POST['comment'].""
-		   ));*/
 		$comment = htmlify($_POST['comment']);
 		$post_id = $_POST['post_id'];
 		
-      $sql = "INSERT INTO pb_comments (post_id, date, author, status, comment) VALUES ('$post_id', '$current_date','$user_id','open', '$comment')";
+		$post_owner = pb_table_data('pb_post', 'user_id', "product_id='$post_id'");
+		pb_notify($post_owner, $user_id, $post_id, 'Commented on', get_words($comment, 20), '/item?id='.$post_id);
+		
+		$sql = "INSERT INTO pb_comments (post_id, date, author, status, comment) VALUES ('$post_id', '$current_date','$user_id','open', '$comment')";
 		
 		if ($conn->query($sql) === TRUE) {
 			//print 'done';
@@ -543,8 +579,8 @@
 	function pb_comment_count($post_id){
 		$json = json_decode( file_get_contents('http://'.domain().'/graph/index.php?page=comments&accessToken=rootbypass_9827354187582375129873&q='.$post_id.'&timeago=true') );$c=0;foreach($json as $data){ if(!empty($data->id)){$c++;} }return $c;
 	}
-	function pb_recent_comments($post_id, $count){
-		$json = json_decode( file_get_contents('http://'.domain().'/graph/index.php?page=comments&accessToken=rootbypass_9827354187582375129873&q='.$post_id.'&timeago=true') );
+	function pb_recent_comments($post_id, $count, $order='DESC'){
+		$json = json_decode( file_get_contents('http://'.domain().'/graph/index.php?page=comments&accessToken=rootbypass_9827354187582375129873&q='.$post_id.'&timeago=true&l='.$order.'') );
 		$result='';
 		$s=0;
 			foreach($json as $data){

@@ -811,7 +811,7 @@ legend{
 	display: block;
 	width: 100%;
 	min-height: 60px;
-	border-bottom: 1px #E6E9ED solid;
+/* 	border-bottom: 1px #E6E9ED solid; */
 	padding: 10px;
 	color: #000000;
 }
