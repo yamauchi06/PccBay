@@ -3,7 +3,7 @@
 		<a href="#">Privacy Policy</a> |
 		<a href="#">FAQ's</a>
 	</div>
-	&copy; Copyright <?php print date('Y'); ?>, PCCbay.com All rights reserved.<br /><em>Secure data is not stored localy</em> 
+	&copy; copyright <?php print date('Y'); ?>, PCCbay.com All rights reserved.<!-- <br /><em>Secure data is not stored localy</em> --> 
 </footer>
 
 

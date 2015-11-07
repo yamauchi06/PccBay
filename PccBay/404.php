@@ -12,6 +12,7 @@
 			background-position: left center;
 			padding: 150px;
 			margin-top: 50px;
+			vertical-align: top;
 		}	
 		.Oldman h1{
 			font-size: 100px;
@@ -55,13 +56,13 @@
 $(document).ready(function(){
 	$('.Oldman').css({
 		width: $(window).width(),
-		height: $(window).height()-50
+		height: $(window).height()-70
 	});
 });
 $(window).resize(function(){
 	$('.Oldman').css({
 		width: $(window).width(),
-		height: $(window).height()-50
+		height: $(window).height()-70
 	});
 });
 

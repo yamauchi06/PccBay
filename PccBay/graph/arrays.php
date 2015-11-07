@@ -74,4 +74,23 @@ if($slq_table=='pb_tags'){
 	array_push($mainJson, $entity);
 }
 // end pb_tags	
+
+
+//pb_notify
+if($slq_table=='pb_notify'){
+	$entity = array(
+		'id' => $val['id'],
+		'to' => $val['notify_to'],
+		'from' => $val['notify_from'],
+		'item' => $val['item'],
+		'item' => $val['item'],
+		'intro' => $val['intro'],
+		'content' => $val['content'],
+		'link' => $val['link'],
+		'date' => $val['date'],
+		'seen' => $val['seen'],
+	);
+	array_push($mainJson, $entity);
+}
+// end pb_notify	
 ?>

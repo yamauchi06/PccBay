@@ -68,5 +68,15 @@ else if($_GET['page']=='images'){
 	}else{
 		$sql = "SELECT * FROM pb_safe_image"; 
 	}
+}
+
+else if($_GET['page']=='notify'){ 
+	$slq_table = 'pb_notify';
+	if(!empty($query)){
+		$sql = "SELECT * FROM pb_notify WHERE 
+		(notify_to='$query' OR item='$query')"; 
+	}else{
+		$sql = "SELECT * FROM pb_notify"; 
+	}
 }	
 ?>

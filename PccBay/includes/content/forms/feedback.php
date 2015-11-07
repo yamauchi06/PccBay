@@ -1,6 +1,6 @@
 <div class="oh-section oh-section-half">
 	
-	<h3 class="pb-rule-below">Feedback</h3>
+	<h3 class="pb-rule-below">You feedback matters</h3>
 	
 	<div style="text-align: center;">
 		
