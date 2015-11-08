@@ -177,7 +177,7 @@ function pb_infinite_feed(min, max){
 					'</div>';
 				}
 				else if(json.type=='discussion'){
-					
+					<?php if(isset($_SESSION['user_id'])){  ?>
 					foot = comm+'<div class="pb-post-foot pb-post-input">'+
 						'<div class="row">'+
 							'<div class="col-xs-12 pb-va-rule">'+
@@ -190,10 +190,11 @@ function pb_infinite_feed(min, max){
 							'</div>'+
 						'</div>'+
 					'</div>';
+					<?php }else{ ?> foot=comm; <?php } ?>
 				}
 
 				else if(json.type=='question'){
-					//commnet
+					<?php if(isset($_SESSION['user_id'])){  ?>
 					foot = comm+'<div class="pb-post-foot pb-post-input">'+
 						'<div class="row">'+
 							'<div class="col-xs-12 pb-va-rule">'+
@@ -206,10 +207,11 @@ function pb_infinite_feed(min, max){
 							'</div>'+
 						'</div>'+
 					'</div>';
+					<?php }else{ ?> foot=comm; <?php } ?>
 				}
 
 				
-				 html+='<div class="col-md-4 pb-post grid-item" id="pb_post_'+json.id+'">'+
+				 html+='<div class="<?php if(!isset($_SESSION['user_id'])){print 'col-md-3';}else{print 'col-md-4';} ?> pb-post grid-item" id="pb_post_'+json.id+'">'+
 							'<div class="pb-post-block">'+
 								'<div class="pb-post-head">'+
 									'<img src="'+json.user.avatar+'" class="pb-post-avatar" />'+
@@ -249,7 +251,7 @@ function pb_infinite_feed(min, max){
 }
 $(document).ready(function(){
 	var min=1;
-	var max=6;
+	var max=12;
 	var scrollINterval=max;
 	pb_infinite_feed(min, max);
 	$(window).scroll(function() {

@@ -21,17 +21,22 @@
 		
 	//Run Query	
 	if(!empty($slq_table)){
-		$conn = new mysqli($servername, $username, $password, $dbname);
-		if ($conn->connect_error) {
-		    die("Connection failed: " . $conn->connect_error);
-		} 
-		$result = $conn->query($sql);
-		if ($result->num_rows > 0) {
-		    while($val = $result->fetch_assoc()) {
-				include('arrays.php');
-		    }
+		if(isset($_GET['loop'])){ $loop=$_GET['loop']; }else{$loop=0;};$count=0;
+		while($count <= $loop){
+			$conn = new mysqli($servername, $username, $password, $dbname);
+			if ($conn->connect_error) {
+			    die("Connection failed: " . $conn->connect_error);
+			} 
+			$result = $conn->query($sql);
+			if ($result->num_rows > 0) {
+			    while($val = $result->fetch_assoc()) {
+					include('arrays.php');
+			    }
+			}
+			$conn->close();
+		$count++;
 		}
-		$conn->close();
+		
 		if( !isset($_GET['html']) ){
 			if( empty($mainJson) ){
 				print return_graph('No query results', 'text', 'throw'); 
