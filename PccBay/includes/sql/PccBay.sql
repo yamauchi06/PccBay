@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 02, 2015 at 02:46 PM
+-- Generation Time: Nov 08, 2015 at 08:33 AM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -33,18 +33,21 @@ CREATE TABLE IF NOT EXISTS `pb_comments` (
   `author` varchar(200) NOT NULL,
   `status` varchar(200) NOT NULL,
   `comment` longtext NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pb_comments`
 --
 
 INSERT INTO `pb_comments` (`id`, `post_id`, `date`, `author`, `status`, `comment`) VALUES
-(1, '10', 'October 31, 2015, 11:40 pm', '100006044469574', 'open', 'Can you budge on the price at all?'),
-(2, '10', 'October 31, 2015, 11:41 pm', '10000607254332', 'open', 'Nah this is a good price, Ill Take it!!'),
-(8, '13', 'November 1, 2015, 11:37 pm', '100006044469574', 'open', 'The html in this page description is all messed up. I think I fixed the problem.'),
-(9, '13', 'November 2, 2015, 1:12 am', '100006044469574', 'open', 'this is a test comment using the plugin comment version.'),
-(10, '6', 'November 2, 2015, 1:19 am', '100006044469574', 'open', 'This is a long comment. Im a writing this random thing just to make sure that comments still look super awesome even if they are long. Long comments are so long and awesome.');
+(1, '3', 'November 7, 2015, 7:31 pm', '100001056120276', 'open', 'Yummy!'),
+(2, '13', 'November 7, 2015, 7:31 pm', '100001056120276', 'open', 'The text on this page is messed up'),
+(3, '7', 'November 7, 2015, 7:31 pm', '100001056120276', 'open', 'Be smarter than the computer'),
+(4, '7', 'November 7, 2015, 7:32 pm', '10000607254332', 'open', 'Get a jobs'),
+(5, '10', 'November 7, 2015, 7:33 pm', '10000607254332', 'open', 'Ill Take it. although I invented it.'),
+(6, '14', 'November 7, 2015, 7:48 pm', '100006044469574', 'open', '42'),
+(7, '10', 'November 7, 2015, 8:06 pm', '10000607254332', 'open', 'whoopy'),
+(8, '1', 'November 8, 2015, 4:52:12 am', '100006044469574', 'open', 'Test comment');
 
 -- --------------------------------------------------------
 
@@ -69,6 +72,38 @@ INSERT INTO `pb_developers` (`id`, `app_id`, `user`, `user_data`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pb_notify`
+--
+
+CREATE TABLE IF NOT EXISTS `pb_notify` (
+  `id` int(200) NOT NULL,
+  `notify_to` varchar(200) NOT NULL,
+  `notify_from` varchar(200) NOT NULL,
+  `item` varchar(200) NOT NULL,
+  `intro` varchar(200) NOT NULL,
+  `content` varchar(200) NOT NULL,
+  `link` varchar(200) NOT NULL,
+  `date` varchar(200) NOT NULL,
+  `seen` int(200) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pb_notify`
+--
+
+INSERT INTO `pb_notify` (`id`, `notify_to`, `notify_from`, `item`, `intro`, `content`, `link`, `date`, `seen`) VALUES
+(1, '100006044469574', '100001056120276', '3', 'Commented on', 'Yummy!', '/item?id=3', 'November 7, 2015, 7:31 pm', 0),
+(2, '10000607254332', '100001056120276', '13', 'Commented on', 'The text on this page is messed up', '/item?id=13', 'November 7, 2015, 7:31 pm', 0),
+(3, '100006044469574', '100001056120276', '7', 'Commented on', 'Be smarter than the computer', '/item?id=7', 'November 7, 2015, 7:31 pm', 0),
+(4, '100006044469574', '10000607254332', '7', 'Commented on', 'Get a jobs', '/item?id=7', 'November 7, 2015, 7:32 pm', 0),
+(5, '100006044469574', '10000607254332', '10', 'Commented on', 'Ill Take it. although I invented it.', '/item?id=10', 'November 7, 2015, 7:33 pm', 0),
+(6, '100001056120276', '100006044469574', '14', 'Commented on', '42', '/item?id=14', 'November 7, 2015, 7:48 pm', 0),
+(7, '100006044469574', '10000607254332', '10', 'Commented on', 'whoopy', '/item?id=10', 'November 7, 2015, 8:06 pm', 0),
+(8, '100001056120276', '100006044469574', '1', 'Commented on', 'Test comment', '/item?id=1', 'November 8, 2015, 4:52:12 am', 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pb_post`
 --
 
@@ -79,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `pb_post` (
   `product_info` longtext NOT NULL COMMENT 'Product title, description, price, date created',
   `trans_info` varchar(1024) NOT NULL COMMENT 'sold to, date sold, payment method, transaction complete flag',
   `status` varchar(200) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pb_post`
@@ -96,7 +131,8 @@ INSERT INTO `pb_post` (`product_id`, `type`, `user_id`, `product_info`, `trans_i
 (8, 'discussion', '100006044469574', '[{"timestamp":"October 27, 2015, 12:15 am","title":"Fine Arts","desc":"How About that child Prodigy","tags":"Prodigy,Fine Arts,Ethan Bortnick","price":"","condition":"null","images":"G6gbX9ICnT"}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
 (9, 'discussion', '100001056120276', '[{"timestamp":"October 27, 2015, 8:53 pm","title":"The Big Idea Behind PCCbay","desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec venenatis vehicula eros in dapibus. Nunc mattis neque porttitor tempor congue. Pellentesque convallis feugiat pretium. Donec maximus imperdiet ligula efficitur convallis. Proin hendrerit semper augue,","tags":"Lorem,ipsum,PCCbay","price":"","condition":"null","images":""}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
 (10, 'product', '100006044469574', '[{"timestamp":"October 31, 2015, 3:35 am","title":"2015 MacBook Pro with Retina display","desc":"<ol><li>2.7GHz Processor</li><li>2.7GHz dual-core Intel Core</li><li>i5 Turbo Boost up to 3.1GHz</li><li>8GB 1866MHz LPDDR3 memory 128GB PCIe-based flash storage</li></ol><ul><li>Intel Iris Graphics 6100</li><li>Built-in battery (10 hours)</li><li>2 Force Touch trackpad</li><li>Power adapter and power cord</li><li>AC Wall Plug</li></ul><p>A Mac includes 90 days of free telephone technical support and a one-year limited warranty. If you purchase the AppleCare Protection Plan, you can extend that coverage to three years from the original purchase date of your Mac 128 GB Storage</p>","tags":"MacBook Pro,Laptop,Computer,Mac,Apple","price":"1,299.00","condition":"80","images":"3dhALzY0OI,pBAXPpOsOR,9dbJWlQABt"}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
-(13, 'product', '10000607254332', '[{"timestamp":"November 1, 2015, 9:51 pm","title":"iPhone Collection","desc":"&lt;span&gt;Availableingold,silver,spacegray,androsegold,iPhone&amp;nbsp;6sfeaturesanA9chip,3D&amp;nbsp;Touch,ultrafastLTE&amp;nbsp;Advancedwireless,Touch&amp;nbsp;ID,a12MPiSightcamera,andiOS&amp;nbsp;9.&lt;br&gt;&lt;br&gt;&lt;/span&gt;A9chipwith64-bitarchitecture&lt;span&gt;EmbeddedM9motioncoprocessor&lt;br&gt;&lt;br&gt;&lt;/span&gt;&lt;span&gt;Second-generationfingerprintsensorbuiltintotheHomebutton&lt;br&gt;&lt;/span&gt;&lt;br&gt;Videoformatssupported:H.264videoupto1080p,60framespersecond,HighProfilelevel4.2withAAC-LCaudioupto160Kbps,48kHz,stereoaudioin.m4v,.mp4,and.movfileformats;MPEG-4videoupto2.5Mbps,640by480pixels,30framespersecond,SimpleProfilewithAAC-LCaudioupto160Kbpsperchannel,48kHz,stereoaudioin.m4v,.mp4,and.movfileformats;MotionJPEG(M-JPEG)upto35Mbps,1280by720pixels,30framespersecond,audioinulaw,PCMstereoaudioin.avifileformat&lt;span&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;/span&gt;","tags":"iphone,phone,apple","price":"300.00","condition":"100","images":"D5cOZeP8sO,23XGOCWxuW,5ckAZ8hxM6"}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open');
+(13, 'product', '10000607254332', '[{"timestamp":"November 1, 2015, 9:51 pm","title":"iPhone Collection","desc":"&lt;span&gt;Availableingold,silver,spacegray,androsegold,iPhone&amp;nbsp;6sfeaturesanA9chip,3D&amp;nbsp;Touch,ultrafastLTE&amp;nbsp;Advancedwireless,Touch&amp;nbsp;ID,a12MPiSightcamera,andiOS&amp;nbsp;9.&lt;br&gt;&lt;br&gt;&lt;/span&gt;A9chipwith64-bitarchitecture&lt;span&gt;EmbeddedM9motioncoprocessor&lt;br&gt;&lt;br&gt;&lt;/span&gt;&lt;span&gt;Second-generationfingerprintsensorbuiltintotheHomebutton&lt;br&gt;&lt;/span&gt;&lt;br&gt;Videoformatssupported:H.264videoupto1080p,60framespersecond,HighProfilelevel4.2withAAC-LCaudioupto160Kbps,48kHz,stereoaudioin.m4v,.mp4,and.movfileformats;MPEG-4videoupto2.5Mbps,640by480pixels,30framespersecond,SimpleProfilewithAAC-LCaudioupto160Kbpsperchannel,48kHz,stereoaudioin.m4v,.mp4,and.movfileformats;MotionJPEG(M-JPEG)upto35Mbps,1280by720pixels,30framespersecond,audioinulaw,PCMstereoaudioin.avifileformat&lt;span&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;/span&gt;","tags":"iphone,phone,apple","price":"300.00","condition":"100","images":"D5cOZeP8sO,23XGOCWxuW,5ckAZ8hxM6"}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
+(14, 'question', '100001056120276', '[{"timestamp":"November 5, 2015, 7:44 am","title":"The Meaning Of Life","desc":"What is the meaning of life?","tags":"life,meanings","price":"","condition":"null","images":""}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open');
 
 -- --------------------------------------------------------
 
@@ -215,22 +251,24 @@ INSERT INTO `pb_tags` (`tag_id`, `tag`, `count`) VALUES
 
 CREATE TABLE IF NOT EXISTS `pb_users` (
   `user_id` varchar(200) NOT NULL,
+  `username` varchar(200) NOT NULL,
   `num_of_ratings` int(11) NOT NULL,
   `total_ratings` int(11) NOT NULL,
   `permissions` int(11) NOT NULL,
   `id_card_key` varchar(255) NOT NULL,
   `contact_info` varchar(1024) NOT NULL,
-  `user_data` varchar(1024) NOT NULL
+  `user_data` varchar(1024) NOT NULL,
+  `steps` varchar(1024) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pb_users`
 --
 
-INSERT INTO `pb_users` (`user_id`, `num_of_ratings`, `total_ratings`, `permissions`, `id_card_key`, `contact_info`, `user_data`) VALUES
-('100006044469574', 0, 0, 100, '124981', '[{"resident":"false","building":"","room":"","phone":"850 281-9161","email":"josh@inspirosity.net","notify_d":"true","notify_m":"true"}]', '[{"ID":"100006044469574","username":"JoshFerguson","name":"Josh Ferguson","avatar":"https://scontent-atl3-1.xx.fbcdn.net/hphotos-xpl1/t31.0-8/11228039_1686546648223468_7048846777877974576_o.jpg","registered":"10/20/2015","permissions":"100","theme":"dark","interest":"Design,Graphics,Advertising,Textbooks,Pensacola FL"}]'),
-('100001056120276', 0, 0, 100, '', '[{"resident":"true","building":"","room":"","phone":"","email":"","notify_d":"true","notify_m":"true"}]', '[{"ID":"100001056120276","username":"joseph.gengarella","name":"Joseph Gengarella","avatar":"https://scontent-iad3-1.xx.fbcdn.net/hphotos-xlp1/v/t1.0-9/10403522_878791748832688_1007985923560409411_n.jpg?oh=08d6efbe0cbea75280afdf0895ede224&oe=56B3F054","registered":"10/27/2015","permissions":"100","theme":"default","interest":""}]'),
-('10000607254332', 0, 0, 0, '000000', '[{"resident":"true","building":"Young","room":"345","phone":"(555) 555-5555","email":"TestUser@email.com","notify_d":"false","notify_m":"false"}]', '[{"ID":"10000607254332","username":"SteveJobs","name":"Steve Jobs","avatar":"https://image.freepik.com/free-vector/steve-jobs-vector-tribute_25-14787.jpg","registered":"10/01/2015","permissions":"100","theme":"blue","interest":""}]');
+INSERT INTO `pb_users` (`user_id`, `username`, `num_of_ratings`, `total_ratings`, `permissions`, `id_card_key`, `contact_info`, `user_data`, `steps`) VALUES
+('100006044469574', 'JoshFerguson', 0, 0, 100, '124981', '[{"resident":"false","building":"","room":"","phone":"850 281-9161","email":"josh@inspirosity.net","notify_d":"true","notify_m":"true"}]', '[{"ID":"100006044469574","username":"JoshFerguson","name":"Josh Ferguson","avatar":"https://scontent-atl3-1.xx.fbcdn.net/hphotos-xpl1/t31.0-8/11228039_1686546648223468_7048846777877974576_o.jpg","registered":"10/20/2015","permissions":"100","theme":"darkblue","interest":"Design,Graphics,Advertising,Textbooks,Pensacola FL"}]', ''),
+('100001056120276', 'joseph.gengarella', 0, 0, 100, '', '[{"resident":"true","building":"","room":"","phone":"","email":"","notify_d":"true","notify_m":"true"}]', '[{"ID":"100001056120276","username":"joseph.gengarella","name":"Joseph Gengarella","avatar":"https://scontent-iad3-1.xx.fbcdn.net/hphotos-xlp1/v/t1.0-9/10403522_878791748832688_1007985923560409411_n.jpg?oh=08d6efbe0cbea75280afdf0895ede224&oe=56B3F054","registered":"10/27/2015","permissions":"100","theme":"default","interest":""}]', ''),
+('10000607254332', 'SteveJobs', 0, 0, 25, '000000', '[{"resident":"true","building":"Young","room":"345","phone":"(555) 555-5555","email":"TestUser@email.com","notify_d":"false","notify_m":"false"}]', '[{"ID":"10000607254332","username":"SteveJobs","name":"Steve Jobs","avatar":"https://image.freepik.com/free-vector/steve-jobs-vector-tribute_25-14787.jpg","registered":"10/01/2015","permissions":"100","theme":"blue","interest":""}]', '');
 
 -- --------------------------------------------------------
 
@@ -266,6 +304,12 @@ ALTER TABLE `pb_comments`
 -- Indexes for table `pb_developers`
 --
 ALTER TABLE `pb_developers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pb_notify`
+--
+ALTER TABLE `pb_notify`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -312,17 +356,22 @@ ALTER TABLE `pb_user_points`
 -- AUTO_INCREMENT for table `pb_comments`
 --
 ALTER TABLE `pb_comments`
-  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `pb_developers`
 --
 ALTER TABLE `pb_developers`
   MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
+-- AUTO_INCREMENT for table `pb_notify`
+--
+ALTER TABLE `pb_notify`
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+--
 -- AUTO_INCREMENT for table `pb_post`
 --
 ALTER TABLE `pb_post`
-  MODIFY `product_id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+  MODIFY `product_id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `pb_safe_image`
 --
