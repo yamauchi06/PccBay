@@ -1,11 +1,19 @@
 <?php
 //PB_POST
 if($_GET['page']=='feed'){ 
-	$slq_table = 'pb_post';  
+	if(isset($_GET['html'])){
+		$slq_table = 'pb_post_html'; 
+	}else{ $slq_table = 'pb_post'; } 
 	if(!empty($query)){
-		$sql = "SELECT * FROM pb_post WHERE product_id='$query'";
-	}else{
-		$sql = "SELECT * FROM pb_post";
+		$sql = "SELECT * FROM pb_post WHERE (product_id='$query' OR user_id='$query')";
+	}
+	else if(isset($_GET['range'])){
+		$r=explode('-', $_GET['range']);
+		$low=$r[0];$high=$r[1];
+		$sql = "SELECT * FROM pb_post WHERE product_id BETWEEN $low and $high AND (type='question' OR type='product') ";
+	}
+	else{
+		$sql = "SELECT * FROM pb_post WHERE type='question' OR type='product'";
 	}
 }
 

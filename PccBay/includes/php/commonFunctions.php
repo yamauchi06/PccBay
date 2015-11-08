@@ -365,7 +365,7 @@
 		if ($conn->connect_error) {
 		    die("Connection failed: " . $conn->connect_error);
 		} 
-		$sql = "SELECT * FROM  $table Where $where";
+		$sql = "SELECT * FROM $table Where $where";
 		$result = $conn->query($sql);
 		if ($result->num_rows > 0) {
 		    while($sqlrow = $result->fetch_assoc()) {
@@ -436,7 +436,7 @@
 		global $servername;global $username;global $password;global $dbname;
 		$conn = new mysqli($servername, $username, $password, $dbname);
 		if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); }
-		$date = date("F j, Y, g:i a");			
+		$date = date("F j, Y, g:i:s a");			
 		$sql = "INSERT INTO pb_notify (notify_to, notify_from, item, intro, content, link, date, seen) 
 		VALUES ('$to', '$from', '$item', '$intro', '$content', '$link', '$date', '0') ";
 		if ($conn->query($sql) === TRUE) {
@@ -559,7 +559,7 @@
 		    die("Connection failed: " . $conn->connect_error);
 		}
       
-      $current_date = date("F j, Y, g:i a");
+        $current_date = date("F j, Y, g:i:s a");
 		$comment = htmlify($_POST['comment']);
 		$post_id = $_POST['post_id'];
 		

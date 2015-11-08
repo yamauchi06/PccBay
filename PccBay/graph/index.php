@@ -2,6 +2,7 @@
 	header("Content-Type: application/json");
 	//Includes	
 	include_once("../includes/php/_db-config.php");
+	include_once('../includes/php/commonFunctions.php');
 	include_once("functions.php");
 	
 	//Authenticate
@@ -31,9 +32,13 @@
 		    }
 		}
 		$conn->close();
-		if(empty($mainJson)){
-			print return_graph('No query results', 'text', 'throw'); }else{
-			print return_graph($mainJson, 'json'); }
+		if( !isset($_GET['html']) ){
+			if( empty($mainJson) ){
+				print return_graph('No query results', 'text', 'throw'); 
+			}else{
+				print return_graph($mainJson, 'json');
+			}
+		}
 	}else{
 		print return_graph('No data table selected', 'text', 'throw'); }
 ?>

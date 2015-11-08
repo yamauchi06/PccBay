@@ -17,9 +17,9 @@
 		<form method="post" action="">
 			<input type="hidden" name="post_type" value="product">
 			
-			<input class="form-control" rows="3" name="product_title" placeholder="Item Name">
+			<input class="form-control" rows="3" name="product_title" placeholder="Item name">
 				
-			<textarea class="form-control no-resize wysihtml5" rows="3" data-maxtext="400" name="product_desc" placeholder="Item Description"></textarea>
+			<textarea class="form-control no-resize wysihtml5" rows="3" data-maxtext="400" name="product_desc" placeholder="Item description"></textarea>
 			
 			<input class="form-control" rows="3" name="product_price" placeholder="Price.">
 	
@@ -46,7 +46,7 @@
 				<div class="dz-message">
 					<br />
 					<i class="zmdi zmdi-image-o"></i><br />
-					Click or Drop photos here!<br /><small>be sure to add photos in order of importance.</small>
+					Click or Drop photos here!<br /><small>in order of importance.</small>
 				</div>
 			</div>
 			<input type="hidden" name="product_images">
