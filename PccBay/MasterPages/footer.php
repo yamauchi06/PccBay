@@ -27,7 +27,8 @@
 <script src="/includes/plugins/bootstrap-wysiwyg/prettify.js"></script>
 <script src="/includes/plugins/bootstrap-wysiwyg/bootstrap-wysihtml5.js"></script>
 
-<script src="/includes/plugins/jquery.jscroll/jquery.jscroll.min.js"></script>
+<script src="/includes/plugins/TinySort/tinysort.min.js"></script>
+<script src="/includes/plugins/TinySort/tinysort.charorder.min.js"></script>
 
 
 

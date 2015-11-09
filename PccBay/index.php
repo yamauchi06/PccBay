@@ -104,30 +104,27 @@
 
 <script>
 function pb_infinite_feed(min, max){
+	console.log(min, max)
 	<?php
 		$Jurl='';
 		if(isset($_GET['username'])){ 
 			$user_data = json_decode(pb_user_data(substr($_GET['username'],1), 'user_data'), true);
-			foreach($user_data as $data){ $pb_user['user_id']=$data['ID']; }
-			$Jurl='&q='.$pb_user['user_id']; 
+			foreach($user_data as $data){ $pb_user['user_id']=$data['ID']; }$Jurl='&q='.$pb_user['user_id']; 
 		}
+		$accessToken=pb_graph_token('9827354187582375129873');
 	?>
 	//$('.MainFeed').append('<p id="freewall_loading" style="text-align:center">loading...</p>');
-	var Jurl='/graph/feed?accessToken=rootbypass_9827354187582375129873<?php print $Jurl; ?>&range='+min+'-'+max;
+	var Jurl='/graph/feed?accessToken=<?php print $accessToken; print $Jurl; ?>&l=DESC&range='+min+'-'+max;
 	var html='';
 	$.ajax({
-	    url: Jurl,
-	    dataType: 'json',
-	    type: 'GET',
+	    url: Jurl,dataType: 'json',type: 'GET',
 	    error: function(xhr, error){ console.debug(xhr); console.debug(error); console.log('Craw URL:', jsonURL); },
 	    success: function(data) {
-		    var TopTitle='';
-		    var BottomText='';
-		    var tags='';
-		    var foot='';
-		    var comm='';
+
+		    var TopTitle='',BottomText='',tags='',foot='',comm='';
 			$.each( data, function( key, json ) { 
 				if(json.type =='product'){ 
+					if(!json.product_info[0].price){json.product_info[0].price='Free';}
 					var Phead = '<span class="themeColor">$ '+json.product_info[0].price+'</span>';
 					TopTitle = '<h4>'+json.product_info[0].title+'</h4>';BottomText='';
 				}
@@ -145,9 +142,7 @@ function pb_infinite_feed(min, max){
 					var img='<img src="'+json.images[0]+'" class="pb-post-product lazy">';
 				}else{img=''}
 				
-				$.each( json.product_info[0].tags.split(','), function(k,tag) { 
-					tags +='<li><a href="/s/'+tag+'">'+tag+'</a></li>';
-				});
+				$.each( json.product_info[0].tags.split(','), function(k,tag) {  tags +='<li><a href="/s/'+tag+'">'+tag+'</a></li>'; });
 				
 				$.each( json.comments.comments, function(i,comment) { 
 					comm+='<div class="col-md-12 pb-post pb-comment-inline">'+
@@ -209,9 +204,7 @@ function pb_infinite_feed(min, max){
 					'</div>';
 					<?php }else{ ?> foot=comm; <?php } ?>
 				}
-
-				
-				 html+='<div class="<?php if(!isset($_SESSION['user_id'])){print 'col-md-3';}else{print 'col-md-4';} ?> pb-post grid-item" id="pb_post_'+json.id+'">'+
+				html+= '<div class="<?php if(!isset($_SESSION['user_id'])){print 'col-md-3';}else{print 'col-md-4';} ?> pb-post grid-item" data-sort="'+json.id+'" id="pb_post_'+json.id+'">'+
 							'<div class="pb-post-block">'+
 								'<div class="pb-post-head">'+
 									'<img src="'+json.user.avatar+'" class="pb-post-avatar" />'+
@@ -251,11 +244,11 @@ function pb_infinite_feed(min, max){
 }
 $(document).ready(function(){
 	var min=1;
-	var max=12;
-	var scrollINterval=max;
+	var max=20;
+	var scrollINterval=20;
 	pb_infinite_feed(min, max);
-	$(window).scroll(function() {
-	   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+	$(window).scroll(function() {		
+	   if($(window).scrollTop() + $(window).height()-200 == $(document).height()-200) {
 	      min=min+scrollINterval;
 	      max=max+scrollINterval;
 	      pb_infinite_feed(min, max);

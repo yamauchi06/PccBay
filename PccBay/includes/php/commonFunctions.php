@@ -315,6 +315,10 @@
 		
 	}
 	
+	function pb_graph_token($app_id, $expire='days'){
+		return file_get_contents('http://'.domain().'/graph/accessToken.php?app_id='.$app_id.'&expire='.$expire);
+	}
+	
 	function pb_user_data($user_id, $row){
 		global $servername;
 		global $username;

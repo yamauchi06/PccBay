@@ -1,10 +1,7 @@
 <?php
 	include('commonFunctions.php');
 	
-	$tagArr = array();
-	
-	
-	print domain();
+	print pb_graph_token('9827354187582375129873');
 	
 /*
 	function pb_add_tag($tag, $count){

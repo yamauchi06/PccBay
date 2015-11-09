@@ -155,6 +155,8 @@ function ini_grid(){
 	$(window).trigger('resize');
 	
 	$("img.lazy").lazyload();
+	
+	//tinysort('#freewall .grid-item',{attr:'data-sort',order:'desc'});
 }
 
 
