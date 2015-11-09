@@ -969,3 +969,12 @@ form hr{
 	text-transform: capitalize;
 }
 
+#lj-noresponse{
+	position: absolute;
+	bottom: -40px;
+	left: 45%;
+	z-index: 999999;
+	opacity: 0.2;
+	font-weight: bold;
+}
+

@@ -18,7 +18,9 @@
 		<div class="row">
 			<!-- Begin Content -->
 			<div class="<?php pb_isset(pb_isset_session('user_id'), 'col-md-9', 'col-md-12') ?> MainFeed">
-				<div id="freewall"></div>
+				<div id="freewall">
+				    <?php pb_include('/MasterPages/post-temp.php'); ?>
+				</div>
 			</div>
 			
 			<!-- Begin SideBar -->
@@ -101,162 +103,138 @@
 			</div>
 		</div>
 	</div>
-
+	
+<script src="/includes/plugins/lazyLoad/jquery.lazyjson.min.js"></script>
+<?php pb_include('/MasterPages/footer.php'); ?>
 <script>
-function pb_infinite_feed(min, max){
-	console.log(min, max)
-	<?php
-		$Jurl='';
-		if(isset($_GET['username'])){ 
-			$user_data = json_decode(pb_user_data(substr($_GET['username'],1), 'user_data'), true);
-			foreach($user_data as $data){ $pb_user['user_id']=$data['ID']; }$Jurl='&q='.$pb_user['user_id']; 
-		}
-		$accessToken=pb_graph_token('9827354187582375129873');
-	?>
-	//$('.MainFeed').append('<p id="freewall_loading" style="text-align:center">loading...</p>');
-	var Jurl='/graph/feed?accessToken=<?php print $accessToken; print $Jurl; ?>&l=DESC&range='+min+'-'+max;
-	var html='';
+function ini_add_comments(post_id, el){
+	comm='';
 	$.ajax({
-	    url: Jurl,dataType: 'json',type: 'GET',
-	    error: function(xhr, error){ console.debug(xhr); console.debug(error); console.log('Craw URL:', jsonURL); },
+	    url: 'http://pccbay.localhost/graph/comments?accessToken=<?php print pb_graph_token('9827354187582375129873'); ?>&timeago=true&q='+post_id,
+	    dataType: 'json',
+	    type: 'GET',
+	    error: function(xhr, error){
+		    console.debug(xhr); console.debug(error); console.log('Craw URL:', jsonURL);
+		},
 	    success: function(data) {
-
-		    var TopTitle='',BottomText='',tags='',foot='',comm='';
-			$.each( data, function( key, json ) { 
-				if(json.type =='product'){ 
-					if(!json.product_info[0].price){json.product_info[0].price='Free';}
-					var Phead = '<span class="themeColor">$ '+json.product_info[0].price+'</span>';
-					TopTitle = '<h4>'+json.product_info[0].title+'</h4>';BottomText='';
-				}
-				else if(json.type =='question'){
-					var Phead =  '<i class="zmdi zmdi-pin-help themeColor" style="font-size:30px"></i>';
-					TopTitle='';
-					BottomText='<strong>'+json.product_info[0].title+'</strong> <br />'+json.product_info[0].desc+'';
-					Phead += '<sub>'+json.comments.count+'</sub>';
-				}
-				else if(json.type =='discussion'){
-					var Phead =  '<i class="zmdi zmdi-comment-text-alt themeColor" style="font-size:30px"></i>';
-					TopTitle='';BottomText='<strong>'+json.product_info[0].title+'</strong> <br />'+json.product_info[0].desc+'';
-				}
-				if(json.images[0]){
-					var img='<img src="'+json.images[0]+'" class="pb-post-product lazy">';
-				}else{img=''}
-				
-				$.each( json.product_info[0].tags.split(','), function(k,tag) {  tags +='<li><a href="/s/'+tag+'">'+tag+'</a></li>'; });
-				
-				$.each( json.comments.comments, function(i,comment) { 
-					comm+='<div class="col-md-12 pb-post pb-comment-inline">'+
-				    	'<div class="pb-post-block">'+
-				            '<div class="pb-post-head-noB">'+
-				                '<img class="pb-post-avatar" src="'+comment.user.avatar+'">'+
-				                '<div class="pb-post-author">'+
-				                   	'<strong><a href="/@'+comment.user.username+'">'+comment.user.name+'</a></strong><br>'+
-				                    '<span class="pb-post-timestamp"><i class="pb-post-timestamp-o">'+comment.timestamp.laps+'</i></span>'+
-				                '</div>'+
-				            '</div>'+
-				            '<div class="pb-post-content">'+comment.comment+
-				            '</div>'+
-				        '</div>'+
-				   ' </div>';
-				});
-				
-				if(json.type=='product'){
-					foot = '<div class="pb-post-foot">'+
-						'<div class="row">'+
-							'<div class="col-xs-12 text-center">'+
-							 ' <a href="/item?id='+json.id+'" class="feed-post-tab-link transition-300">'+
-							    '<span class="feed-post-tab"><i class="zmdi zmdi-money-box"></i> View This Item</span>'+
-							 '</a>'+
-							'</div>'+
-						'</div>'+
-					'</div>';
-				}
-				else if(json.type=='discussion'){
-					<?php if(isset($_SESSION['user_id'])){  ?>
-					foot = comm+'<div class="pb-post-foot pb-post-input">'+
-						'<div class="row">'+
-							'<div class="col-xs-12 pb-va-rule">'+
-							 ' <form action="/includes/php/async.php?function=pb_add_comment&redirect=[current]" method="post" autocomplete="off">'+
-								 ' <input type="hidden" name="post_id" value="'+json.id+'" >'+
-								 ' <input type="text" name="comment" placeholder="Chime in" class="pb-post-input-text">'+
-								 ' <div class="pb-post-send-icon"><i class="zmdi zmdi-mail-send"></i></div>'+
-								 ' <input type="submit" value="Go" name="add_comment" class="pb-post-input-submit">'+
-							  '</form>'+
-							'</div>'+
-						'</div>'+
-					'</div>';
-					<?php }else{ ?> foot=comm; <?php } ?>
-				}
-
-				else if(json.type=='question'){
-					<?php if(isset($_SESSION['user_id'])){  ?>
-					foot = comm+'<div class="pb-post-foot pb-post-input">'+
-						'<div class="row">'+
-							'<div class="col-xs-12 pb-va-rule">'+
-							  '<form action="/includes/php/async.php?function=pb_add_comment&redirect=[current]" method="post" autocomplete="off">'+
-								 ' <input type="hidden" name="post_id" value="'+json.id+'" >'+
-								  '<input type="text" name="comment" placeholder="Answer Qestion" class="pb-post-input-text">'+
-								 ' <div class="pb-post-send-icon"><i class="zmdi zmdi-mail-send"></i></div>'+
-								 ' <input type="submit" value="Go" name="add_comment" class="pb-post-input-submit">'+
-							  '</form>'+
-							'</div>'+
-						'</div>'+
-					'</div>';
-					<?php }else{ ?> foot=comm; <?php } ?>
-				}
-				html+= '<div class="<?php if(!isset($_SESSION['user_id'])){print 'col-md-3';}else{print 'col-md-4';} ?> pb-post grid-item" data-sort="'+json.id+'" id="pb_post_'+json.id+'">'+
-							'<div class="pb-post-block">'+
-								'<div class="pb-post-head">'+
-									'<img src="'+json.user.avatar+'" class="pb-post-avatar" />'+
-									'<div class="pb-post-author">'+
-										'<strong><a href="/@'+json.user.username+'">'+json.user.name+'</a></strong><br />'+
-										'<span class="pb-post-timestamp"> <i class="pb-post-timestamp-o">'+
-										''+json.timestamp.laps+''+
-										'</i></span>'+
-									'</div>'+
-									'<div class="pb-post-price">'+Phead+'</div>'+
+		    $.each( data, function( key, comment ) { 
+			     comm+='<div class="col-md-12 pb-post pb-comment-inline">'+
+			    	'<div class="pb-post-block">'+
+			            '<div class="pb-post-head-noB">'+
+			                '<img class="pb-post-avatar" src="'+comment.user.avatar+'">'+
+			                '<div class="pb-post-author">'+
+			                   	'<strong><a href="/@'+comment.user.username+'">'+comment.user.name+'</a></strong><br>'+
+			                    '<span class="pb-post-timestamp"><i class="pb-post-timestamp-o">'+comment.date+'</i></span>'+
+			                '</div>'+
+			            '</div>'+
+			            '<div class="pb-post-content">'+comment.comment+
+			            '</div>'+
+			        '</div>'+
+			   ' </div>';
+			});//end each
+			$(el).before(comm);
+			comm='';
+	    }//end success
+	});// end agax
+}	
+function ini_grid_ext(JsonURI){
+	$('.grid-item').each(function(){
+		var post = $(this);
+		var pID = post.find('.pb-post-foot-fill').attr('data-post-id');
+		var pIfo = post.find('.pbPPHead');
+		var pHead_type = pIfo.attr('data-type');
+		var pHead_price = pIfo.attr('data-price');
+		var alreadyRan = pIfo.attr('data-done');
+		var comments_count = pIfo.attr('data-comment-count');
+		var comm='',foot='';
+		var randID = Math.floor(Math.random() * 100000);
+		if(alreadyRan=='false'){
+			pIfo.attr('data-done', 'true');
+			if(pHead_type=='product'){ 
+				if(!pHead_price){ pHead_price='Free'; }
+				post.find('.pb_Pdesc').remove();
+				post.find('.pbPPHead').html('<span class="themeColor">$ '+pHead_price+'</span>');
+				foot = '<div class="pb-post-foot" id="comment_'+randID+'">'+
+							'<div class="row">'+
+								'<div class="col-xs-12 text-center">'+
+								 ' <a href="/item?id='+pID+'" class="feed-post-tab-link transition-300">'+
+								    '<span class="feed-post-tab"><i class="zmdi zmdi-money-box"></i> View This Item</span>'+
+								 '</a>'+
 								'</div>'+
-								'<div class="pb-post-content">'+TopTitle+
-
-									'<div class="pb-post-slider flexslider">'+
-									 ' <ul class="slides">'+
-										'<li>'+
-											'<a href="/item?id='+json.id+'">'+img+'</a>'+								  
-										'</li>'+
-									 ' </ul>'+
-									'</div>'+
-									'<p>'+BottomText+'</p>'+
-									
-									'<div class="pb-post-tags">'+
-										'<ul>'+tags+'</ul>'+
-									'</div>'+
-								'</div>'+foot+
 							'</div>'+
 						'</div>';
-						tags='';
-						comm="";
+			}if(pHead_type=='question'){ 
+				post.find('.pbPPHead').html('<i class="zmdi zmdi-pin-help themeColor" style="font-size:30px"></i><sub>'+comments_count+'</sub>');
+				<?php if(isset($_SESSION['user_id'])){  ?>
+				foot = comm+'<div class="pb-post-foot pb-post-input" id="comment_'+randID+'">'+
+					'<div class="row">'+
+						'<div class="col-xs-12 pb-va-rule">'+
+						  '<form action="/includes/php/async.php?function=pb_add_comment&redirect=[current]" method="post" autocomplete="off">'+
+							 ' <input type="hidden" name="post_id" value="'+pID+'" >'+
+							  '<input type="text" name="comment" placeholder="Answer Qestion" class="pb-post-input-text">'+
+							 ' <div class="pb-post-send-icon"><i class="zmdi zmdi-mail-send"></i></div>'+
+							 ' <input type="submit" value="Go" name="add_comment" class="pb-post-input-submit">'+
+						  '</form>'+
+						'</div>'+
+					'</div>'+
+				'</div>';
+				<?php }else{ ?> foot=comm; <?php } ?>
+				ini_add_comments(pID, '#comment_'+randID );
+			}if(pHead_type=='discussion'){ 
+				post.find('.pbPPHead').html('<i class="zmdi zmdi-comment-text-alt themeColor" style="font-size:30px"></i>');
+				<?php if(isset($_SESSION['user_id'])){  ?>
+				foot = comm+'<div class="pb-post-foot pb-post-input" id="comment_'+randID+'">'+
+					'<div class="row">'+
+						'<div class="col-xs-12 pb-va-rule">'+
+						 ' <form action="/includes/php/async.php?function=pb_add_comment&redirect=[current]" method="post" autocomplete="off">'+
+							 ' <input type="hidden" name="post_id" value="'+pID+'" >'+
+							 ' <input type="text" name="comment" placeholder="Chime in" class="pb-post-input-text">'+
+							 ' <div class="pb-post-send-icon"><i class="zmdi zmdi-mail-send"></i></div>'+
+							 ' <input type="submit" value="Go" name="add_comment" class="pb-post-input-submit">'+
+						  '</form>'+
+						'</div>'+
+					'</div>'+
+				'</div>';
+				<?php }else{ ?> foot=comm; <?php } ?>
+			}
+			
+			var img = post.find('.pb-post-product').attr('src');
+			if(!img){ post.find('.pb-post-product').remove(); }
+			
+			var tagsHTML = post.find('.pb-post-tags').attr('data-tags');
+			tagsHTML=tagsHTML.split(',');
+			post.find('.pb-post-tags ul').empty();
+			$.each( tagsHTML, function( key, tag ) { 
+				post.find('.pb-post-tags ul').append('<li><a href="/s/'+tag+'">'+tag+'</a></li>'); 
 			});
-			//$('#freewall_loading').remove();
-		    $('#freewall').append(html);
-			ini_grid();
-		}//end success
-	});// end agax
-}
+			
+			post.find('.pb-post-foot-fill').append(foot);
+		}
+		
+	});
+}	
 $(document).ready(function(){
-	var min=1;
-	var max=20;
-	var scrollINterval=20;
-	pb_infinite_feed(min, max);
-	$(window).scroll(function() {		
-	   if($(window).scrollTop() + $(window).height()-200 == $(document).height()-200) {
-	      min=min+scrollINterval;
-	      max=max+scrollINterval;
-	      pb_infinite_feed(min, max);
-	   }
+	var JsonURI = 'http://pccbay.localhost/graph/feed?accessToken=<?php print pb_graph_token('9827354187582375129873'); ?>&loop=1';
+	$( 'div#freewall' ).lazyjson({
+	    api: {
+	        uri: JsonURI
+	    },
+	    afterLoad: function (res) {
+		    ini_grid_ext(JsonURI);
+		    ini_grid();
+	    },
+	   pagination: {
+			active: true,
+			pages: 1,
+			count: 12,
+			lazyLoad: true
+		},
+		loaderImg: '/images/interior-images/loader.gif',
+	    noResults: '<div id="lj-noresponse" style="text-align:center;padding:20px;"></div>',
+	    noResultsText: 'No More Post',
 	});
 });
 </script>
-<?php pb_include('/MasterPages/footer.php'); ?>
 
 </body>
 </html>
