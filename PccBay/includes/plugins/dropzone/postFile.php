@@ -8,7 +8,7 @@ $backStep = '../../../';
 
 $date_format = 'Y_m_j';
 
-$cropImagesWidth = 700;
+$cropImagesWidth = 900;
 
 $albumURL = $backStep.'/images/user-data/'.date($date_format).'/';
 

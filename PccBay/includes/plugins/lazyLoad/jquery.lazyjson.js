@@ -1,21 +1,13 @@
-/*
- * LazyJSON Plugin
- * Version: 1.0.0 (Mon, 15 Oct 2012)
- * https://github.com/rpnzl/jquery-lazyjson
- *
- * Copyright 2012, Michael Giuliana
- * http://rpnzl.com
- *
- * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
- */
-
+//https://github.com/rpnzl/jquery-lazyjson/tree/v1.0#usage
 (function (window, console, $) {
 
 	'use strict';
 
 	// Main Plugin
 	$.fn.lazyjson = function (settings) {
+		
+		
+		var docHeight = $(document).height();
 
 		// Vars
 		var _this           = this,
@@ -30,6 +22,7 @@
 			data            = {},
 			response		= null,
 			template,
+			loadOffset		= docHeight/3,
 			options         = $.extend(true, {}, $.fn.lazyjson.defaults, settings);
 
 
@@ -56,7 +49,7 @@
 
 					$(window).scroll(function () {
 						var position = _this.position();
-						if (($(window).height() + $(window).scrollTop()) > (position.top + _this.height())) {
+						if (($(window).height() + $(window).scrollTop()) > (position.top + _this.height()-loadOffset)) {
 							currEvent = 'lazyLoad';
 							_this.load();
 						}
@@ -424,7 +417,8 @@
 		templatePrefix: 'template-',
 		
 		// The loader element, will also accept a jQuery object
-		loader: '<div id="lj-loader" style="text-align:center;padding:20px;"><img /></div>',
+		//loader: '<div id="lj-loader" style="text-align:center;padding:20px;"><img /></div>',
+		loader: '<div id="lj-loader" style="text-align:center;padding:20px;"></div>',
 		
 		// The URL or path to the loader image to assign to the loader object
 		loaderImg: null,

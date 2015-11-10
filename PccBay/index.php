@@ -104,9 +104,12 @@
 		</div>
 	</div>
 	
-<script src="/includes/plugins/lazyLoad/jquery.lazyjson.min.js"></script>
+
+<script src="/includes/plugins/lazyLoad/jquery.lazyjson.js"></script>
 <?php pb_include('/MasterPages/footer.php'); ?>
 <script>
+var iniTimer;
+var iniTimerInterval = 200;
 function ini_add_comments(post_id, el){
 	comm='';
 	$.ajax({
@@ -134,11 +137,15 @@ function ini_add_comments(post_id, el){
 			});//end each
 			$(el).before(comm);
 			comm='';
+			clearTimeout(iniTimer);
+			iniTimer = setTimeout(ini_grid, iniTimerInterval);
 	    }//end success
 	});// end agax
 }	
 function ini_grid_ext(JsonURI){
-	$('.grid-item').each(function(){
+	var gridItems = $('.grid-item');
+	var count = gridItems.length;
+	gridItems.each(function(){
 		var post = $(this);
 		var pID = post.find('.pb-post-foot-fill').attr('data-post-id');
 		var pIfo = post.find('.pbPPHead');
@@ -158,7 +165,7 @@ function ini_grid_ext(JsonURI){
 							'<div class="row">'+
 								'<div class="col-xs-12 text-center">'+
 								 ' <a href="/item?id='+pID+'" class="feed-post-tab-link transition-300">'+
-								    '<span class="feed-post-tab"><i class="zmdi zmdi-money-box"></i> View This Item</span>'+
+								    '<span class="feed-post-tab"><i class="zmdi zmdi-chevron-right"></i> More about this</span>'+
 								 '</a>'+
 								'</div>'+
 							'</div>'+
@@ -202,39 +209,42 @@ function ini_grid_ext(JsonURI){
 			if(!img){ post.find('.pb-post-product').remove(); }
 			
 			var tagsHTML = post.find('.pb-post-tags').attr('data-tags');
-			tagsHTML=tagsHTML.split(',');
-			post.find('.pb-post-tags ul').empty();
-			$.each( tagsHTML, function( key, tag ) { 
-				post.find('.pb-post-tags ul').append('<li><a href="/s/'+tag+'">'+tag+'</a></li>'); 
-			});
+			if(tagsHTML.length>0){
+				tagsHTML=tagsHTML.split(',');
+				post.find('.pb-post-tags ul').empty();
+				$.each( tagsHTML, function( key, tag ) { 
+					post.find('.pb-post-tags ul').append('<li><a href="/s/'+tag+'">'+tag+'</a></li>'); 
+				});
+			}
 			
 			post.find('.pb-post-foot-fill').append(foot);
 		}
-		
 	});
 }	
 $(document).ready(function(){
-	var JsonURI = 'http://pccbay.localhost/graph/feed?accessToken=<?php print pb_graph_token('9827354187582375129873'); ?>&loop=1';
+	var JsonURI = 'http://pccbay.localhost/graph/feed?accessToken=<?php print pb_graph_token('9827354187582375129873'); ?>&loop=5';
 	$( 'div#freewall' ).lazyjson({
 	    api: {
 	        uri: JsonURI
 	    },
 	    afterLoad: function (res) {
+		    clearTimeout(iniTimer);
 		    ini_grid_ext(JsonURI);
 		    ini_grid();
 	    },
 	   pagination: {
 			active: true,
 			pages: 1,
-			count: 12,
+			count: 20,
 			lazyLoad: true
 		},
-		loaderImg: '/images/interior-images/loader.gif',
-	    noResults: '<div id="lj-noresponse" style="text-align:center;padding:20px;"></div>',
-	    noResultsText: 'No More Post',
+		loaderImg: null,
+		//loader: '<div id="lj-loader" style="text-align:center;padding:20px;"></div>',
+		noResults: '<div id="lj-noresponse" style="text-align:center;padding:20px;"></div>',
+		noResultsText: 'No More Post',
 	});
 });
-</script>
 
+</script>
 </body>
 </html>

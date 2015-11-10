@@ -4,3 +4,11 @@
 		<?php topTags(20); ?>
 	</ul>
 </div>
+
+<label>Price Range</label>
+<input type="range" step="5" />
+<br />
+
+<label> Price </label>
+<input type="range" step="5" />
+<br />

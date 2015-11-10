@@ -126,37 +126,16 @@ function handleHash(hash){
 
 function ini_grid(){
 	var pb_post_plider_width = $('.pb-post-content').width();
-	$( window ).resize(function() {
-	  pb_post_plider_width = $('.pb-post-content').width();	
-	});	
-	$('.pb-post-slider').flexslider({
-		animation: "slide",
-		animationLoop: false,
-		itemWidth: pb_post_plider_width,
-		itemMargin: 0,
-		directionNav: true, 
-		controlNav: false,
-		slideshow: false
-	});
+	$( window ).resize(function() { pb_post_plider_width = $('.pb-post-content').width(); });
 	var wall = new Freewall("#freewall");
 	wall.reset({
 		selector: '.grid-item',
 		animate: true,
 		cellW: pb_post_plider_width,
 		cellH: 'auto',
-		onResize: function() {
-			wall.fitWidth();
-		}
+		onResize: function() { wall.fitWidth(); },
 	});
-	
-	wall.container.find('.grid-item img').load(function() {
-		wall.fitWidth();
-	});
-	$(window).trigger('resize');
-	
-	$("img.lazy").lazyload();
-	
-	//tinysort('#freewall .grid-item',{attr:'data-sort',order:'desc'});
+	wall.fitWidth();
 }
 
 
