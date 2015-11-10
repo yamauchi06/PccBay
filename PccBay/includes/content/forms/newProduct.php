@@ -138,9 +138,23 @@ $(document).ready(function(){
 	$("div#Post_Upload_photos").dropzone({ 
 		url: "/includes/plugins/dropzone/postFile.php",
 		success: function(file, response){
+			file['newname'] = response.replace(/"/, '').replace(/ /, '');
             uploaded_images.push( response.replace(/"/, '').replace(/ /, '') );
             $('[name="product_images"]').val(uploaded_images);
-        }
+        },
+        addRemoveLinks: true,
+		removedfile: function(file, response) {    
+		    $.ajax({
+		        type: 'POST',
+		        url: '/includes/plugins/dropzone/delete.php',
+		        data: "id="+file.newname,
+		        dataType: 'html',
+		        success: function(data) {
+			        var _ref;
+					return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+			    }
+		    });
+		}
 	});
 	
 	$('[name="product_price"]').number( true, 2 );

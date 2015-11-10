@@ -178,7 +178,7 @@ function ini_grid_ext(JsonURI){
 						'<div class="col-xs-12 pb-va-rule">'+
 						  '<form action="/includes/php/async.php?function=pb_add_comment&redirect=[current]" method="post" autocomplete="off">'+
 							 ' <input type="hidden" name="post_id" value="'+pID+'" >'+
-							  '<input type="text" name="comment" placeholder="Answer Qestion" class="pb-post-input-text">'+
+							  '<input type="text" name="comment" placeholder="Write a comment" class="pb-post-input-text">'+
 							 ' <div class="pb-post-send-icon"><i class="zmdi zmdi-mail-send"></i></div>'+
 							 ' <input type="submit" value="Go" name="add_comment" class="pb-post-input-submit">'+
 						  '</form>'+
@@ -195,7 +195,7 @@ function ini_grid_ext(JsonURI){
 						'<div class="col-xs-12 pb-va-rule">'+
 						 ' <form action="/includes/php/async.php?function=pb_add_comment&redirect=[current]" method="post" autocomplete="off">'+
 							 ' <input type="hidden" name="post_id" value="'+pID+'" >'+
-							 ' <input type="text" name="comment" placeholder="Chime in" class="pb-post-input-text">'+
+							 ' <input type="text" name="comment" placeholder="Write a comment" class="pb-post-input-text">'+
 							 ' <div class="pb-post-send-icon"><i class="zmdi zmdi-mail-send"></i></div>'+
 							 ' <input type="submit" value="Go" name="add_comment" class="pb-post-input-submit">'+
 						  '</form>'+

@@ -497,6 +497,10 @@ legend{
 	padding: 5px;
 	margin: 0px;
 }
+
+.pb_Pdesc{
+	font-size: 13px;
+}
 .pb-post-product{
 	width: 100%;
 	margin: 0px 0px;
@@ -579,6 +583,7 @@ legend{
 	padding-right: 15%;
 	outline: none;
 	box-shadow: inset 1px 1px 3px rgba(222,222,222,0.58);
+	font-size: 13px;
 }
 
 .pb-post-input-text:focus{

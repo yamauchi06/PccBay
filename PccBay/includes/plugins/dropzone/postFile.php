@@ -3,6 +3,7 @@ session_name('com_pccbay_user');
 session_start('');	
 
 include_once('../../php/_db-config.php');	
+include_once('../../php/commonFunctions.php');	
 	 
 $backStep = '../../../';
 
@@ -10,9 +11,13 @@ $date_format = 'Y_m_j';
 
 $cropImagesWidth = 900;
 
+$convetimageTo = 'jpg';
+
 $albumURL = $backStep.'/images/user-data/'.date($date_format).'/';
 
 $imagePath = '/images/user-data/'.date($date_format).'/';
+
+$newImageNameAndId = pb_new_id('pb_safe_image', 'uid', 10); 
 
 
 function exit_status($str){
@@ -59,15 +64,6 @@ function convertImage($originalImage, $outputImage, $quality)
     return 1;
 }
 
-function generateRandomString($length = 20) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
-    }
-    return $randomString;
-}
 
 if(!file_exists($albumURL)){
 	if (!mkdir($albumURL, 0777)) {
@@ -82,8 +78,9 @@ function addToDb($title, $size, $type, $file, $string){
 		global $password;
 		global $dbname;
 		global $_POST;
+		global $newImageNameAndId;
 		
-		$uid = generateRandomString();
+		$uid = $newImageNameAndId;
 		$alt = $title;
 		$date = date("F j, Y, g:i a");
 		$author = $_SESSION['user_id'];
@@ -116,16 +113,14 @@ if(isset($_FILES['file'])){
     $move = move_uploaded_file($file_tmp, $albumURL.$_FILES['file']['name']);
     if($move){
 	    $ext = get_extension($_FILES['file']['name']);
-	    $newName = sha1( md5(date("F-j-Y_g-i-a:s").'_').generateRandomString() );	 
+	    $newName = $newImageNameAndId;	 
 	    rename(''.$albumURL.''.$_FILES['file']['name'], ''.$albumURL.''.$newName.'.'.$ext);
 
-/*
-	    if($ext !== 'jpg'){
-		    convertImage($albumURL.$newName.'.'.$ext, $albumURL.$newName.'.jpg', 100);
+	    if($ext !== $convetimageTo){
+		    convertImage($albumURL.$newName.'.'.$ext, $albumURL.$newName.'.'.$convetimageTo, 100);
 		    unlink($albumURL.$newName.'.'.$ext);
-		    $ext = 'jpg';
+		    $ext = $convetimageTo;
 	    }
-*/
 
 		$width = $cropImagesWidth;		
 		$Thumb = $albumURL.$newName.'.'.$ext;

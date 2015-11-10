@@ -1,7 +1,7 @@
 <?php
 	include('commonFunctions.php');
 	
-	print pb_graph_token('9827354187582375129873');
+	print pb_new_id('pb_safe_image', 'uid', 7);
 	
 /*
 	function pb_add_tag($tag, $count){
