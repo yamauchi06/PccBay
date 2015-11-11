@@ -746,6 +746,10 @@ legend{
 }
 
 
+.pb-myComm{
+	border-left: 2px #e0e0df solid;
+}
+
 .pb-comment-inline {
 	border-top: 1px #F5F7FA solid;
 }

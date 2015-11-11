@@ -110,3 +110,9 @@ a:hover {
 
 
 .oh-top-menu li a:hover, .oh-top-menu li a.active{ background: <?php echo $brandColor; ?>; }
+
+
+
+.pb-myComm{
+	border-left: 2px <?php echo $brandColor; ?> solid;
+}

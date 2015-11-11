@@ -16,6 +16,7 @@
 				data-type="{{type}}"
 				data-price="{{product_info.price}}"
 				data-comment-count="{{comments.count}}"
+				data-user-id="{{user.id}}"
 				data-done="false"
 				></span>
 			</div>

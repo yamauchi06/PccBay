@@ -110,7 +110,7 @@
 <script>
 var iniTimer;
 var iniTimerInterval = 200;
-function ini_add_comments(post_id, el){
+function ini_add_comments(post_id, el, autheroId){
 	comm='';
 	$.ajax({
 	    url: 'http://pccbay.localhost/graph/comments?accessToken=<?php print pb_graph_token('9827354187582375129873'); ?>&timeago=true&q='+post_id,
@@ -121,7 +121,11 @@ function ini_add_comments(post_id, el){
 		},
 	    success: function(data) {
 		    $.each( data, function( key, comment ) { 
-			     comm+='<div class="col-md-12 pb-post pb-comment-inline">'+
+			     myComm='';
+			     if(comment.author==autheroId){
+				     myComm='pb-myComm'
+			     }
+			     comm+='<div class="col-md-12 pb-post pb-comment-inline '+myComm+'">'+
 			    	'<div class="pb-post-block">'+
 			            '<div class="pb-post-head-noB">'+
 			                '<img class="pb-post-avatar" src="'+comment.user.avatar+'">'+
@@ -152,6 +156,7 @@ function ini_grid_ext(JsonURI){
 		var pHead_type = pIfo.attr('data-type');
 		var pHead_price = pIfo.attr('data-price');
 		var alreadyRan = pIfo.attr('data-done');
+		var autheroId = pIfo.attr('data-user-id');
 		var comments_count = pIfo.attr('data-comment-count');
 		var comm='',foot='';
 		var randID = Math.floor(Math.random() * 100000);
@@ -165,7 +170,7 @@ function ini_grid_ext(JsonURI){
 							'<div class="row">'+
 								'<div class="col-xs-12 text-center">'+
 								 ' <a href="/item?id='+pID+'" class="feed-post-tab-link transition-300">'+
-								    '<span class="feed-post-tab"><i class="zmdi zmdi-chevron-right"></i> More about this</span>'+
+								    '<span class="feed-post-tab"><i class="zmdi zmdi-chevron-right"></i> more about this</span>'+
 								 '</a>'+
 								'</div>'+
 							'</div>'+
@@ -186,7 +191,7 @@ function ini_grid_ext(JsonURI){
 					'</div>'+
 				'</div>';
 				<?php }else{ ?> foot=comm; <?php } ?>
-				ini_add_comments(pID, '#comment_'+randID );
+				ini_add_comments(pID, '#comment_'+randID, autheroId);
 			}if(pHead_type=='discussion'){ 
 				post.find('.pbPPHead').html('<i class="zmdi zmdi-comment-text-alt themeColor" style="font-size:30px"></i>');
 				<?php if(isset($_SESSION['user_id'])){  ?>
