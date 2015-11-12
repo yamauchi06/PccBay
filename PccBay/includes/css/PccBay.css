@@ -120,6 +120,7 @@ a:hover{
 
 .MainFeed{
 	padding-top: 15px;
+	margin-bottom: 100px;
 }
 .MainSideBar{
 	background-color: #ffffff;
@@ -500,6 +501,7 @@ legend{
 
 .pb_Pdesc{
 	font-size: 13px;
+	word-wrap: break-word;
 }
 .pb-post-product{
 	width: 100%;
@@ -1110,23 +1112,32 @@ form hr{
   }
 }
 
-/*
 
 #lj-loader{
 	position: absolute;
-	bottom: -38px;
+	bottom: -80px;
 	left: 45%;
 	z-index: 999999;
 }
-*/
+
 #lj-noresponse{
 	position: absolute;
-	bottom: -40px;
-	left: 45%;
+	text-align: center;
+	width: 100%;
+	bottom: -80px;
+	left: 0px;
 	z-index: 999999;
 	font-weight: bold;
 	text-shadow: 1px 1px 1px #f3f3f3;
 	color: rgba(161, 162, 163, 0.76);
+}
+
+#lj-loader img{
+	width: 40px;
+	opacity: 0.3;
+}
+#lj-noresponse h3{
+	font-size: 30px;
 }
 
 

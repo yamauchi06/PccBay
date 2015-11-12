@@ -124,9 +124,10 @@ function handleHash(hash){
 	}
 }
 
-function ini_grid(){
+function ini_grid(ini_gridCount){
 	var pb_post_plider_width = $('.pb-post-content').width();
 	$( window ).resize(function() { pb_post_plider_width = $('.pb-post-content').width(); });
+
 	var wall = new Freewall("#freewall");
 	wall.reset({
 		selector: '.grid-item',

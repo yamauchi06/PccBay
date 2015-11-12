@@ -1,4 +1,3 @@
-
 <div class="<?php if(!isset($_SESSION['user_id'])){print 'col-md-3';}else{print 'col-md-4';} ?> 
 	pb-post grid-item grid-noWall" id="template-freewall">
 	<div class="pb-post-block">

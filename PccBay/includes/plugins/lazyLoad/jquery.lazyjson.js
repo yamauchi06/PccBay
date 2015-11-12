@@ -22,7 +22,7 @@
 			data            = {},
 			response		= null,
 			template,
-			loadOffset		= docHeight/3,
+			loadOffset		= docHeight/2,
 			options         = $.extend(true, {}, $.fn.lazyjson.defaults, settings);
 
 
@@ -128,7 +128,7 @@
 
 			// No Results
 			if (!(options.noResults instanceof jQuery)) {
-				options.noResults = $(options.noResults).text(options.noResultsText);
+				options.noResults = $(options.noResults).append(options.noResultsText);
 			}
 
 			/*----------------------

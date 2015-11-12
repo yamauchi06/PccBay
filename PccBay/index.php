@@ -105,7 +105,6 @@
 	</div>
 	
 
-<script src="/includes/plugins/lazyLoad/jquery.lazyjson.js"></script>
 <?php pb_include('/MasterPages/footer.php'); ?>
 <script>
 var iniTimer;
@@ -164,7 +163,7 @@ function ini_grid_ext(JsonURI){
 			pIfo.attr('data-done', 'true');
 			if(pHead_type=='product'){ 
 				if(!pHead_price){ pHead_price='Free'; }
-				post.find('.pb_Pdesc').remove();
+				post.find('.pb_Pdesc').html( '<p>'+post.find('.pb_Pdesc').text().split(/\s+/).slice(1,50).join(" ")+'...</p>' );	
 				post.find('.pbPPHead').html('<span class="themeColor">$ '+pHead_price+'</span>');
 				foot = '<div class="pb-post-foot" id="comment_'+randID+'">'+
 							'<div class="row">'+
@@ -175,7 +174,8 @@ function ini_grid_ext(JsonURI){
 								'</div>'+
 							'</div>'+
 						'</div>';
-			}if(pHead_type=='question'){ 
+			}
+			if(pHead_type=='question'){ 
 				post.find('.pbPPHead').html('<i class="zmdi zmdi-pin-help themeColor" style="font-size:30px"></i><sub>'+comments_count+'</sub>');
 				<?php if(isset($_SESSION['user_id'])){  ?>
 				foot = comm+'<div class="pb-post-foot pb-post-input" id="comment_'+randID+'">'+
@@ -227,7 +227,8 @@ function ini_grid_ext(JsonURI){
 	});
 }	
 $(document).ready(function(){
-	var JsonURI = 'http://pccbay.localhost/graph/feed?accessToken=<?php print pb_graph_token('9827354187582375129873'); ?>&loop=5';
+	var ini_gridCount=0;
+	var JsonURI = 'http://pccbay.localhost/graph/feed?accessToken=<?php print pb_graph_token('9827354187582375129873'); ?>&loop=20';
 	$( 'div#freewall' ).lazyjson({
 	    api: {
 	        uri: JsonURI
@@ -235,7 +236,10 @@ $(document).ready(function(){
 	    afterLoad: function (res) {
 		    clearTimeout(iniTimer);
 		    ini_grid_ext(JsonURI);
-		    ini_grid();
+		    if(ini_gridCount===0){
+			    ini_grid(ini_gridCount);
+		    }
+		    ini_gridCount++;
 	    },
 	   pagination: {
 			active: true,
@@ -243,10 +247,10 @@ $(document).ready(function(){
 			count: 20,
 			lazyLoad: true
 		},
-		loaderImg: null,
-		//loader: '<div id="lj-loader" style="text-align:center;padding:20px;"></div>',
-		noResults: '<div id="lj-noresponse" style="text-align:center;padding:20px;"></div>',
-		noResultsText: 'No More Post',
+		loaderImg: '/images/interior-images/spiffygif_30x30.gif',
+		loader: '<div id="lj-loader"><img /></div>',
+		noResults: '<div id="lj-noresponse"></div>',
+		noResultsText: '<h3>No More Post</h3>',
 	});
 });
 
