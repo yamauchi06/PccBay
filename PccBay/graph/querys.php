@@ -65,7 +65,7 @@ else if($_GET['page']=='users'){
 	if(empty($query)){
 		$sql = "SELECT * FROM pb_users";
 	}else{
-		$sql = "SELECT * FROM pb_users WHERE user_id='$query'";
+		$sql = "SELECT * FROM pb_users WHERE (user_id='$query' OR username='$query')";
 	}
 }
 
@@ -86,5 +86,12 @@ else if($_GET['page']=='notify'){
 	}else{
 		$sql = "SELECT * FROM pb_notify"; 
 	}
+}
+
+else if($_GET['page']=='search'){ 
+	$slq_table = 'pb_search';
+	$sql =  "SELECT * ".
+	        "FROM pb_post, pb_tags ".
+	        "WHERE (pb_post.product_id LIKE '$query' OR pb_tags.tag = '$query') ";
 }	
 ?>

@@ -26,6 +26,7 @@
 <script src="/includes/plugins/bootstrap-wysiwyg/prettify.js"></script>
 <script src="/includes/plugins/bootstrap-wysiwyg/bootstrap-wysihtml5.js"></script>
 
+<script src="/includes/plugins/devbridgeAutocomplete/jquery.autocomplete.js"></script>
 
 <script src="/includes/plugins/freewall/freewall.js"></script>
 <!-- <script src="/includes/plugins/Masonry/masonry.min.js"></script> -->

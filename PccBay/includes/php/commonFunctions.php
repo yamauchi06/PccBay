@@ -126,10 +126,21 @@
 		}$conn->close();
 	}
 	
+	function pb_include_globals($include){
+		$split = explode('?', $include);
+		$array=array();
+		parse_str(parse_url($include, PHP_URL_QUERY), $array);
+		foreach($array as $param){
+			${$param} = $array[$param];
+		}
+		return $split[0];
+	}
+	
 	function pb_include($include, $root=true, $includeTimes='', $Global='', $useif='false'){
 		$includeEX = explode('~', $include);
 		$include=$includeEX[0];
 		if(!empty($includeEX[1])){$include_cmd=$includeEX[1];}
+		//$include=pb_include_globals($include);
 		if($root){ $include = $_SERVER['DOCUMENT_ROOT'].$include; }
 		if(file_exists($include)){
 			if($includeTimes == 'once'){
@@ -330,8 +341,8 @@
 		
 	}
 	
-	function pb_graph_token($app_id, $expire='days'){
-		return file_get_contents('http://'.domain().'/graph/accessToken.php?app_id='.$app_id.'&expire='.$expire);
+	function pb_graph_token($app_id='', $secret='', $expire='days'){
+		return json_decode(file_get_contents('http://'.domain().'/graph/accessToken.php?app_id='.$app_id.'&secret='.$secret.'&expire='.$expire))->token;
 	}
 	
 	function pb_user_data($user_id, $row){

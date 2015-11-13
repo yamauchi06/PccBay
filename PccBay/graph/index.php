@@ -11,11 +11,15 @@
 
 	// Default var set
 	$mainJson = array();
-	$query='';if(isset($_GET['q'])){$query=$_GET['q'];}
+	$query='';if(isset($_GET['q'])){$query=$_GET['q'];}if($query=='null'){$query='';}
 	$listBy='DESC';if(isset($_GET['l'])){$listBy=$_GET['l'];}
 	
 	//Set Query
 	if(isset($_GET['page'])){
+		if($_GET['page']=='smartsearch'){
+			include('smartsearch.php');
+			exit;
+		}
 		include('querys.php'); }else{
 		array_push($mainJson, 'Query not defined'); }
 		

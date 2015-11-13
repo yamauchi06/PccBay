@@ -112,7 +112,7 @@ var iniTimerInterval = 200;
 function ini_add_comments(post_id, el, autheroId){
 	comm='';
 	$.ajax({
-	    url: 'http://pccbay.localhost/graph/comments?accessToken=<?php print pb_graph_token('9827354187582375129873'); ?>&timeago=true&q='+post_id,
+	    url: 'http://pccbay.localhost/graph/comments?accessToken=<?php print pb_graph_token('9827354187582375129873', '712638715312875'); ?>&timeago=true&q='+post_id,
 	    dataType: 'json',
 	    type: 'GET',
 	    error: function(xhr, error){
@@ -227,8 +227,10 @@ function ini_grid_ext(JsonURI){
 	});
 }	
 $(document).ready(function(){
+	var tail='null';
+	if(thispage().indexOf('@') !== -1){ tail=thispage().substring(1); userUrl(tail); }
 	var ini_gridCount=0;
-	var JsonURI = 'http://pccbay.localhost/graph/feed?accessToken=<?php print pb_graph_token('9827354187582375129873'); ?>&loop=20';
+	var JsonURI = 'http://pccbay.localhost/graph/feed?accessToken=<?php print pb_graph_token('9827354187582375129873', '712638715312875'); ?>&loop=20&q='+tail;
 	$( 'div#freewall' ).lazyjson({
 	    api: {
 	        uri: JsonURI

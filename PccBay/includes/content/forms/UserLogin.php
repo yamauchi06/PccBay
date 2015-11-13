@@ -14,6 +14,14 @@
 		<a class="btn btn-block btn-social btn-google" href="/?sessionSet=user_id&value=10000607254332">
 			<i class="fa fa-google"></i> Sign in as Steve Jobs
 		</a>
+		
+		
+		<a class="btn btn-block btn-social btn-soundcloud" href="/?sessionSet=user_id&value=9286529385629835">
+			<i class="fa fa-soundcloud"></i> Sign in as Test User 1
+		</a>
+		<a class="btn btn-block btn-social btn-tumblr" href="/?sessionSet=user_id&value=1982418468126194826">
+			<i class="fa fa-tumblr"></i> Sign in as Test User 2
+		</a>
 	</div>
 	
 </div>

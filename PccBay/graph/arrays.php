@@ -98,6 +98,7 @@ if($slq_table=='pb_users'){
 	if(isset($_GET['timeago'])){ $val['date']=time_ago(strtotime($val['date'])); }
 	$entity = array(
 		'user_id' => $val['user_id'],
+		'username' => $val['username'],
 		'num_of_ratings' => $val['num_of_ratings'],
 		'total_ratings' => $val['total_ratings'],
 		'permissions' => $val['permissions'],
@@ -135,6 +136,18 @@ if($slq_table=='pb_notify'){
 		'link' => $val['link'],
 		'date' => $val['date'],
 		'seen' => $val['seen'],
+	);
+	array_push($mainJson, $entity);
+}
+// end pb_notify
+
+
+
+//pb_notify
+if($slq_table=='pb_search'){
+	$entity = array(
+		'id' => $val['tag_id'],
+		'title' => $val['tag']
 	);
 	array_push($mainJson, $entity);
 }

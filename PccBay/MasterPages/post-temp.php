@@ -4,7 +4,7 @@
 		<div class="pb-post-head">
 			<img src="{{user.avatar}}" class="pb-post-avatar" />
 			<div class="pb-post-author">
-				<strong><a href="/@{{user.username}}">{{user.name}}</a></strong><br />
+				<strong><a href="/@{{user.id}}">{{user.name}}</a></strong><br />
 				<span class="pb-post-timestamp"> <i class="pb-post-timestamp-o">
 				{{timestamp.laps}}
 				</i></span>

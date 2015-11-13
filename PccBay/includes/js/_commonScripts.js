@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	
+	var API_Assess_Token = pb_graph_token('9827354187582375129873', '712638715312875');
+	
 	
 	// User Sidebar Tabs
 	$(".MainSideBar nav a").click(function(event){
@@ -58,6 +60,28 @@ $(document).ready(function(){
 	});
 	
 	
+	pb_delay(1000, function(){
+		$('#headerSearch').devbridgeAutocomplete({
+		    serviceUrl: '/graph/smartsearch?accessToken=rootbypass_9827354187582375129873',
+		    paramName: 'q',
+		    groupBy: 'category',
+		    onSelect: function (suggestion) {
+		       var type=suggestion.data.category,id=suggestion.data.id,title=suggestion.value;
+		       if(type=="product"){ href('/item?id='+id); }
+		       if(type=="user"){ href('/@'+id); }
+		       if(type=="tag"){ href('/s/'+title); }
+		    },
+			onSearchComplete: function (query, suggestions) {
+				if(suggestions){
+					$('.autocomplete-suggestions').show();
+				}else{
+					$('.autocomplete-suggestions').hide();
+				}
+			}
+		});
+		
+	})
+	
 });
 
 
@@ -96,6 +120,21 @@ $('img.svg').each(function(){
 });
 
 
+function thispage(){
+	var page = window.location.href.split('/');
+	return page[page.length-1];
+}
+
+function userUrl(user_id){
+	$.ajax({
+		url: '/graph/users?accessToken=rootbypass_9827354187582375129873&q='+user_id, 
+		dataType: 'json',
+		success: function(result){
+			window.history.replaceState("@"+result[0].username, result[0].username, "/@"+result[0].username);
+		},
+	});
+}
+
 function htmlentities(string){
 	string
 	.replace(/'/, '&#39;')
@@ -127,11 +166,10 @@ function handleHash(hash){
 function ini_grid(ini_gridCount){
 	var pb_post_plider_width = $('.pb-post-content').width();
 	$( window ).resize(function() { pb_post_plider_width = $('.pb-post-content').width(); });
-
 	var wall = new Freewall("#freewall");
 	wall.reset({
 		selector: '.grid-item',
-		animate: true,
+		animate: false,
 		cellW: pb_post_plider_width,
 		cellH: 'auto',
 		onResize: function() { wall.fitWidth(); },
@@ -139,4 +177,24 @@ function ini_grid(ini_gridCount){
 	wall.fitWidth();
 }
 
+function pb_graph_token(app_id, expire){
+	$.ajax({
+		url: '/graph/accessToken.php?app_id='+app_id, 
+		dataType: 'text',
+		success: function(result){
+			return result;
+		},
+	});
+}
+
+
+function pb_delay(time, func, funcParam){
+	setTimeout(
+	  function() 
+	  {
+	    func(funcParam);
+	  }, time);
+}
+
+function href(url){ window.location.href = url; }
 

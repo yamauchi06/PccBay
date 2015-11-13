@@ -1,9 +1,9 @@
 <?php
 $lifeSpans    = array('seconds'=>'s','minutes'=>'i','hours'=>'g','days'=>'j','months'=>'F','years'=>'Y');
 $timespan     = $lifeSpans['days'];
-$accessToken .= $app_id.date($timespan).$val['user'].$val['user_data'];
+$accessToken .= $app_id.date($timespan).$val['user'].$val['user_data'].$val['secret'];
 $accessToken .= date($timespan).$app_id.$val['user_data'];
-$accessToken  = str_rot13($accessToken);
+$accessToken  = str_rot13($accessToken).$val['secret'];
 $accessToken  = strtolower($accessToken);
 $accessToken  = str_replace(' ', '0', $accessToken);
 $accessToken  = str_replace('a', '0', $accessToken);
@@ -310,5 +310,5 @@ $accessToken  = str_replace('h', '_', $accessToken);
 $key          = mb_substr(sha1(md5($accessToken)), 5, 15);
 $first400     = substr($key, 0, 10);
 $theRest      = substr($key, 10);
-$accessToken  = md5($accessToken).':'.$first400.'-'.$theRest;	
+$accessToken  = md5($accessToken).':'.$first400.'-'.$theRest.'-'.$val['permissions'];	
 ?>

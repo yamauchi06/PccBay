@@ -116,3 +116,7 @@ a:hover {
 .pb-myComm{
 	border-left: 2px <?php echo $brandColor; ?> solid;
 }
+
+.autocomplete-suggestion strong{
+	border-color:<?php echo $brandColor; ?>;
+}

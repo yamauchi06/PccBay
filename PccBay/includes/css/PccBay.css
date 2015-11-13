@@ -130,7 +130,7 @@ a:hover{
 	right: 0px;
 	padding: 0px;
 	padding-top: 55px;
-	z-index: 99999;
+/* 	z-index: 99999; */
 }
 .MainSideBar nav a{
 	font-size: 30px;
@@ -753,12 +753,12 @@ legend{
 }
 
 .pb-comment-inline {
-	border-top: 1px #F5F7FA solid;
+	border-top: 1px #ffffff solid;
 }
 
 .pb-comment-inline .pb-post-block{
-	background: #ffffff;
-	border: 2px #ffffff solid;
+	background: #fcfcfc;
+	border: 2px #fcfcfc solid;
 	border-radius: 0px;
 	min-height: 20px;
 	vertical-align: top;
@@ -1228,4 +1228,98 @@ input[type=range]:focus::-ms-fill-lower {
 }
 input[type=range]:focus::-ms-fill-upper {
   background: #3A5795;
+}
+
+
+
+.autocomplete-suggestions::-webkit-scrollbar {
+	width:  4px;
+}
+
+.autocomplete-suggestions::-webkit-scrollbar-thumb {
+	background: #d7d7d7;
+}
+
+.autocomplete-suggestions::-webkit-scrollbar-track {
+	background: #f6f6f6;
+}
+.autocomplete-wrapper{
+
+}
+
+.autocomplete-suggestions{
+	max-height: 300px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	box-shadow: 1px 1px 5px rgba(110,110,110,0.90);
+	display: none;
+	position: fixed !important;
+	top: 50px !important;
+	color: #5a5a5a;
+}
+.autocomplete-suggestion, .autocomplete-group{
+	width: 100%;
+	padding: 10px;
+	min-height: 25px;
+	font-size: 14px;
+	border-top: 1px #f6f6f6 solid;
+	border-top: none;
+	background: #ffffff;
+	text-transform: capitalize;
+}
+.autocomplete-suggestion:last-child{
+	border-bottom: none;
+}
+
+
+.autocomplete-suggestion:hover{
+	background: #F5F7FA;
+	cursor: pointer;
+}
+
+.autocomplete-suggestion .acri{
+	width: 25px;
+	height: 25px;
+	float: left;
+	margin-right: 5px;
+	border-radius: 2px;
+	text-align: center;
+}
+.autocomplete-suggestion .acri.img{
+	margin-top: -2px;
+}
+.autocomplete-suggestion .acri.zmdi{
+	padding-top: 1px;
+	font-size: 18px;
+}
+
+.autocomplete-suggestion .acri.zmdi-tag{
+	font-size: 15px;
+	-ms-transform: rotate(-45deg); /* IE 9 */
+    -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */
+    transform: rotate(-45deg);
+}
+
+.autocomplete-suggestion strong{
+	font-weight: 400;
+	border-bottom: 1px solid silver;
+}
+
+.autocomplete-group{
+	border-bottom: 1px #d7d7d7 solid;
+	border-top: 1px #d7d7d7 solid;
+	font-weight: thin;
+	padding: 5px;
+	height: 25px;
+	text-align: left;
+	font-size: 11px;
+}
+.autocomplete-group strong{
+	font-weight: thin;
+	padding-left: 5px;
+}
+.autocomplete-group strong:after{
+	content: "s";
 }

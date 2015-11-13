@@ -40,18 +40,21 @@
 			<div class="col-md-2 col-md-offset-3" id="headerBtns"></div>
 			<div class="col-md-4">
 			    <div class="input-group MainSearchBox transition-300">
-			      <input type="text" class="form-control" placeholder="Search PCCbay">
+			      <input type="text" class="form-control" placeholder="Search PCCbay" id="headerSearch">
 			      <span class="input-group-btn">
 			        <button class="btn" type="button"> <span class="glyphicon glyphicon-search"></span> </button>
 			      </span>
 			    </div>
+			    <div class="autocomplete-wrapper">
+					<div class="autocomplete-suggestions col-md-12"></div>
+				</div>
 			</div>
 		</div>
 	</header>
 	
 	<!-- Begin Content -->
 	<div class="Oldman"></div>
-<?php pb_include('/MasterPages/footer.php~col-md-12'); ?>
+<?php pb_include('/MasterPages/footer.php'); ?>
 <script>
 $(document).ready(function(){
 	$('.Oldman').css({
