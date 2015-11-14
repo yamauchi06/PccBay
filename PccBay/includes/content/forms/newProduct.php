@@ -7,6 +7,7 @@
 			<ul>
 				<li><a href="#" data-form="New_Post_Product" class="active">Product</a></li>
 				<li><a href="#" data-form="New_Post_Question">Question</a></li>
+				<li><a href="/services">Service</a></li>
 <!-- 				<li><a href="#" data-form="New_Post_Discussion">Discussion</a></li> -->
 			</ul>
 		</div>

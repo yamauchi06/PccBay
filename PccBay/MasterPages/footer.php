@@ -1,10 +1,11 @@
-<footer class="<?php pb_isset(pb_isset_session('user_id'), 'col-md-9', 'col-md-12');  if(isset($include_cmd)){print ' '.$include_cmd;} ?>">
-	<div style="float: left;">
-		<a href="#">Privacy Policy</a> |
-		<a href="#">FAQ's</a>
-	</div>
-	&copy; copyright <?php print date('Y'); ?>, PCCbay.com All rights reserved.<!-- <br /><em>Secure data is not stored localy</em> --> 
-</footer>
+<?php 
+	$footerFullWidth='true';
+	if($footerFullWidth=='true'){
+		pb_include('/MasterPages/footer-fullWidth.php');
+	}else{
+		pb_include('/MasterPages/footer-partWidth.php');
+	}
+?>
 
 
 

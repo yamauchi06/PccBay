@@ -6,14 +6,12 @@
 		
 		<h2 class="pb-theme-green">Invite Someone To<br />PCCBay.com</h2>
 		<p>
-			The more you invite the more points you Earn.<br />
+			The more you invite the more points you earn.<br />
 			When they respond you get more!
 		</p>
 		<div class="pb-half-rule"></div><br />
 		<p>
-			<code class="pb-theme-green">
-				http://s.pccbay.com/Xt5y22i
-			</code>
+			<input class="codeSelect pb-theme-green" value="http://.s.pccbay.com/Xt5y22i">
 		</p>
 		
 	</div>

@@ -1,7 +1,7 @@
 /* overHead */
 .overHeadPullout{
 	background: #E6E9ED;
-	z-index: 9999;
+	z-index: 999;
 	position: fixed;
 	height: 0%; 
 /* 	width: 100%;  */

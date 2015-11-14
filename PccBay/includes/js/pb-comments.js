@@ -46,7 +46,7 @@
 					            	'<div class="pb-menu-icon"><i class="zmdi zmdi-chevron-down"></i></div>'+
 					                '<img class="pb-post-avatar" src="'+user_data[0].avatar+'">'+
 					                '<div class="pb-post-author">'+
-					                   ' <strong><a href="/@'+user_data[0].username+'">'+user_data[0].name+'</a></strong><br>'+
+					                   ' <strong><a href="/@'+user_data[0].id+'">'+user_data[0].name+'</a></strong><br>'+
 					                    '<span class="pb-post-timestamp"><i class="pb-post-timestamp-o">'+data[i].date+'</i></span>'+
 					                '</div>'+
 					            '</div>'+

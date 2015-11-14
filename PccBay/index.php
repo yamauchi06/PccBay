@@ -129,7 +129,7 @@ function ini_add_comments(post_id, el, autheroId){
 			            '<div class="pb-post-head-noB">'+
 			                '<img class="pb-post-avatar" src="'+comment.user.avatar+'">'+
 			                '<div class="pb-post-author">'+
-			                   	'<strong><a href="/@'+comment.user.username+'">'+comment.user.name+'</a></strong><br>'+
+			                   	'<strong><a href="/@'+comment.user.id+'">'+comment.user.name+'</a></strong><br>'+
 			                    '<span class="pb-post-timestamp"><i class="pb-post-timestamp-o">'+comment.date+'</i></span>'+
 			                '</div>'+
 			            '</div>'+
