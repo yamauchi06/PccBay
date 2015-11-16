@@ -687,7 +687,7 @@
 					if(suggestion.data.category=='question'){
 						imagePlace = '<div class="acri zmdi zmdi-pin-help" />'; 
 					}
-					if(suggestion.data.category=='product' || suggestion.data.category=='user'){
+					if(suggestion.data.category=='product' || suggestion.data.category=='user' || suggestion.data.category=='service'){
 						imagePlace = '<div class="acri img" style="'+imgCss+'" />'; 
 					}
                 html += '<div class="' + className + '" data-index="' + i + '">' + imagePlace + formatResult(suggestion, value) + '</div>';

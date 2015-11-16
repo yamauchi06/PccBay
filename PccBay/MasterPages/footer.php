@@ -1,6 +1,6 @@
-<?php 
-	$footerFullWidth='true';
-	if($footerFullWidth=='true'){
+<?php
+	if(!isset($include_cmd)){$include_cmd='col-md-9';} 
+	if($include_cmd=='col-md-12'){
 		pb_include('/MasterPages/footer-fullWidth.php');
 	}else{
 		pb_include('/MasterPages/footer-partWidth.php');

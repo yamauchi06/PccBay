@@ -246,6 +246,7 @@ a:hover{
 	padding: 10px 15px;
 	margin-bottom: 10px;
 	border: 1px #2C3E50 solid;
+	background: transparent;
 	border-radius: 3px;
 	color: #2C3E50;
 	cursor: pointer;
@@ -1232,6 +1233,71 @@ form hr{
 }
 
 
+.pb-upload-file{
+	background: #fcfcfc;
+	border: 2px dashed #E6E9ED;
+	border-radius: 3px;
+	height: 98px;
+	width: 98px;
+	display: inline-block;
+	text-align: center;
+	position: relative;
+}
+.pb-upload-file:hover{
+	background: #f7f7f7;
+	border: 2px dashed #c9ccd0;
+	cursor: pointer;
+}
+.pb-upload-file-long{
+	width: 200px;
+	height: 70px;
+}
+.pb-upload-file .icon{
+	font-size: 50px;
+	opacity: 0.1;
+	vertical-align: middle;
+	margin-top: 17px;
+}
+.pb-upload-file-long .icon{
+	margin-top: 2px;
+}
+.pb-upload-file.pb-dropzone .dz-preview .dz-image{
+	height: 94px;
+	width: 94px;
+	margin: 0px;
+}
+.pb-upload-file.pb-dropzone .dz-preview{
+	margin: 0px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.pb-upload-file-long.pb-dropzone .dz-preview .dz-image{
+	height: 68px;
+	width: 196px;
+	margin: 0px;
+}
+.pb-upload-file-long.pb-dropzone .dz-preview{
+	margin: 0px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+.pb-dropzone .dz-preview{
+	min-height: 10px;
+}
+.dz-details{
+	display: none;
+}
+.dz-message .text{
+	font-size: 10px;
+	opacity: 0.3;
+	display: block;
+	margin-top: -2px;
+}
+
+
 
 input[type=range] {
   -webkit-appearance: none;
@@ -1413,4 +1479,37 @@ input[type=range]:focus::-ms-fill-upper {
 }
 .autocomplete-group strong:after{
 	content: "s";
+}
+
+
+.typeahead-result{
+	max-height: 300px;
+	width: 300px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	box-shadow: 1px 1px 5px rgba(110,110,110,0.90);
+	top: 50px !important;
+	color: #5a5a5a;
+	position: absolute;
+	z-index: 99999;
+	background: #ffffff;
+}
+.typeahead-result ul{
+	list-style: none;
+	margin: 0px;
+	padding: 5px;
+}
+
+.typeahead-result ul li a{
+	text-decoration: none;
+	border-top: 1px #f6f6f6 solid;
+	padding: 10px;
+	display: block;
+}
+.typeahead-result ul li a:hover{
+	background: #F5F7FA;
+	cursor: pointer;
+	text-decoration: none; 
 }

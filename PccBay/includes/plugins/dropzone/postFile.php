@@ -83,7 +83,8 @@ function addToDb($title, $size, $type, $file, $string){
 		$uid = $newImageNameAndId;
 		$alt = $title;
 		$date = date("F j, Y, g:i a");
-		$author = $_SESSION['user_id'];
+		$author='Guest';
+		if(isset($_SESSION['user_id'])){ $author = $_SESSION['user_id']; }
 		$conn = new mysqli($servername, $username, $password, $dbname);
 		if ($conn->connect_error) {
 		    die("Connection failed: " . $conn->connect_error);

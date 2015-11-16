@@ -47,7 +47,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>PCCbay | The eBay for PCC</title>
+		<title><?php print domain('title'); ?> | The eBay for PCC</title>
 		<?php pb_include('/MasterPages/head.php'); ?>
 	</head>	
 <body>

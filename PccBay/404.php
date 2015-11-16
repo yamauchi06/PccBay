@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>PCCbay | The eBay for PCC</title>
+		<title><?php print domain('title'); ?> | The eBay for PCC</title>
 		<?php pb_include('/MasterPages/head.php'); ?>
 		<style>
 		.Oldman{
@@ -40,7 +40,7 @@
 			<div class="col-md-2 col-md-offset-3" id="headerBtns"></div>
 			<div class="col-md-4">
 			    <div class="input-group MainSearchBox transition-300">
-			      <input type="text" class="form-control" placeholder="Search PCCbay" id="headerSearch">
+			      <input type="text" class="form-control" placeholder="Search <?php print domain('title'); ?>" id="headerSearch">
 			      <span class="input-group-btn">
 			        <button class="btn" type="button"> <span class="glyphicon glyphicon-search"></span> </button>
 			      </span>

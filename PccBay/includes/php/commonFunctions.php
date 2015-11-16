@@ -4,8 +4,50 @@
 	if(!empty($_GET['sessionSet'])){ $_SESSION[$_GET['sessionSet']] = $_GET['value']; }
 	if(!empty($_GET['sessionUnSet'])){ unset( $_SESSION[$_GET['sessionUnSet']] ); }
 	
-	function domain(){
-		return $_SERVER['HTTP_HOST'];
+	// START PB DATABASE CONNECTIONS
+	function pb_sql_connect(){
+		$conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
+		if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); }
+		return $conn;
+	}
+	function pb_sql_query($conn, $sql){ 
+		return $conn->query($sql); 
+	}
+	function pb_db($sql, $callback='', $callbackNoResults=''){
+		$conn=pb_sql_connect();
+		$query=pb_sql_query($conn, $sql);
+		$conn->close();
+		if($callback==''){
+			return $query;
+		}else{
+			if ($query->num_rows > 0) {
+				while($row = $query->fetch_assoc()) {
+					$callback($row);
+				}
+			}else{
+				if(function_exists($callbackNoResults)){
+					$callbackNoResults();
+				}else{
+					return $callbackNoResults;
+				}
+			}
+		}
+	}
+	// END PB DATABASE CONNECTIONS
+
+	function domain($type='url'){
+		if($type=='url'){
+			return $_SERVER['HTTP_HOST'];
+		}
+		if($type=='title'){
+			return 'PCCbay';
+		}
+		if($type=='domain'){
+			return 'PCCbay.com';
+		}
+		if($type=='tagline'){
+			return 'The eBay for PCC';
+		}
 	}
 	
 	function rand_str($kind='mixed', $length = 10) {
@@ -25,17 +67,19 @@
 	
 	function pb_new_id($table, $row, $length, $kind='mixed') {
 		$token = rand_str($kind, $length);
-		global $servername;global $username;global $password;global $dbname;
-		$conn = new mysqli($servername, $username, $password, $dbname);
-		if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);} 
-		$sql = "SELECT * FROM $table Where $row='$token'";
-		$result = $conn->query($sql);
+		$result = pb_db("SELECT * FROM $table Where $row='$token'");
 		if ($result->num_rows > 0) { 
 			generateUniqueID();	
 		}else{
 			return $token;
 		}
-		$conn->close();
+	}
+	
+	function postorget($var){
+		if(isset($_GET[$var])){ $type='GET'; $result=$_GET[$var]; }
+		if(isset($_POST[$var])){ $type='POST'; $result=$_POST[$var]; }
+		if(empty($result)){$result=null;}
+		return $result;
 	}
 	
 	function get_words($sentence, $count = 8) {
@@ -107,14 +151,7 @@
 	}
 	
 	function pb_safe_image($unique_id, $method='image', $attr='', $popup='true', $html='{{image}}'){
-		global $servername;
-		global $username;
-		global $password;
-		global $dbname;
-		$conn = new mysqli($servername, $username, $password, $dbname);
-		if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);} 
-		$sql = "SELECT * FROM pb_safe_image Where uid='$unique_id'";
-		$result = $conn->query($sql);
+		$result = pb_db("SELECT * FROM pb_safe_image Where uid='$unique_id'");
 		if ($result->num_rows > 0) {
 		    while($row = $result->fetch_assoc()) {
 			    $size=explode(':', $row['size']);
@@ -123,7 +160,7 @@
 		        if($method=='image'){  $results = '<img src="'.$row['string'].'" alt="'.$row['alt'].'" title="'.$row['title'].'" '.$attr.' />';}
 		        if($method=='image-lazy'){$results = '<img src="'.$row['string'].'" '.$attr.' />';}
 		    }print str_replace('{{image}}', $results, $html);
-		}$conn->close();
+		}
 	}
 	
 	function pb_include_globals($include){
@@ -140,7 +177,6 @@
 		$includeEX = explode('~', $include);
 		$include=$includeEX[0];
 		if(!empty($includeEX[1])){$include_cmd=$includeEX[1];}
-		//$include=pb_include_globals($include);
 		if($root){ $include = $_SERVER['DOCUMENT_ROOT'].$include; }
 		if(file_exists($include)){
 			if($includeTimes == 'once'){
@@ -174,194 +210,31 @@
 		}
 	}
 	
-	function topTags($limit){
-		global $servername;
-		global $username;
-		global $password;
-		global $dbname;
-		$conn = new mysqli($servername, $username, $password, $dbname);
-		if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);} 
-		$sql = "SELECT * FROM pb_tags ORDER BY count DESC LIMIT $limit";
-		$result = $conn->query($sql);
-		if ($result->num_rows > 0) {
-		    while($row = $result->fetch_assoc()) {
-			 	print '<li><a href="/s/'.$row['tag'].'">'.ucwords($row['tag']).'</a></li>';   
-		    }
-		}$conn->close();
-	}
-	
-	
-	function pb_json_feed($Posttype='product', $from='*', $retrieve='*', $loop=0){
-		global $servername;
-		global $username;
-		global $password;
-		global $dbname;
-		$type_sql = " AND type='$Posttype' ";
-
-		if($from=='*'){
-			$sql = "SELECT * FROM pb_post Where status='open' AND (type='product' OR type='question') ORDER BY product_id DESC";
+	function loggedClass($in, $out){
+		if(isset($_SESSION['user_id'])){
+			print $in;
 		}else{
-			$sql = "SELECT * FROM pb_post Where user_id='$from' AND status='open' AND (type='product' OR type='question') ORDER BY product_id DESC";
+			print $out;
 		}
-		$mainJson = array();
-		$l=0;
-		while($l <= $loop){
-			$conn = new mysqli($servername, $username, $password, $dbname);
-			if ($conn->connect_error) {
-			    die("Connection failed: " . $conn->connect_error);
-			} 
-			
-			$result = $conn->query($sql);
-			if ($result->num_rows > 0) {
-			    while($val = $result->fetch_assoc()) {
-					$entity = array(
-						'id' => $val['product_id'],
-						'type' => $val['type'],
-						'author_id' => $val['user_id'],
-						'product_info' => $val['product_info'],
-						'trans_info' => $val['trans_info'],
-						'status' => $val['status']
-					);
-					array_push($mainJson, $entity);
-					
-					$product_info = json_decode($val['product_info']);
-					$trans_info = json_decode($val['trans_info']);
-			    }
-			}
-			$conn->close();
-		$l++;	
-		}//end
-		
-		return json_encode($mainJson);
-		
 	}
-		
 	
-
-	function pb_feed($loop=1, $from='*', $show='*', $retrieve='*'){
-		$json = pb_json_feed($show, $from);
-		$jsonIterator = json_decode($json, TRUE);
-		$i=1;
-		while($i<=$loop){
-			foreach ($jsonIterator as $key => $val) {
-				$product_info = json_decode($val['product_info']);
-				foreach($product_info as $entity){
-					$val['price'] = $entity->price;
-					$val['Condition'] = $entity->condition;
-					$val['categories'] = $entity->tags;
-					$val['images'] = $entity->images;
-					$val['date'] = $entity->timestamp;
-					$val['title'] = $entity->title;
-					$val['desc'] = $entity->desc;
-				}
-				$user_data = json_decode(pb_user_data($val['author_id'], 'user_data'), true);
-				foreach($user_data as $data){
-					$pb_user['name']=$data['name'];
-					$pb_user['username']=$data['username'];
-					$pb_user['avatar']=$data['avatar'];
-					$pb_user['registered']=date("F d, Y", strtotime($data['registered']));
-					$pb_user['theme']=$data['theme'];
-				} 
-				
-			    ?>
-			    <div class="<?php pb_isset(pb_isset_session('user_id'), 'col-md-4', 'col-md-3') ?> pb-post grid-item" id="pb_post_<?php print $val['id']; ?>">
-					<div class="pb-post-block">
-						<div class="pb-post-head">
-							<img src="<?php print $pb_user['avatar']; ?>" class="pb-post-avatar" />
-							<div class="pb-post-author">
-								<strong><a href="/@<?php print $pb_user['username']; ?>"><?php print $pb_user['name']; ?></a></strong><br />
-								<span class="pb-post-timestamp"> <i class="pb-post-timestamp-o">
-								<?php  print time_ago( strtotime($val['date']) ); ?>
-								</i></span>
-							</div>
-							<div class="pb-post-price">
-								<?php 
-									if($val['type']=='product'){ 
-										print '<span class="themeColor">$ '.$val['price'].'</span>';
-									}
-									else if($val['type']=='question'){
-										print '<i class="zmdi zmdi-pin-help themeColor" style="font-size:30px"></i>';
-										print '<sub>'. pb_comment_count($val['id']).'</sub>';
-									}
-									else if($val['type']=='discussion'){
-										print '<i class="zmdi zmdi-comment-text-alt themeColor" style="font-size:30px"></i>';
-									}
-								?>
-							</div>
-						</div>
-						<div class="pb-post-content">
-							<?php
-								print pb_if(
-									$val['type']=='product',
-									'<h4>'.htmlspecialchars_decode($val['title']).'</h4>'
-								);	
-							?>
-							<div class="pb-post-slider flexslider">
-							  <ul class="slides">
-								  <li>
-								  	<?php 
-									pb_safe_image(
-										explode(',', $val['images'])[0], 
-										'image-lazy', ' class="pb-post-product lazy" ',
-										$popup='false', $html='<a href="/item?id='.$val['id'].'">{{image}}</a>'
-									); 
-									?>
-								  </li>
-							  </ul>
-							</div>
-							<p>
-								<?php
-								print pb_if(
-									$val['type']=='question' || $val['type']=='discussion',
-									'<strong>'.htmlspecialchars_decode($val['title']).'</strong> <br />'.htmlspecialchars_decode($val['desc']).''
-								);	
-								?>
-							</p>
-							
-							<div class="pb-post-tags">
-								<ul>
-									<?php
-									$cats = explode(',', $val['categories']);
-									if(count($cats) >= 1){
-										foreach ($cats as $index => $category) {
-											print '<li><a href="/s/'.str_replace(' ', '+', $category).'">'.ucwords($category).'</a></li>';
-										}
-									}
-									?>
-								</ul>
-							</div>
-						</div>
-						<?php pb_include('/includes/php/postParts/postFooter.php', true, '', $val); ?>
-					</div>
-				</div>
-			    <?php
-			}
-		$i++;	
-		}
-		
-	}
+	function topTags($limit){
+		pb_db("SELECT * FROM pb_tags ORDER BY count DESC LIMIT $limit", function($row){
+			print '<li><a href="/s/'.$row['tag'].'">'.ucwords($row['tag']).'</a></li>';
+		});
+	}	
 	
 	function pb_graph_token($app_id='', $secret='', $expire='days'){
 		return json_decode(file_get_contents('http://'.domain().'/graph/accessToken.php?app_id='.$app_id.'&secret='.$secret.'&expire='.$expire))->token;
 	}
 	
 	function pb_user_data($user_id, $row){
-		global $servername;
-		global $username;
-		global $password;
-		global $dbname;
-		$conn = new mysqli($servername, $username, $password, $dbname);
-		if ($conn->connect_error) {
-		    die("Connection failed: " . $conn->connect_error);
-		} 
-		$sql = "SELECT * FROM  pb_users Where (user_id='$user_id' OR username='$user_id' OR id_card_key='$user_id')";
-		$result = $conn->query($sql);
+		$result = pb_db("SELECT * FROM  pb_users Where (user_id='$user_id' OR username='$user_id' OR id_card_key='$user_id')");
 		if ($result->num_rows > 0) {
 		    while($sqlrow = $result->fetch_assoc()) {
 				return $sqlrow[$row];
 		    }
 		}
-		$conn->close();
 	}
 	
 	function pb_user_permission($user_id, $get, $style){
@@ -387,36 +260,16 @@
 	}
 	
 	function pb_table_data($table, $row, $where){
-		global $servername;
-		global $username;
-		global $password;
-		global $dbname;
-		$conn = new mysqli($servername, $username, $password, $dbname);
-		if ($conn->connect_error) {
-		    die("Connection failed: " . $conn->connect_error);
-		} 
-		$sql = "SELECT * FROM $table Where $where";
-		$result = $conn->query($sql);
+		$result = pb_db("SELECT * FROM $table Where $where");
 		if ($result->num_rows > 0) {
 		    while($sqlrow = $result->fetch_assoc()) {
 				return $sqlrow[$row];
 		    }
 		}
-		$conn->close();
 	}
-	
-	
+
 	function pb_my_notifications($user_id){
-		global $servername;
-		global $username;
-		global $password;
-		global $dbname;
-		$conn = new mysqli($servername, $username, $password, $dbname);
-		if ($conn->connect_error) {
-		    die("Connection failed: " . $conn->connect_error);
-		} 
-		$sql = "SELECT * FROM  pb_notify Where notify_to IN ($user_id) AND seen='0'";
-		$result = $conn->query($sql);
+		$result = pb_db("SELECT * FROM  pb_notify Where notify_to IN ($user_id) AND seen='0'");
 		if ($result->num_rows > 0) {
 		    while($row = $result->fetch_assoc()) {
 			    $tm=$row['item'];
@@ -443,92 +296,46 @@
 		}else{
 			print '<p style="text-align:center">No new notifications.</p>';
 		}
-		$conn->close();
 	}
 	
 	function pb_update_notifications($id, $seen){
-		global $servername;
-		global $username;
-		global $password;
-		global $dbname;
-		$conn = new mysqli($servername, $username, $password, $dbname);
-		if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); } 
-		$sql = "UPDATE pb_notify SET seen='$seen' WHERE id='$id'";
-		if ($conn->query($sql) === TRUE) {
-			//done
-		} else {
-		    echo "Error updating record: " . $conn->error;
-		}
-		$conn->close();
+		pb_db("UPDATE pb_notify SET seen='$seen' WHERE id='$id'");
 	}
 	
 	function pb_notify($to, $from, $item, $intro, $content, $link){
-		global $servername;global $username;global $password;global $dbname;
-		$conn = new mysqli($servername, $username, $password, $dbname);
-		if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); }
 		$date = date("F j, Y, g:i:s a");			
-		$sql = "INSERT INTO pb_notify (notify_to, notify_from, item, intro, content, link, date, seen) 
-		VALUES ('$to', '$from', '$item', '$intro', '$content', '$link', '$date', '0') ";
-		if ($conn->query($sql) === TRUE) {
-			//print 'done';
-		} else {
-			echo "Error notifying: " . $conn->error;
-		}
-		$conn->close(); 
+		pb_db("INSERT INTO pb_notify (notify_to, notify_from, item, intro, content, link, date, seen) 
+		VALUES ('$to', '$from', '$item', '$intro', '$content', '$link', '$date', '0')"); 
 	}
 	
 	function pb_add_product($user_id) {
-		global $servername;
-		global $username;
-		global $password;
-		global $dbname;
-		global $_POST;
 		$post_type = $_POST['post_type'];
-		$conn = new mysqli($servername, $username, $password, $dbname);
-		if ($conn->connect_error) {
-		    die("Connection failed: " . $conn->connect_error);
-		} 
-			$product_info = array();
-      		array_push($product_info, array(
-      			"timestamp" => "".date("F j, Y, g:i a")."",
-      			"title"     => "".htmlify( $_POST['product_title'] )."",
-      			"desc"      => "".htmlify( $_POST['product_desc'] )."",
-      			"tags"      => "".$_POST['product_tags']."",
-      			"price"     => "".$_POST['product_price']."",
-      			"condition" => "".$_POST['product_condition']."",
-      			"images" => "".$_POST['product_images'].""
-      		));
-      		
-         $product_info = json_encode($product_info);
-         
-         $trans_info = array();
-            array_push($trans_info, array(
-               "completed" => 0,
-               "method"    => 0,
-               "sold_to"   => 0,
-               "date_sold" => 0
-            ));
+		$product_info = array();
+  		array_push($product_info, array(
+  			"timestamp" => "".date("F j, Y, g:i a")."",
+  			"title"     => "".htmlify( $_POST['product_title'] )."",
+  			"desc"      => "".htmlify( $_POST['product_desc'] )."",
+  			"tags"      => "".$_POST['product_tags']."",
+  			"price"     => "".$_POST['product_price']."",
+  			"condition" => "".$_POST['product_condition']."",
+  			"images" => "".$_POST['product_images'].""
+  		));
+  		
+     $product_info = json_encode($product_info);
+     
+     $trans_info = array();
+        array_push($trans_info, array(
+           "completed" => 0,
+           "method"    => 0,
+           "sold_to"   => 0,
+           "date_sold" => 0
+        ));
       		
       	$trans_info = json_encode($trans_info);
-		$sql = "INSERT INTO pb_post (type, user_id, product_info, trans_info, status) VALUES ('$post_type', '$user_id','$product_info','$trans_info', 'open')";
-		
-		if ($conn->query($sql) === TRUE) {
-			//print 'done';
-		} else {
-		    echo "Error updating record: " . $conn->error;
-		}
-   	
-   	$conn->close();
+		pb_db("INSERT INTO pb_post (type, user_id, product_info, trans_info, status) VALUES ('$post_type', '$user_id','$product_info','$trans_info', 'open')");
 	}
-	
-	
-	
-	
+
 	function pb_update_account($user_id) {
-		global $servername;
-		global $username;
-		global $password;
-		global $dbname;
 		global $_POST;
 		//var_dump($_POST);
 		if(isset($_POST['account_residence'])){ $account_residence = 'true'; }else{ $account_residence = 'false'; }
@@ -559,52 +366,16 @@
   			"interest"     => "".$_POST['account_interest']."",
   		));
         $user_data = json_encode($user_data);
-		
-		$conn = new mysqli($servername, $username, $password, $dbname);
-	   	// Check connection
-		if ($conn->connect_error) {
-		    die("Connection failed: " . $conn->connect_error);
-		} 
-		
-		$sql = "UPDATE pb_users SET contact_info='$contact_info', user_data='$user_data' WHERE user_id='$user_id'";
-
-		if ($conn->query($sql) === TRUE) {
-			print "<script>$('#userThemeCSS').attr('href', '/includes/css/themes/".$_POST['account_theme'].".css');</script>";
-		} else {
-		    echo "Error updating record: " . $conn->error;
-		}
-
-		$conn->close();
+		pb_db("UPDATE pb_users SET contact_info='$contact_info', user_data='$user_data' WHERE user_id='$user_id'");
 	}
 	
 	function pb_add_comment($user_id) {
-      global $servername;
-		global $username;
-		global $password;
-		global $dbname;
-		global $_POST;
-		
-		$conn = new mysqli($servername, $username, $password, $dbname);
-		if ($conn->connect_error) {
-		    die("Connection failed: " . $conn->connect_error);
-		}
-      
         $current_date = date("F j, Y, g:i:s a");
 		$comment = htmlify($_POST['comment']);
 		$post_id = $_POST['post_id'];
-		
 		$post_owner = pb_table_data('pb_post', 'user_id', "product_id='$post_id'");
 		pb_notify($post_owner, $user_id, $post_id, 'Commented on', get_words($comment, 20), '/item?id='.$post_id);
-		
-		$sql = "INSERT INTO pb_comments (post_id, date, author, status, comment) VALUES ('$post_id', '$current_date','$user_id','open', '$comment')";
-		
-		if ($conn->query($sql) === TRUE) {
-			//print 'done';
-		} else {
-		    echo "Error adding commenting: " . $conn->error;
-		}
-   	
-   	$conn->close(); 
+		pb_db("INSERT INTO pb_comments (post_id, date, author, status, comment) VALUES ('$post_id', '$current_date','$user_id','open', '$comment')"); 
 	}
 	function pb_comment_count($post_id){
 		$json = json_decode( file_get_contents('http://'.domain().'/graph/index.php?page=comments&accessToken=rootbypass_9827354187582375129873&q='.$post_id.'&timeago=true') );$c=0;foreach($json as $data){ if(!empty($data->id)){$c++;} }return $c;
@@ -642,5 +413,12 @@
 			}
 		return $result;
 	}
-	
+
+	function pb_add_servise($user_id) {
+        $current_date = date("F j, Y, g:i:s a");
+		$about = htmlify($_POST['about']);
+		$service_id = pb_new_id('pb_services', 'service_id', 10, 'numbers');
+		pb_db("INSERT INTO pb_services (service_id, category, title, cost, location, hours, established, bio, cover, logo, owner, members, ratings, portfolio) 
+				VALUES ('$service_id', '$_POST[category]', '$_POST[title]', '$_POST[cost]', '$_POST[location]', '', '$current_date', '$about', '$_POST[profile_cover]', '$_POST[profile_img]', '$user_id', '', '', '$_POST[profile_logo]')");
+	}	
 ?>

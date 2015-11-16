@@ -70,6 +70,7 @@ $(document).ready(function(){
 		       if(type=="product"){ href('/item?id='+id); }
 		       if(type=="user"){ href('/@'+id); }
 		       if(type=="tag"){ href('/s/'+title); }
+		       if(type=="service"){ href('/services/'+id); }
 		    },
 			onSearchComplete: function (query, suggestions) {
 				if(suggestions){
@@ -203,4 +204,14 @@ function pb_delay(time, func, funcParam){
 }
 
 function href(url){ window.location.href = url; }
+
+function pb_remove_img(Image_ID, dataType, callback){
+	 $.ajax({
+        type: 'POST',
+        url: '/includes/plugins/dropzone/delete.php',
+        data: "id="+Image_ID,
+        dataType: dataType,
+        success: function(data) {  if(callback){ callback(data); }  }
+    });
+}
 

@@ -13,4 +13,9 @@
 	if(isset($_POST['add_comment'])) {
    		pb_add_comment($_SESSION['user_id']);
 	}
+	
+	// My Service
+	if(isset($_POST['add_servise'])) {
+   		pb_add_servise($_SESSION['user_id']);
+	}
 ?>

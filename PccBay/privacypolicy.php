@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>PCCbay | Privacy Policy</title>
+		<title><?php print domain('title'); ?> | Privacy Policy</title>
 		<?php pb_include('/MasterPages/head.php'); ?>
 	</head>	
 <body>
 	<header>		
-		<?php pb_include('/MasterPages/header.php'); ?>
+		<?php pb_include('/MasterPages/header-plain.php'); ?>
 	</header>
 	<?php pb_include('/MasterPages/MainMenu.php'); ?>
 	
@@ -37,7 +37,7 @@
 			<div class="col-lg-10 col-lg-offset-1 pb-page-block">
 				
 <h3>What is this Privacy Policy for?</h3>
-This privacy policy is for this website [www.websitename.co.uk] and served by [### COMPANY NAME ###] and governs the privacy of its users who choose to use it.
+This privacy policy is for this website <?php print domain('domain'); ?> and served by [### COMPANY NAME ###] and governs the privacy of its users who choose to use it.
 
 The policy sets out the different areas where user privacy is concerned and outlines the obligations & requirements of the users, the website and website owners. Furthermore the way this website processes, stores and protects user data and information will also be detailed within this policy.
 
