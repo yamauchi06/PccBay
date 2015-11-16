@@ -25,11 +25,7 @@
 					$callback($row);
 				}
 			}else{
-				if(function_exists($callbackNoResults)){
-					$callbackNoResults();
-				}else{
-					return $callbackNoResults;
-				}
+				if(function_exists($callbackNoResults)){ $callbackNoResults(); }else{ return $callbackNoResults; }
 			}
 		}
 	}

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 08, 2015 at 08:33 AM
+-- Generation Time: Nov 16, 2015 at 11:14 PM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `pb_comments` (
   `author` varchar(200) NOT NULL,
   `status` varchar(200) NOT NULL,
   `comment` longtext NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pb_comments`
@@ -47,7 +47,16 @@ INSERT INTO `pb_comments` (`id`, `post_id`, `date`, `author`, `status`, `comment
 (5, '10', 'November 7, 2015, 7:33 pm', '10000607254332', 'open', 'Ill Take it. although I invented it.'),
 (6, '14', 'November 7, 2015, 7:48 pm', '100006044469574', 'open', '42'),
 (7, '10', 'November 7, 2015, 8:06 pm', '10000607254332', 'open', 'whoopy'),
-(8, '1', 'November 8, 2015, 4:52:12 am', '100006044469574', 'open', 'Test comment');
+(8, '1', 'November 8, 2015, 4:52:12 am', '100006044469574', 'open', 'Test comment'),
+(9, '10', 'November 9, 2015, 7:52:10 pm', '100006044469574', 'open', 'test comment'),
+(10, '7', 'November 9, 2015, 7:52:36 pm', '100006044469574', 'open', 'test'),
+(11, '10', 'November 10, 2015, 2:58:56 am', '100001056120276', 'open', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'),
+(12, '10', 'November 10, 2015, 2:59:04 am', '100001056120276', 'open', ' Lorem Ipsum has been the industry'),
+(13, '10', 'November 10, 2015, 2:59:21 am', '10000607254332', 'open', 'took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into '),
+(14, '10', 'November 10, 2015, 2:59:48 am', '100006044469574', 'open', 'When should we do this'),
+(15, '14', 'November 11, 2015, 1:05:54 am', '100001056120276', 'open', 'thanks'),
+(16, '17', 'November 12, 2015, 10:14:34 pm', '9286529385629835', 'open', 'How much?'),
+(17, '17', 'November 16, 2015, 10:26:08 pm', '100001056120276', 'open', 'test commnt');
 
 -- --------------------------------------------------------
 
@@ -58,7 +67,9 @@ INSERT INTO `pb_comments` (`id`, `post_id`, `date`, `author`, `status`, `comment
 CREATE TABLE IF NOT EXISTS `pb_developers` (
   `id` int(200) NOT NULL,
   `app_id` varchar(200) NOT NULL,
+  `secret` varchar(200) NOT NULL,
   `user` varchar(200) NOT NULL,
+  `permissions` varchar(200) NOT NULL,
   `user_data` longtext NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
@@ -66,8 +77,8 @@ CREATE TABLE IF NOT EXISTS `pb_developers` (
 -- Dumping data for table `pb_developers`
 --
 
-INSERT INTO `pb_developers` (`id`, `app_id`, `user`, `user_data`) VALUES
-(1, '9827354187582375129873', 'root', '');
+INSERT INTO `pb_developers` (`id`, `app_id`, `secret`, `user`, `permissions`, `user_data`) VALUES
+(1, '9827354187582375129873', '712638715312875', 'root', 'rw', '');
 
 -- --------------------------------------------------------
 
@@ -85,21 +96,30 @@ CREATE TABLE IF NOT EXISTS `pb_notify` (
   `link` varchar(200) NOT NULL,
   `date` varchar(200) NOT NULL,
   `seen` int(200) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pb_notify`
 --
 
 INSERT INTO `pb_notify` (`id`, `notify_to`, `notify_from`, `item`, `intro`, `content`, `link`, `date`, `seen`) VALUES
-(1, '100006044469574', '100001056120276', '3', 'Commented on', 'Yummy!', '/item?id=3', 'November 7, 2015, 7:31 pm', 0),
+(1, '100006044469574', '100001056120276', '3', 'Commented on', 'Yummy!', '/item?id=3', 'November 7, 2015, 7:31 pm', 1),
 (2, '10000607254332', '100001056120276', '13', 'Commented on', 'The text on this page is messed up', '/item?id=13', 'November 7, 2015, 7:31 pm', 0),
-(3, '100006044469574', '100001056120276', '7', 'Commented on', 'Be smarter than the computer', '/item?id=7', 'November 7, 2015, 7:31 pm', 0),
-(4, '100006044469574', '10000607254332', '7', 'Commented on', 'Get a jobs', '/item?id=7', 'November 7, 2015, 7:32 pm', 0),
-(5, '100006044469574', '10000607254332', '10', 'Commented on', 'Ill Take it. although I invented it.', '/item?id=10', 'November 7, 2015, 7:33 pm', 0),
+(3, '100006044469574', '100001056120276', '7', 'Commented on', 'Be smarter than the computer', '/item?id=7', 'November 7, 2015, 7:31 pm', 1),
+(4, '100006044469574', '10000607254332', '7', 'Commented on', 'Get a jobs', '/item?id=7', 'November 7, 2015, 7:32 pm', 1),
+(5, '100006044469574', '10000607254332', '10', 'Commented on', 'Ill Take it. although I invented it.', '/item?id=10', 'November 7, 2015, 7:33 pm', 1),
 (6, '100001056120276', '100006044469574', '14', 'Commented on', '42', '/item?id=14', 'November 7, 2015, 7:48 pm', 0),
-(7, '100006044469574', '10000607254332', '10', 'Commented on', 'whoopy', '/item?id=10', 'November 7, 2015, 8:06 pm', 0),
-(8, '100001056120276', '100006044469574', '1', 'Commented on', 'Test comment', '/item?id=1', 'November 8, 2015, 4:52:12 am', 0);
+(7, '100006044469574', '10000607254332', '10', 'Commented on', 'whoopy', '/item?id=10', 'November 7, 2015, 8:06 pm', 1),
+(8, '100001056120276', '100006044469574', '1', 'Commented on', 'Test comment', '/item?id=1', 'November 8, 2015, 4:52:12 am', 0),
+(9, '100006044469574', '100006044469574', '10', 'Commented on', 'test comment', '/item?id=10', 'November 9, 2015, 7:52:10 pm', 1),
+(10, '100006044469574', '100006044469574', '7', 'Commented on', 'test', '/item?id=7', 'November 9, 2015, 7:52:36 pm', 1),
+(11, '100006044469574', '100001056120276', '10', 'Commented on', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', '/item?id=10', 'November 10, 2015, 2:58:56 am', 1),
+(12, '100006044469574', '100001056120276', '10', 'Commented on', '', '/item?id=10', 'November 10, 2015, 2:59:04 am', 1),
+(13, '100006044469574', '10000607254332', '10', 'Commented on', 'took a galley of type and scrambled it to make a type specimen book. It has survived not only five ', '/item?id=10', 'November 10, 2015, 2:59:21 am', 1),
+(14, '100006044469574', '100006044469574', '10', 'Commented on', 'When should we do this', '/item?id=10', 'November 10, 2015, 2:59:48 am', 0),
+(15, '100001056120276', '100001056120276', '14', 'Commented on', 'thanks', '/item?id=14', 'November 11, 2015, 1:05:54 am', 0),
+(16, '100006044469574', '9286529385629835', '17', 'Commented on', 'How much?', '/item?id=17', 'November 12, 2015, 10:14:34 pm', 0),
+(17, '100006044469574', '100001056120276', '17', 'Commented on', 'test commnt', '/item?id=17', 'November 16, 2015, 10:26:08 pm', 0);
 
 -- --------------------------------------------------------
 
@@ -114,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `pb_post` (
   `product_info` longtext NOT NULL COMMENT 'Product title, description, price, date created',
   `trans_info` varchar(1024) NOT NULL COMMENT 'sold to, date sold, payment method, transaction complete flag',
   `status` varchar(200) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pb_post`
@@ -128,11 +148,12 @@ INSERT INTO `pb_post` (`product_id`, `type`, `user_id`, `product_info`, `trans_i
 (5, 'product', '100006044469574', '[{"timestamp":"October 26, 2015, 6:34 pm","title":"Jailbroken iPhone 4S","desc":"Jailbroken iPhone 4S","tags":"phone,iphone","price":"100.00","condition":"34","images":"NfAsvbVKJn"}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
 (6, 'product', '100001056120276', '[{"timestamp":"October 26, 2015, 6:36 pm","title":"K-cups","desc":"","tags":"K-cups,coffee,drink","price":"20.00","condition":"91","images":"1A0kP9T75X"}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
 (7, 'question', '100006044469574', '[{"timestamp":"October 27, 2015, 12:01 am","title":"How to use PCCbay","desc":"Does anyone know how to use this?","tags":"FAQ,PCCbay,help","price":"","condition":"null","images":""}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
-(8, 'discussion', '100006044469574', '[{"timestamp":"October 27, 2015, 12:15 am","title":"Fine Arts","desc":"How About that child Prodigy","tags":"Prodigy,Fine Arts,Ethan Bortnick","price":"","condition":"null","images":"G6gbX9ICnT"}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
-(9, 'discussion', '100001056120276', '[{"timestamp":"October 27, 2015, 8:53 pm","title":"The Big Idea Behind PCCbay","desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec venenatis vehicula eros in dapibus. Nunc mattis neque porttitor tempor congue. Pellentesque convallis feugiat pretium. Donec maximus imperdiet ligula efficitur convallis. Proin hendrerit semper augue,","tags":"Lorem,ipsum,PCCbay","price":"","condition":"null","images":""}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
 (10, 'product', '100006044469574', '[{"timestamp":"October 31, 2015, 3:35 am","title":"2015 MacBook Pro with Retina display","desc":"<ol><li>2.7GHz Processor</li><li>2.7GHz dual-core Intel Core</li><li>i5 Turbo Boost up to 3.1GHz</li><li>8GB 1866MHz LPDDR3 memory 128GB PCIe-based flash storage</li></ol><ul><li>Intel Iris Graphics 6100</li><li>Built-in battery (10 hours)</li><li>2 Force Touch trackpad</li><li>Power adapter and power cord</li><li>AC Wall Plug</li></ul><p>A Mac includes 90 days of free telephone technical support and a one-year limited warranty. If you purchase the AppleCare Protection Plan, you can extend that coverage to three years from the original purchase date of your Mac 128 GB Storage</p>","tags":"MacBook Pro,Laptop,Computer,Mac,Apple","price":"1,299.00","condition":"80","images":"3dhALzY0OI,pBAXPpOsOR,9dbJWlQABt"}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
 (13, 'product', '10000607254332', '[{"timestamp":"November 1, 2015, 9:51 pm","title":"iPhone Collection","desc":"&lt;span&gt;Availableingold,silver,spacegray,androsegold,iPhone&amp;nbsp;6sfeaturesanA9chip,3D&amp;nbsp;Touch,ultrafastLTE&amp;nbsp;Advancedwireless,Touch&amp;nbsp;ID,a12MPiSightcamera,andiOS&amp;nbsp;9.&lt;br&gt;&lt;br&gt;&lt;/span&gt;A9chipwith64-bitarchitecture&lt;span&gt;EmbeddedM9motioncoprocessor&lt;br&gt;&lt;br&gt;&lt;/span&gt;&lt;span&gt;Second-generationfingerprintsensorbuiltintotheHomebutton&lt;br&gt;&lt;/span&gt;&lt;br&gt;Videoformatssupported:H.264videoupto1080p,60framespersecond,HighProfilelevel4.2withAAC-LCaudioupto160Kbps,48kHz,stereoaudioin.m4v,.mp4,and.movfileformats;MPEG-4videoupto2.5Mbps,640by480pixels,30framespersecond,SimpleProfilewithAAC-LCaudioupto160Kbpsperchannel,48kHz,stereoaudioin.m4v,.mp4,and.movfileformats;MotionJPEG(M-JPEG)upto35Mbps,1280by720pixels,30framespersecond,audioinulaw,PCMstereoaudioin.avifileformat&lt;span&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;/span&gt;","tags":"iphone,phone,apple","price":"300.00","condition":"100","images":"D5cOZeP8sO,23XGOCWxuW,5ckAZ8hxM6"}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
-(14, 'question', '100001056120276', '[{"timestamp":"November 5, 2015, 7:44 am","title":"The Meaning Of Life","desc":"What is the meaning of life?","tags":"life,meanings","price":"","condition":"null","images":""}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open');
+(14, 'question', '100001056120276', '[{"timestamp":"November 5, 2015, 7:44 am","title":"The Meaning Of Life","desc":"What is the meaning of life?","tags":"life,meanings","price":"","condition":"null","images":""}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
+(15, 'product', '10000607254332', '[{"timestamp":"November 8, 2015, 12:13 pm","title":"Lollipops","desc":"<span>One way to help prevent obesity is to exercise &#34;portion control&#34;. Dum Dums are a perfectly sized treat, providing a quick, high-flavor treat without consuming too much.<br></span><br>It is important to allow treats, such as candy and other snacks, in moderation rather than eliminate them. Children who learn the importance of balanced eating will be better-equipped to manage their own diet as adults.<br><br>Candy calories do not contribute a large percentage of the fat and sugar in the American diet. In fact, less than two percent of the fat and ten percent of the sugar in our diets are supplied by candy. Most of the fat actually comes from the high-fat animal products we eat. The main sources of sugar in America&rsquo;s diets are sugary beverages, baked goods, and frozen desserts. (Candy Myths from candyusa.org web site)<br>","tags":"food, candy","price":"","condition":"97","images":"BbnYnaMdaui6gMdARH9W"}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
+(16, 'product', '1982418468126194826', '[{"timestamp":"November 8, 2015, 12:43 pm","title":"Lego Iron Man","desc":"Blahhhhhhhhhh","tags":"lego,toy,toys,super hero","price":"1.00","condition":"32","images":"rkr5x2twOIImq9XpgiqL"}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open'),
+(17, 'question', '100006044469574', '[{"timestamp":"November 9, 2015, 11:27 pm","title":"Web Design","desc":"Whether you&#8217;re promoting services, a new book, or need an informational site for your organization, your website will be your most public face. A poorly designed website&#8212;or no website at all&#8212;will be a turn-off to prospective clients, something that should be avoided. We will discuss your specific needs and develop a site that&#8217;s not just attractive and well-functioning, but promotes your business even when you can&#8217;t.","tags":"web,design,art","price":"20.00","condition":"100","images":"W5mlYQsJFH,S9OMpzsJbz"}]', '[{"completed":0,"method":0,"sold_to":0,"date_sold":0}]', 'open');
 
 -- --------------------------------------------------------
 
@@ -149,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `pb_safe_image` (
   `author` varchar(200) NOT NULL,
   `file` varchar(200) NOT NULL,
   `string` longtext NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pb_safe_image`
@@ -173,7 +194,59 @@ INSERT INTO `pb_safe_image` (`id`, `uid`, `size`, `type`, `date`, `author`, `fil
 (17, '57BXJb3A7W', '235:235', 'jpg', 'October 31, 2015, 3:41 am', '100006044469574', 'a8c99d09a3cd14b42bc7b7bb47a203a427d64e30.jpg', '/images/user-data/2015_10_31/a8c99d09a3cd14b42bc7b7bb47a203a427d64e30.jpg'),
 (18, 'D5cOZeP8sO', '900:720', 'jpg', 'November 1, 2015, 9:51 pm', '10000607254332', '7d99da6a0535dc62d4396ace86557e23861420e5.jpg', '/images/user-data/2015_11_1/7d99da6a0535dc62d4396ace86557e23861420e5.jpg'),
 (19, '23XGOCWxuW', '900:675', 'jpg', 'November 1, 2015, 9:51 pm', '10000607254332', 'd1ee0ecc37adb651dea60af31df2f25c241458d2.jpg', '/images/user-data/2015_11_1/d1ee0ecc37adb651dea60af31df2f25c241458d2.jpg'),
-(20, '5ckAZ8hxM6', '900:600', 'jpg', 'November 1, 2015, 9:51 pm', '10000607254332', '396a269a3516dc79150b888cb390ed1bed9778b6.jpg', '/images/user-data/2015_11_1/396a269a3516dc79150b888cb390ed1bed9778b6.jpg');
+(20, '5ckAZ8hxM6', '900:600', 'jpg', 'November 1, 2015, 9:51 pm', '10000607254332', '396a269a3516dc79150b888cb390ed1bed9778b6.jpg', '/images/user-data/2015_11_1/396a269a3516dc79150b888cb390ed1bed9778b6.jpg'),
+(21, 'BbnYnaMdaui6gMdARH9W', '640:353', 'jpg', 'November 8, 2015, 7:13 pm', '10000607254332', '07e19fbe48efd44cd326ecb82a409e6759627fa6.jpg', '/images/user-data/2015_11_8/07e19fbe48efd44cd326ecb82a409e6759627fa6.jpg'),
+(22, 'rkr5x2twOIImq9XpgiqL', '300:244', 'jpg', 'November 8, 2015, 7:43 pm', '100006044469574', '9b2a54b257a71517e3c00f904577e495a8c9a466.jpg', '/images/user-data/2015_11_8/9b2a54b257a71517e3c00f904577e495a8c9a466.jpg'),
+(35, 'S9OMpzsJbz', '800:585', 'jpg', 'November 10, 2015, 11:03 pm', '100006044469574', 'S9OMpzsJbz.jpg', '/images/user-data/2015_11_10/S9OMpzsJbz.jpg'),
+(36, 'W5mlYQsJFH', '800:436', 'jpg', 'November 10, 2015, 11:03 pm', '100006044469574', 'W5mlYQsJFH.jpg', '/images/user-data/2015_11_10/W5mlYQsJFH.jpg'),
+(38, '2k8CsysXVL', '200:200', 'jpg', 'November 15, 2015, 4:17 am', '', '2k8CsysXVL.jpg', '/images/user-data/2015_11_15/2k8CsysXVL.jpg'),
+(39, 'xIczXxtMml', '200:200', 'jpg', 'November 15, 2015, 4:53 pm', '', 'xIczXxtMml.jpg', '/images/user-data/2015_11_15/xIczXxtMml.jpg'),
+(40, 'B6QeygzOsR', '900:600', 'jpg', 'November 15, 2015, 9:15 pm', '', 'B6QeygzOsR.jpg', '/images/user-data/2015_11_15/B6QeygzOsR.jpg'),
+(41, 'BlVNNU8PsS', '200:200', 'jpg', 'November 15, 2015, 9:16 pm', 'Guest', 'BlVNNU8PsS.jpg', '/images/user-data/2015_11_15/BlVNNU8PsS.jpg'),
+(42, 'nOXiSILxea', '900:600', 'jpg', 'November 15, 2015, 9:17 pm', 'Guest', 'nOXiSILxea.jpg', '/images/user-data/2015_11_15/nOXiSILxea.jpg'),
+(43, 'arDSrrYR9Z', '200:200', 'jpg', 'November 15, 2015, 9:17 pm', 'Guest', 'arDSrrYR9Z.jpg', '/images/user-data/2015_11_15/arDSrrYR9Z.jpg'),
+(44, 'M8pNkmfwYv', '900:962', 'jpg', 'November 15, 2015, 9:17 pm', 'Guest', 'M8pNkmfwYv.jpg', '/images/user-data/2015_11_15/M8pNkmfwYv.jpg'),
+(45, 'BTrswRAezN', '200:200', 'jpg', 'November 15, 2015, 9:22 pm', 'Guest', 'BTrswRAezN.jpg', '/images/user-data/2015_11_15/BTrswRAezN.jpg'),
+(46, 'YJCIfSnrRz', '900:962', 'jpg', 'November 15, 2015, 9:22 pm', 'Guest', 'YJCIfSnrRz.jpg', '/images/user-data/2015_11_15/YJCIfSnrRz.jpg'),
+(53, 'o7RVb7KlRJ', '500:375', 'jpg', 'November 16, 2015, 2:36 am', '100006044469574', 'o7RVb7KlRJ.jpg', '/images/user-data/2015_11_16/o7RVb7KlRJ.jpg'),
+(48, 'LpnY42vqcN', '200:200', 'jpg', 'November 15, 2015, 9:23 pm', 'Guest', 'LpnY42vqcN.jpg', '/images/user-data/2015_11_15/LpnY42vqcN.jpg'),
+(50, 'Gan85QTN2m', '900:600', 'jpg', 'November 15, 2015, 9:25 pm', 'Guest', 'Gan85QTN2m.jpg', '/images/user-data/2015_11_15/Gan85QTN2m.jpg'),
+(52, 'JuZFf73KVk', '200:200', 'jpg', 'November 15, 2015, 9:26 pm', 'Guest', 'JuZFf73KVk.jpg', '/images/user-data/2015_11_15/JuZFf73KVk.jpg'),
+(54, 'C4tY4hcaA5', '900:506', 'jpg', 'November 16, 2015, 2:36 am', '100006044469574', 'C4tY4hcaA5.jpg', '/images/user-data/2015_11_16/C4tY4hcaA5.jpg'),
+(58, 'qHQY1DnVVJ', '900:506', 'jpg', 'November 16, 2015, 2:39 am', '100006044469574', 'qHQY1DnVVJ.jpg', '/images/user-data/2015_11_16/qHQY1DnVVJ.jpg'),
+(57, 'xH2bVZT6yZ', '500:375', 'jpg', 'November 16, 2015, 2:39 am', '100006044469574', 'xH2bVZT6yZ.jpg', '/images/user-data/2015_11_16/xH2bVZT6yZ.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pb_services`
+--
+
+CREATE TABLE IF NOT EXISTS `pb_services` (
+  `id` int(200) NOT NULL,
+  `service_id` varchar(200) NOT NULL,
+  `category` varchar(200) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `cost` varchar(200) NOT NULL,
+  `location` varchar(200) NOT NULL,
+  `hours` varchar(200) NOT NULL,
+  `established` varchar(200) NOT NULL,
+  `bio` longtext NOT NULL,
+  `cover` varchar(200) NOT NULL,
+  `logo` varchar(200) NOT NULL,
+  `owner` varchar(200) NOT NULL,
+  `members` varchar(200) NOT NULL,
+  `ratings` varchar(200) NOT NULL,
+  `portfolio` longtext NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pb_services`
+--
+
+INSERT INTO `pb_services` (`id`, `service_id`, `category`, `title`, `cost`, `location`, `hours`, `established`, `bio`, `cover`, `logo`, `owner`, `members`, `ratings`, `portfolio`) VALUES
+(1, '1982619836198361836', 'Digital Media', 'Graphic & Web Design', '12.00', 'null', 'mon-fri:anytime', '11/14/2015', 'Whether you''re promoting services, a new book, or need an informational site for your organization, your website will be your most public face. A poorly designed website-or no website at all-will be a turn-off to prospective clients, something that should be avoided. We will discuss your specific needs and develop a site that''s not just attractive and well-functioning, but promotes your business even when you can''t.', 'http://inspirosity.net/img/slides/slide-inspirosityStudios.jpg', 'http://inspirosity.net/img/inspirosityStudios-acent.png', '100006044469574', '100001056120276', '4.5', ''),
+(2, '0193060916', 'Hair Care', 'llama care', '10.00', 'none', '', 'November 15, 2015, 7:40:36 pm', 'This is a super cool hair styling gig. word to the wide i use my pet llama to cut the hair.', 'qHQY1DnVVJ', 'xH2bVZT6yZ', '100006044469574', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -267,8 +340,10 @@ CREATE TABLE IF NOT EXISTS `pb_users` (
 
 INSERT INTO `pb_users` (`user_id`, `username`, `num_of_ratings`, `total_ratings`, `permissions`, `id_card_key`, `contact_info`, `user_data`, `steps`) VALUES
 ('100006044469574', 'JoshFerguson', 0, 0, 100, '124981', '[{"resident":"false","building":"","room":"","phone":"850 281-9161","email":"josh@inspirosity.net","notify_d":"true","notify_m":"true"}]', '[{"ID":"100006044469574","username":"JoshFerguson","name":"Josh Ferguson","avatar":"https://scontent-atl3-1.xx.fbcdn.net/hphotos-xpl1/t31.0-8/11228039_1686546648223468_7048846777877974576_o.jpg","registered":"10/20/2015","permissions":"100","theme":"darkblue","interest":"Design,Graphics,Advertising,Textbooks,Pensacola FL"}]', ''),
-('100001056120276', 'joseph.gengarella', 0, 0, 100, '', '[{"resident":"true","building":"","room":"","phone":"","email":"","notify_d":"true","notify_m":"true"}]', '[{"ID":"100001056120276","username":"joseph.gengarella","name":"Joseph Gengarella","avatar":"https://scontent-iad3-1.xx.fbcdn.net/hphotos-xlp1/v/t1.0-9/10403522_878791748832688_1007985923560409411_n.jpg?oh=08d6efbe0cbea75280afdf0895ede224&oe=56B3F054","registered":"10/27/2015","permissions":"100","theme":"default","interest":""}]', ''),
-('10000607254332', 'SteveJobs', 0, 0, 25, '000000', '[{"resident":"true","building":"Young","room":"345","phone":"(555) 555-5555","email":"TestUser@email.com","notify_d":"false","notify_m":"false"}]', '[{"ID":"10000607254332","username":"SteveJobs","name":"Steve Jobs","avatar":"https://image.freepik.com/free-vector/steve-jobs-vector-tribute_25-14787.jpg","registered":"10/01/2015","permissions":"100","theme":"blue","interest":""}]', '');
+('100001056120276', 'joseph.gengarella', 0, 0, 100, '', '[{"resident":"true","building":"Coberly","room":"555","phone":"555-888-999","email":"","notify_d":"true","notify_m":"true"}]', '[{"ID":"100001056120276","username":"joseph.gengarella","name":"Joseph Gengarella","avatar":"https://scontent-iad3-1.xx.fbcdn.net/hphotos-xlp1/v/t1.0-9/10403522_878791748832688_1007985923560409411_n.jpg?oh=08d6efbe0cbea75280afdf0895ede224&oe=56B3F054","registered":"10/27/2015","permissions":"100","theme":"darkgreen","interest":""}]', ''),
+('10000607254332', 'SteveJobs', 0, 0, 25, '000000', '[{"resident":"true","building":"Young","room":"345","phone":"(555) 555-5555","email":"TestUser@email.com","notify_d":"false","notify_m":"false"}]', '[{"ID":"10000607254332","username":"SteveJobs","name":"Steve Jobs","avatar":"https://image.freepik.com/free-vector/steve-jobs-vector-tribute_25-14787.jpg","registered":"10/01/2015","permissions":"100","theme":"blue","interest":""}]', ''),
+('9286529385629835', 'testuaer1', 0, 0, 25, '12345678', '', '[{"ID":"9286529385629835","username":"testuaer1","name":"Test User one","avatar":"/images/test-images/baby.jpg","registered":"10/20/2015","permissions":"100","theme":"darkblue","interest":"Design,Graphics,Advertising,Textbooks,Pensacola FL"}]', ''),
+('1982418468126194826', 'TestUser2', 0, 0, 50, '98765431', '', '[{"ID":"1982418468126194826","username":"TestUser2","name":"Test User Two","avatar":"/images/test-images/man.jpg","registered":"10/20/2015","permissions":"100","theme":"darkblue","interest":"Design,Graphics,Advertising,Textbooks,Pensacola FL"}]', '');
 
 -- --------------------------------------------------------
 
@@ -325,6 +400,12 @@ ALTER TABLE `pb_safe_image`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `pb_services`
+--
+ALTER TABLE `pb_services`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `pb_short_url`
 --
 ALTER TABLE `pb_short_url`
@@ -356,7 +437,7 @@ ALTER TABLE `pb_user_points`
 -- AUTO_INCREMENT for table `pb_comments`
 --
 ALTER TABLE `pb_comments`
-  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `pb_developers`
 --
@@ -366,17 +447,22 @@ ALTER TABLE `pb_developers`
 -- AUTO_INCREMENT for table `pb_notify`
 --
 ALTER TABLE `pb_notify`
-  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `pb_post`
 --
 ALTER TABLE `pb_post`
-  MODIFY `product_id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+  MODIFY `product_id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `pb_safe_image`
 --
 ALTER TABLE `pb_safe_image`
-  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=59;
+--
+-- AUTO_INCREMENT for table `pb_services`
+--
+ALTER TABLE `pb_services`
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `pb_short_url`
 --
