@@ -65,7 +65,7 @@
 		$token = rand_str($kind, $length);
 		$result = pb_db("SELECT * FROM $table Where $row='$token'");
 		if ($result->num_rows > 0) { 
-			generateUniqueID();	
+			pb_new_id($table, $row, $length, $kind);	
 		}else{
 			return $token;
 		}
@@ -86,6 +86,7 @@
 	function pb_page(){
 		return 'index.php';
 	}
+	
 	function pb_do_function($function, $attr){
 		return $function($attr);
 	}
