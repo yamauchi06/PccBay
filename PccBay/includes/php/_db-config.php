@@ -17,6 +17,8 @@
 		$password_ops = "Pcc@C0nnect02";
 		$dbname_ops = "PccBay";
 		
+		$docRootEXT = '';
+		
 		$localhost=true;
 	}else{
 		$servername = "68.178.143.18";
@@ -29,9 +31,12 @@
 		$password_ops = "";
 		$dbname_ops = "PccBay";
 		
+		$docRootEXT = '/sites/pccbay_test';
+		
 		$localhost=false;
 	}
 	
+	define('DOCUMENT_ROOT_EXT', $docRootEXT);
 	
 	define('DB_HOSTNAME', $servername);
 	

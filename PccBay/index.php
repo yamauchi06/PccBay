@@ -1,4 +1,4 @@
-<?php include_once($_SERVER['DOCUMENT_ROOT'].'/MasterPages/overhead.php'); ?>
+<?php include_once('MasterPages/overhead.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>

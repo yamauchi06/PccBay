@@ -1,5 +1,5 @@
 <?php 
-	include_once($_SERVER['DOCUMENT_ROOT'].'/MasterPages/overhead.php'); 
+	include_once('MasterPages/overhead.php');
 	if( isset($_GET['id']) ){ $product_id=$_GET['id']; }else{$product_id='';}
 	if( !isset($_SESSION['user_id']) || empty($product_id) ){ header('Location: /#userLogin'); }
 	$conn = new mysqli($servername, $username, $password, $dbname);
