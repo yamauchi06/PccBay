@@ -3,15 +3,15 @@
 <html lang="en">
 	<head>
 		<title><?php print domain('title'). ' | ' . domain('tagline'); ?></title>
-		<?php pb_include('/MasterPages/head.php'); ?>
+		<?php pb_include('/MasterPages/head'); ?>
 	</head>	
 <body>
 	<header>		
-		<?php pb_include('/MasterPages/header.php'); ?>
+		<?php pb_include('/MasterPages/header'); ?>
 	</header>
 	<?php 
 	if(isset($_SESSION['user_id'])){
-		pb_include('/MasterPages/MainMenu.php');
+		pb_include('/MasterPages/MainMenu');
 	}	
 	?>
 	<div class="container-fluid">
@@ -19,7 +19,7 @@
 			<!-- Begin Content -->
 			<div class="<?php pb_isset(pb_isset_session('user_id'), 'col-md-9', 'col-md-12') ?> MainFeed">
 				<div id="freewall">
-				    <?php pb_include('/MasterPages/post-temp.php'); ?>
+				    <?php pb_include('/MasterPages/post-temp'); ?>
 				</div>
 			</div>
 			
@@ -49,13 +49,13 @@
 			);	
 			?>
 				<div id="side_dashboard" class="pb-sidebar-group activeSet">
-					<?php pb_include('/includes/content/pbRightBar/side_dashboard.php'); ?>
+					<?php pb_include('/includes/content/pbRightBar/side_dashboard'); ?>
 				</div>
 				<div id="side_notifications" class="pb-sidebar-group">
-					<?php pb_include('/includes/content/pbRightBar/side_notifications.php'); ?>
+					<?php pb_include('/includes/content/pbRightBar/side_notifications'); ?>
 				</div>
 				<div id="side_account" class="pb-sidebar-group full-width">
-					<?php pb_include('/includes/content/pbRightBar/side_account.php'); ?>
+					<?php pb_include('/includes/content/pbRightBar/side_account'); ?>
 				</div>
 					
 			</div>
@@ -81,31 +81,31 @@
 		<div id="pb-j"></div>
 		<div id="HiddenFrames" class="<?php pb_isset(pb_isset_session('user_id'), 'col-md-9', 'col-md-12') ?>">
 			<div id="NewProductBox" class="HiddenFrame">
-				<?php pb_include('/includes/content/forms/newProduct.php'); ?>
+				<?php pb_include('/includes/content/forms/newProduct'); ?>
 			</div>
 			<div id="MyCardBox" class="HiddenFrame">
-				<?php pb_include('/includes/content/forms/myPCCcard.php'); ?>
+				<?php pb_include('/includes/content/forms/myPCCcard'); ?>
 			</div>
 			<div id="postViewer" class="HiddenFrame">
-				<?php pb_include('/includes/content/forms/postViewer.php'); ?>
+				<?php pb_include('/includes/content/forms/postViewer'); ?>
 			</div>
 			<div id="invitationCodeBox" class="HiddenFrame">
-				<?php pb_include('/includes/content/info/invitationCode.php'); ?>
+				<?php pb_include('/includes/content/info/invitationCode'); ?>
 			</div>
 			<div id="feedbackBox" class="HiddenFrame">
-				<?php pb_include('/includes/content/forms/feedback.php'); ?>
+				<?php pb_include('/includes/content/forms/feedback'); ?>
 			</div>
 			<div id="userAccountSettingBox" class="HiddenFrame">
-				<?php pb_include('/includes/content/forms/accountSettings.php'); ?>
+				<?php pb_include('/includes/content/forms/accountSettings'); ?>
 			</div>
 			<div id="userLogin" class="HiddenFrame">
-				<?php pb_include('/includes/content/forms/UserLogin.php'); ?>
+				<?php pb_include('/includes/content/forms/UserLogin'); ?>
 			</div>
 		</div>
 	</div>
 	
 
-<?php pb_include('/MasterPages/footer.php~col-md-9'); ?>
+<?php pb_include('/MasterPages/footer~col-md-9'); ?>
 <script>
 var iniTimer;
 var iniTimerInterval = 200;

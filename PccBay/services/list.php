@@ -3,13 +3,13 @@
 <html lang="en">
 	<head>
 		<title><?php print domain('title'); ?> | Services</title>
-		<?php pb_include('/MasterPages/head.php'); ?>
+		<?php pb_include('/MasterPages/head'); ?>
 	</head>	
 <body>
 	<header>		
-		<?php pb_include('/MasterPages/header-plain.php'); ?>
+		<?php pb_include('/MasterPages/header-plain'); ?>
 	</header>
-	<?php pb_include('/MasterPages/MainMenu.php'); ?>
+	<?php pb_include('/MasterPages/MainMenu'); ?>
 	<!-- Begin Content -->
 	<div class="container">
 		<div class="row"><br />
@@ -30,6 +30,6 @@
 			<?php }); ?>
 		</div>
 	</div>
-<?php pb_include('/MasterPages/footer.php~col-md-12'); ?>
+<?php pb_include('/MasterPages/footer~col-md-12'); ?>
 </body>
 </html>

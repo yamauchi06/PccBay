@@ -3,13 +3,13 @@
 <html lang="en">
 	<head>
 		<title><?php print domain('title'); ?> | Services</title>
-		<?php pb_include('/MasterPages/head.php'); ?>
+		<?php pb_include('/MasterPages/head'); ?>
 	</head>	
 <body>
 	<header>		
-		<?php pb_include('/MasterPages/header-plain.php'); ?>
+		<?php pb_include('/MasterPages/header-plain'); ?>
 	</header>
-	<?php pb_include('/MasterPages/MainMenu.php'); ?>
+	<?php pb_include('/MasterPages/MainMenu'); ?>
 	
 	<!-- Begin Content -->
 	<div class="container">
@@ -39,28 +39,28 @@
 					<i class="zmdi zmdi-scissors icon"></i>
 					<h3>Hair Styler</h3>
 					<p>Get payed for your chopping, curling, and cutting skills.</p>
-					<a href="/services/join?category=hair care" class="pb-page-button">Get Started</a>
+					<a href="/services/join" class="pb-page-button">Get Started</a>
 				</div>
 				
 				<div class="col-md-3 pb-page-block-highlight-icon">
 					<i class="fa fa-hand-paper-o icon"></i>
 					<h3>White Glove</h3>
 					<p>We all hate it, But you can do it best, so let them know.</p>
-					<a href="/services/join?category=white glove" class="pb-page-button">Get Started</a>
+					<a href="/services/join" class="pb-page-button">Get Started</a>
 				</div>
 				
 				<div class="col-md-3 pb-page-block-highlight-icon">
 					<i class="zmdi zmdi-book icon"></i>
 					<h3>Tutor</h3>
 					<p>Good at a particular course? Help those who aren't.</p>
-					<a href="/services/join?category=tutor" class="pb-page-button">Get Started</a>
+					<a href="/services/join" class="pb-page-button">Get Started</a>
 				</div>
 				
 				<div class="col-md-3 pb-page-block-highlight-icon">
 					<i class="fa fa-magic icon"></i>
 					<h3>Specialized</h3>
 					<p>Provide a your service and<br />get payed.</p>
-					<a href="/services/join?category=other" class="pb-page-button">Get Started</a>
+					<a href="/services/join" class="pb-page-button">Get Started</a>
 				</div>
 				
 			</div>
@@ -177,6 +177,6 @@
 
 
 
-<?php pb_include('/MasterPages/footer.php~col-md-12'); ?>
+<?php pb_include('/MasterPages/footer~col-md-12'); ?>
 </body>
 </html>

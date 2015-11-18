@@ -144,11 +144,13 @@
 		return $split[0];
 	}
 	
-	function pb_include($include, $root=true, $includeTimes='', $Global='', $useif='false'){
+	function pb_include($include, $root=true, $includeTimes='', $Global='', $ext='php'){
 		$includeEX = explode('~', $include);
 		$include=$includeEX[0];
 		if(!empty($includeEX[1])){$include_cmd=$includeEX[1];}
 		if($root){ $include = $_SERVER['DOCUMENT_ROOT'].$include; }
+		$extin=pathinfo($include, PATHINFO_EXTENSION);
+		if( empty($extin) || $extin=='' || !isset($extin) ){ $include = $include.'.'.$ext; }
 		if(file_exists($include)){
 			if($includeTimes == 'once'){
 				include_once($include); }else{

@@ -5,7 +5,7 @@
 <html lang="en">
 	<head>
 		<title><?php print domain('title'); ?> | Services</title>
-		<?php pb_include('/MasterPages/head.php'); ?>
+		<?php pb_include('/MasterPages/head'); ?>
 		<style>
 			fieldset{
 				border: 1px solid #E6E9ED;
@@ -53,9 +53,9 @@
 	</head>	
 <body>
 	<header>		
-		<?php pb_include('/MasterPages/header-plain.php'); ?>
+		<?php pb_include('/MasterPages/header-plain'); ?>
 	</header>
-	<?php pb_include('/MasterPages/MainMenu.php'); ?>
+	<?php pb_include('/MasterPages/MainMenu'); ?>
 	
 	<!-- Begin Content -->
 	<div class="container">
@@ -159,7 +159,7 @@
 			
 		</div>
 	</div>
-<?php pb_include('/MasterPages/footer.php~col-md-12'); ?>
+<?php pb_include('/MasterPages/footer~col-md-12'); ?>
 <script src="/includes/plugins/typeahead/jquery.typeahead.min.js"></script>
 <script src="/includes/js/pb-suggest.js"></script>
 <script>	
@@ -178,6 +178,8 @@ $(document).ready(function(){
 		minchar: 1,
 		results: ["Hair Care","Cleaning","White Glove","Food Services","Ride Share","Design","Development","Tutor","Lifestyle","Personal Assistent"]
 	});
+	
+	
 	pb_suggest('[name="location"]',{
 		minchar: 1,
 		results: ["Ballard","Bradley Tower","Coberly","Dixon Tower","Griffith Tower","Young Tower"]
