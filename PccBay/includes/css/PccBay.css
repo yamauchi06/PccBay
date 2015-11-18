@@ -1481,34 +1481,38 @@ input[type=range]:focus::-ms-fill-upper {
 	content: "s";
 }
 
-
-.typeahead-result{
+.pb-autocomplete-wrapper{
+	position: relative;
+}
+.pb-autocomplete-result{
 	max-height: 300px;
-	width: 300px;
+	width: 100%;
 	overflow-y: auto;
 	overflow-x: hidden;
 	border-bottom-left-radius: 2px;
 	border-bottom-right-radius: 2px;
 	box-shadow: 1px 1px 5px rgba(110,110,110,0.90);
-	top: 50px !important;
 	color: #5a5a5a;
 	position: absolute;
 	z-index: 99999;
 	background: #ffffff;
 }
-.typeahead-result ul{
+.pb-autocomplete-result ul{
 	list-style: none;
 	margin: 0px;
 	padding: 5px;
 }
 
-.typeahead-result ul li a{
+.pb-autocomplete-result ul li a{
 	text-decoration: none;
-	border-top: 1px #f6f6f6 solid;
+	border-bottom: 1px #f6f6f6 solid;
 	padding: 10px;
 	display: block;
 }
-.typeahead-result ul li a:hover{
+.pb-autocomplete-result ul li:last-child a{
+	border: none;
+}
+.pb-autocomplete-result ul li a:hover{
 	background: #F5F7FA;
 	cursor: pointer;
 	text-decoration: none; 

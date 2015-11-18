@@ -88,13 +88,7 @@
 							
 							<label>
 								Service Category<br />
-								<div class="typeahead-container">
-							        <div class="typeahead-field">
-							            <span class="typeahead-query">
-							                <input type="text" name="category" autocomplete="off">
-							            </span>
-							        </div>
-							    </div>
+								<input type="text" name="category" autocomplete="off">
 							</label>
 							
 							<label>
@@ -167,6 +161,7 @@
 	</div>
 <?php pb_include('/MasterPages/footer.php~col-md-12'); ?>
 <script src="/includes/plugins/typeahead/jquery.typeahead.min.js"></script>
+<script src="/includes/js/pb-suggest.js"></script>
 <script>	
 $(document).ready(function(){
 	$("div.pb-dropzone").dropzone({ 
@@ -179,17 +174,14 @@ $(document).ready(function(){
             thisInput.val(file['newname']);
         }
 	});
-	
-	$('[name="category"]').typeahead({
-	    order: "desc",
-	    source: {
-	        data: ["Hair Care","Cleaning","White Glove","Food Services","Ride Share","Design","Development","Tutor","Lifestyle","Personal Assistent"]
-	    },
-	    callback: {
-	        
-	    }
+	pb_suggest('[name="category"]',{
+		minchar: 1,
+		results: ["Hair Care","Cleaning","White Glove","Food Services","Ride Share","Design","Development","Tutor","Lifestyle","Personal Assistent"]
 	});
-	
+	pb_suggest('[name="location"]',{
+		minchar: 1,
+		results: ["Ballard","Bradley Tower","Coberly","Dixon Tower","Griffith Tower","Young Tower"]
+	});
 });
 </script>
 </body>

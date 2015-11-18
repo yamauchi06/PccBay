@@ -1,35 +1,9 @@
 <?php
 	include_once('_db-config.php');
+	include_once('_pb_db.php');
 	
 	if(!empty($_GET['sessionSet'])){ $_SESSION[$_GET['sessionSet']] = $_GET['value']; }
 	if(!empty($_GET['sessionUnSet'])){ unset( $_SESSION[$_GET['sessionUnSet']] ); }
-	
-	// START PB DATABASE CONNECTIONS
-	function pb_sql_connect(){
-		$conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
-		if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); }
-		return $conn;
-	}
-	function pb_sql_query($conn, $sql){ 
-		return $conn->query($sql); 
-	}
-	function pb_db($sql, $callback='', $callbackNoResults=''){
-		$conn=pb_sql_connect();
-		$query=pb_sql_query($conn, $sql);
-		$conn->close();
-		if($callback==''){
-			return $query;
-		}else{
-			if ($query->num_rows > 0) {
-				while($row = $query->fetch_assoc()) {
-					$callback($row);
-				}
-			}else{
-				if(function_exists($callbackNoResults)){ $callbackNoResults(); }else{ return $callbackNoResults; }
-			}
-		}
-	}
-	// END PB DATABASE CONNECTIONS
 
 	function domain($type='url'){
 		if($type=='url'){
@@ -207,11 +181,16 @@
 		}
 	}
 	
-	function loggedClass($in, $out){
+	function loggedClass($in, $out, $return=false){
 		if(isset($_SESSION['user_id'])){
-			print $in;
+			$output=$in;
 		}else{
-			print $out;
+			$output=$out;
+		}
+		if($return==false){
+			print $output;
+		}else{
+			return $output;
 		}
 	}
 	
@@ -264,6 +243,10 @@
 		    }
 		}
 	}
+	
+	function pb_remove_img($imgId='', $response='text'){
+		return pb_db("DELETE FROM pb_safe_image WHERE uid='$imgId'");
+	}
 
 	function pb_my_notifications($user_id){
 		$result = pb_db("SELECT * FROM  pb_notify Where notify_to IN ($user_id) AND seen='0'");
@@ -296,12 +279,12 @@
 	}
 	
 	function pb_update_notifications($id, $seen){
-		pb_db("UPDATE pb_notify SET seen='$seen' WHERE id='$id'");
+		return pb_db("UPDATE pb_notify SET seen='$seen' WHERE id='$id'");
 	}
 	
 	function pb_notify($to, $from, $item, $intro, $content, $link){
 		$date = date("F j, Y, g:i:s a");			
-		pb_db("INSERT INTO pb_notify (notify_to, notify_from, item, intro, content, link, date, seen) 
+		return pb_db("INSERT INTO pb_notify (notify_to, notify_from, item, intro, content, link, date, seen) 
 		VALUES ('$to', '$from', '$item', '$intro', '$content', '$link', '$date', '0')"); 
 	}
 	
@@ -329,7 +312,7 @@
         ));
       		
       	$trans_info = json_encode($trans_info);
-		pb_db("INSERT INTO pb_post (type, user_id, product_info, trans_info, status) VALUES ('$post_type', '$user_id','$product_info','$trans_info', 'open')");
+		return pb_db("INSERT INTO pb_post (type, user_id, product_info, trans_info, status) VALUES ('$post_type', '$user_id','$product_info','$trans_info', 'open')");
 	}
 
 	function pb_update_account($user_id) {
@@ -363,7 +346,7 @@
   			"interest"     => "".$_POST['account_interest']."",
   		));
         $user_data = json_encode($user_data);
-		pb_db("UPDATE pb_users SET contact_info='$contact_info', user_data='$user_data' WHERE user_id='$user_id'");
+		return pb_db("UPDATE pb_users SET contact_info='$contact_info', user_data='$user_data' WHERE user_id='$user_id'");
 	}
 	
 	function pb_add_comment($user_id) {
@@ -372,7 +355,7 @@
 		$post_id = $_POST['post_id'];
 		$post_owner = pb_table_data('pb_post', 'user_id', "product_id='$post_id'");
 		pb_notify($post_owner, $user_id, $post_id, 'Commented on', get_words($comment, 20), '/item?id='.$post_id);
-		pb_db("INSERT INTO pb_comments (post_id, date, author, status, comment) VALUES ('$post_id', '$current_date','$user_id','open', '$comment')"); 
+		return pb_db("INSERT INTO pb_comments (post_id, date, author, status, comment) VALUES ('$post_id', '$current_date','$user_id','open', '$comment')"); 
 	}
 	function pb_comment_count($post_id){
 		$json = json_decode( file_get_contents('http://'.domain().'/graph/index.php?page=comments&accessToken=rootbypass_9827354187582375129873&q='.$post_id.'&timeago=true') );$c=0;foreach($json as $data){ if(!empty($data->id)){$c++;} }return $c;
@@ -415,7 +398,7 @@
         $current_date = date("F j, Y, g:i:s a");
 		$about = htmlify($_POST['about']);
 		$service_id = pb_new_id('pb_services', 'service_id', 10, 'numbers');
-		pb_db("INSERT INTO pb_services (service_id, category, title, cost, location, hours, established, bio, cover, logo, owner, members, ratings, portfolio) 
+		return pb_db("INSERT INTO pb_services (service_id, category, title, cost, location, hours, established, bio, cover, logo, owner, members, ratings, portfolio) 
 				VALUES ('$service_id', '$_POST[category]', '$_POST[title]', '$_POST[cost]', '$_POST[location]', '', '$current_date', '$about', '$_POST[profile_cover]', '$_POST[profile_img]', '$user_id', '', '', '$_POST[profile_logo]')");
 	}	
 ?>

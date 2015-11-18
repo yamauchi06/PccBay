@@ -112,7 +112,7 @@ var iniTimerInterval = 200;
 function ini_add_comments(post_id, el, autheroId){
 	comm='';
 	$.ajax({
-	    url: '/graph/comments?accessToken=<?php print pb_graph_token('9827354187582375129873', '712638715312875'); ?>&timeago=true&q='+post_id,
+	    url: '/graph/comments?l=ASC&accessToken=<?php print pb_graph_token('9827354187582375129873', '712638715312875'); ?>&timeago=true&q='+post_id,
 	    dataType: 'json',
 	    type: 'GET',
 	    error: function(xhr, error){
