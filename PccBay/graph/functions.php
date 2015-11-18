@@ -1,9 +1,9 @@
 <?php
 function return_graph($content='', $format='json', $dataText='data')	{
 	if($format=='json')
-		$result = json_encode($content, JSON_PRETTY_PRINT);
+		$result = json_encode($content, 128);
 	else if($format=='text')
-		$result = json_encode(array($dataText => $content), JSON_PRETTY_PRINT);	
+		$result = json_encode(array($dataText => $content), 128);	
 	return $result;	
 }
 
@@ -69,7 +69,7 @@ function oAuthAccess($app_id){
 		if($appCleared){ if($getStr=='rootbypass_'.$app_id){$accessToken = $getStr;} }
 	}else{$getStr=null;};
 	if($getStr !== $accessToken|| $getStr==null){
-		print json_encode(array('Authentication Failed' => 'A bad accessToken or no accessToken was supplied.'), JSON_PRETTY_PRINT);	
+		print json_encode(array('Authentication Failed' => 'A bad accessToken or no accessToken was supplied.'), 128);	
 		exit;
 	}else{
 		header("Access-Control-Allow-Origin: *"); }

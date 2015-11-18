@@ -36,8 +36,6 @@
 		$localhost=false;
 	}
 	
-	define('DOCUMENT_ROOT_EXT', $docRootEXT);
-	
 	define('DB_HOSTNAME', $servername);
 	
 	define('DB_USERNAME', $username);

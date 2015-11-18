@@ -14,14 +14,15 @@
 		    while($val = $result->fetch_assoc()) {
 				$accessToken = '';
 				include_once('accessToken-algorithm.php');
-				print json_encode(array('token'=>$accessToken, 'expires'=>date("F j, Y").', 12:00:00 pm'), JSON_PRETTY_PRINT);
+				$r=array('token'=>$accessToken, 'expires'=>date("F j, Y").', 12:00:00 pm');
+				print json_encode($r, 128);
 		    }
 		}else{
-			print json_encode(array('Access Blocked'), JSON_PRETTY_PRINT);
+			print json_encode(array('Access Blocked'), 128);
 		}
 		$conn->close();
 		
 	}else{
-		print json_encode(array('Access Blocked'), JSON_PRETTY_PRINT);
+		print json_encode(array('Access Blocked'), 128);
 	}
 ?>
