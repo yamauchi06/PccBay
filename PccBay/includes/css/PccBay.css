@@ -590,6 +590,51 @@ legend{
 */
 }
 
+.pb-collage{
+	margin: 0px auto;
+	width: auto;
+	height: auto;
+}
+
+.pb-mask-half{
+	width: 49%;
+	min-height: 10px;
+	margin: 0px 0px;
+	display: inline-block;
+	vertical-align: top;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+}
+.pb-mask{
+	width: 100%;
+	min-height: 10px;
+	margin: 0px 0px;
+	display: inline-block;
+	vertical-align: top;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+}
+.pb-post-img{
+	width: 100%;
+	margin: 0px 0px;
+	display: inline-block;
+	vertical-align: top;
+}
+.pb-post-img-half{
+	width: 49%;
+	margin: 0px 0px;
+	display: inline-block;
+	vertical-align: top;
+}
+.pb-post-img-fourth{
+	width: 24%;
+	margin: 0px 0px;
+	display: inline-block;
+	vertical-align: top;
+}
+
 .pb-post-slider{
 	width: 100%;
 	position: relative;

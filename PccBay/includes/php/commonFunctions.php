@@ -134,6 +134,19 @@
 		}
 	}
 	
+	function pb_safe_image_return($unique_id, $method='image', $attr='', $popup='true', $html='{{image}}'){
+		$result = pb_db("SELECT * FROM pb_safe_image Where uid='$unique_id'");
+		if ($result->num_rows > 0) {
+		    while($row = $result->fetch_assoc()) {
+			    $size=explode(':', $row['size']);
+			    if($popup=='true'){$attr .= 'data-overHead-img="'.$row['string'].'" data-original="'.$row['string'].'"';}
+		        if($method=='base64'){ $results = $row['string']; }
+		        if($method=='image'){  $results = '<img src="'.$row['string'].'" alt="'.$row['alt'].'" title="'.$row['title'].'" '.$attr.' />';}
+		        if($method=='image-lazy'){$results = '<img src="'.$row['string'].'" '.$attr.' />';}
+		    }return $results;
+		}
+	}
+	
 	function pb_include_globals($include){
 		$split = explode('?', $include);
 		$array=array();
@@ -249,6 +262,26 @@
 	function pb_remove_img($imgId='', $response='text'){
 		return pb_db("DELETE FROM pb_safe_image WHERE uid='$imgId'");
 	}
+	
+	function pb_collage($imageArray, $height){
+		$html='<div class="pb-collage">';
+		$heightH=$height/2;
+		$images=explode(',', str_replace(' ', '', $imageArray));
+		$imgCount=count($images);
+		foreach($images as $key=>$image){
+			$url=pb_safe_image_return($image, 'base64');
+			if($key==0){
+				$html.='<div class="pb-mask-half"style="background-image:url('.$url.');height:'.$height.'px;"></div><div class="pb-mask-half">';
+			}else{
+				$html.='<div class="pb-mask" style="background-image:url('.$url.');height:'.$heightH.'px;"></div>';
+			}
+			if($key>=$imgCount){
+				$html.='</div>';
+			}
+		}
+		$html.='</div>';
+		return $html;
+	}
 
 	function pb_my_notifications($user_id){
 		$result = pb_db("SELECT * FROM  pb_notify Where notify_to IN ($user_id) AND seen='0'");
@@ -362,7 +395,7 @@
 	function pb_comment_count($post_id){
 		$json = json_decode( file_get_contents('http://'.domain().'/graph/index.php?page=comments&accessToken=rootbypass_9827354187582375129873&q='.$post_id.'&timeago=true') );$c=0;foreach($json as $data){ if(!empty($data->id)){$c++;} }return $c;
 	}
-	function pb_recent_comments($post_id, $count, $order='DESC'){
+	function pb_recent_comments($post_id, $count, $order='DESC', $emptyMsg='Be the first to comment.'){
 		$json = json_decode( file_get_contents('http://'.domain().'/graph/index.php?page=comments&accessToken=rootbypass_9827354187582375129873&q='.$post_id.'&timeago=true&l='.$order.'') );
 		$result='';
 		$s=0;
@@ -393,6 +426,7 @@
 				if($s == $count) {  break;  }
 				}
 			}
+		if($s==0){$result=$emptyMsg;}	
 		return $result;
 	}
 

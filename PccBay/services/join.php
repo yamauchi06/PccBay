@@ -70,6 +70,7 @@
 					
 					<div class="col-md-2 pb-page-block-highlight" style="float: right;margin-right: 220px;">
 						<img src="/images/interior-images/graph.svg" style="opacity:0.5;margin-top: -15px" />
+<!-- 						<i class="fa fa-connectdevelop"style="opacity:0.5;margin-top: -15px;font-size: 140px;"></i> -->
 					</div>
 					
 				</div>
@@ -178,10 +179,12 @@ $(document).ready(function(){
 	});
 	
 	
+/*
 	pb_suggest('[name="location"]',{
 		minchar: 1,
 		results: ["Ballard","Bradley Tower","Coberly","Dixon Tower","Griffith Tower","Young Tower"]
 	});
+*/
 });
 </script>
 </body>

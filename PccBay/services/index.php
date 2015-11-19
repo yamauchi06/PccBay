@@ -38,14 +38,14 @@
 				<div class="col-md-3 pb-page-block-highlight-icon">
 					<i class="zmdi zmdi-scissors icon"></i>
 					<h3>Hair Styler</h3>
-					<p>Get payed for your chopping, curling, and cutting skills.</p>
+					<p>Get paid for your chopping, curling, and cutting skills.</p>
 					<a href="/services/join" class="pb-page-button">Get Started</a>
 				</div>
 				
 				<div class="col-md-3 pb-page-block-highlight-icon">
 					<i class="fa fa-hand-paper-o icon"></i>
 					<h3>White Glove</h3>
-					<p>We all hate it, But you can do it best, so let them know.</p>
+					<p>We all hate it, But you can do it best, so why not get paid.</p>
 					<a href="/services/join" class="pb-page-button">Get Started</a>
 				</div>
 				
@@ -59,7 +59,7 @@
 				<div class="col-md-3 pb-page-block-highlight-icon">
 					<i class="fa fa-magic icon"></i>
 					<h3>Specialized</h3>
-					<p>Provide a your service and<br />get payed.</p>
+					<p>Provide a your service and<br />get paid.</p>
 					<a href="/services/join" class="pb-page-button">Get Started</a>
 				</div>
 				
@@ -72,27 +72,27 @@
 				<div class="col-md-4">
 					<ul class="pb-service-list">
 						<li>
-							<b>Item One</b>
+							<b>Hair Cuts</b>
 							<br/>
 							<p>Some text to tell you about it. This is text to tell you about it.</p>
 						</li>
 						<li>
-							<b>Item Two</b>
+							<b>White Glove Cleaning</b>
 							<br/>
 							<p>Some text to tell you about it. This is text to tell you about it.</p>
 						</li>
 						<li>
-							<b>Item Three</b>
+							<b>Tutor</b>
 							<br/>
 							<p>Some text to tell you about it.</p>
 						</li>
 						<li>
-							<b>Item Four</b>
+							<b>Ride Share</b>
 							<br/>
-							<p>Some text to tell you about it.</p>
+							<p>Some text to tell you about it. <a href="#">map</a></p>
 						</li>
 						<li>
-							<b>Item Five</b>
+							<b>Food Prep</b>
 							<br/>
 							<p>Some text to tell you about it. This is text to tell you about it.</p>
 						</li>

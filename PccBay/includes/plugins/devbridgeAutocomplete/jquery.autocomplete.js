@@ -62,7 +62,7 @@
                 lookup: null,
                 onSelect: null,
                 width: 'auto',
-                minChars: 1,
+                minChars: 2,
                 maxHeight: 300,
                 deferRequestBy: 0,
                 params: {},
@@ -77,7 +77,7 @@
                 preserveInput: false,
                 containerClass: 'autocomplete-suggestions',
                 tabDisabled: false,
-                dataType: 'text',
+                dataType: 'json',
                 currentRequest: null,
                 triggerSelectOnValidInput: true,
                 preventBadQueries: true,
@@ -253,6 +253,8 @@
                 'width': options.width + 'px',
                 'z-index': options.zIndex
             });
+            
+            
         },
 
 
@@ -678,6 +680,10 @@
                 if (groupBy){
                     html += formatGroup(suggestion, value, i);
                 }
+                var innSmall='';
+                if(suggestion.data.small){
+	                innSmall=' <i class="fa fa-angle-right"></i> '+suggestion.data.small
+                }
 
 				var imgCss = 'background: no-repeat center center url('+suggestion.data.image+');background-size:cover';
 				var imagePlace='';
@@ -690,9 +696,11 @@
 					if(suggestion.data.category=='product' || suggestion.data.category=='user' || suggestion.data.category=='service'){
 						imagePlace = '<div class="acri img" style="'+imgCss+'" />'; 
 					}
-                html += '<div class="' + className + '" data-index="' + i + '">' + imagePlace + formatResult(suggestion, value) + '</div>';
+                html += '<div class="' + className + '" data-index="' + i + '">' + imagePlace + formatResult(suggestion, value) + '<small><b>'+innSmall+'</b></small>' + '</div>';
             });
 
+			
+			
             this.adjustContainerWidth();
 
             noSuggestionsContainer.detach();
@@ -714,6 +722,13 @@
 
             that.visible = true;
             that.findBestHint();
+            
+			setTimeout(
+			function() 
+			{
+				pb_stars('.pb-stars-search', true, true, '10px', '#E7711B');
+			}, 100);
+            
         },
 
         noSuggestions: function() {
@@ -965,6 +980,7 @@
             $(window).off('resize.autocomplete', that.fixPositionCapture);
             $(that.suggestionsContainer).remove();
         }
+        
     };
 
     // Create chainable jQuery plugin:
@@ -994,4 +1010,6 @@
             }
         });
     };
+    
+   
 }));

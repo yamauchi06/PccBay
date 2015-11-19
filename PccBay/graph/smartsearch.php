@@ -37,6 +37,7 @@
 						'title' => $title,
 						'image' => $img,
 						'info' => strtolower($info),
+						'small' => '',
 						'status' => strtolower($val['status'])
 					);
 					array_push($mainJson, $entity);
@@ -67,6 +68,7 @@
 						'title' => $title,
 						'image' => $images,
 						'info' => strtolower($info),
+						'small' => '',
 						'status' => 'open'
 					);
 					array_push($mainJson, $entity);
@@ -88,6 +90,7 @@
 						'id' => $val['tag_id'],
 						'type' => 'tag',
 						'info' => strtolower($val['tag']),
+						'small' => '',
 						'title' => strtolower($val['tag']),
 						'image' => '',
 						'status' => 'open'
@@ -111,8 +114,9 @@
 					$entity = array(
 						'id' => $val['service_id'],
 						'type' => 'service',
-						'title' => strtolower($val['title'].' - <small>'.$val['category'].'<small>'),
+						'title' => strtolower($val['title']),
 						'info' => strtolower($val['category']),
+						'small' => strtolower($val['category'].'<div class="pb-stars-search" data-stars="'.$val['ratings'].'"></div>'),
 						'image' => $img
 					);
 					array_push($mainJson, $entity);
@@ -137,8 +141,9 @@
 						'value' => $item['title'], 
 						'data' => array( 
 							'category' => $item['type'],
+							'small' => $item['small'],
 							'image' => $item['image'],  
-							'id' => $item['id']							
+							'id' => $item['id']						
 						) 
 					) 
 				); 

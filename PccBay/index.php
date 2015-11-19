@@ -106,6 +106,7 @@
 	
 
 <?php pb_include('/MasterPages/footer~col-md-9'); ?>
+<!-- <script src="/includes/plugins/montage/jquery.montage.min.js"></script> -->
 <script>
 var iniTimer;
 var iniTimerInterval = 200;
