@@ -36,7 +36,7 @@
 											<?php
 										}
 									}else{
-										print '<div class="pb-mask" style="background-image:url(/images/interior-images/flatUIicons.png);height:160px;"></div>';
+										print '<div class="pb-mask" style="background-image:url(/images/interior-images/mapPhone.jpg);height:160px;"></div>';
 									}	
 									?>
 								</div>
