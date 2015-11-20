@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 16, 2015 at 11:14 PM
+-- Generation Time: Nov 20, 2015 at 03:03 AM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `pb_safe_image` (
   `author` varchar(200) NOT NULL,
   `file` varchar(200) NOT NULL,
   `string` longtext NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pb_safe_image`
@@ -213,8 +213,11 @@ INSERT INTO `pb_safe_image` (`id`, `uid`, `size`, `type`, `date`, `author`, `fil
 (50, 'Gan85QTN2m', '900:600', 'jpg', 'November 15, 2015, 9:25 pm', 'Guest', 'Gan85QTN2m.jpg', '/images/user-data/2015_11_15/Gan85QTN2m.jpg'),
 (52, 'JuZFf73KVk', '200:200', 'jpg', 'November 15, 2015, 9:26 pm', 'Guest', 'JuZFf73KVk.jpg', '/images/user-data/2015_11_15/JuZFf73KVk.jpg'),
 (54, 'C4tY4hcaA5', '900:506', 'jpg', 'November 16, 2015, 2:36 am', '100006044469574', 'C4tY4hcaA5.jpg', '/images/user-data/2015_11_16/C4tY4hcaA5.jpg'),
+(59, 'wFG4ty1H65', '500:500', 'jpg', 'November 19, 2015, 5:50 am', '100006044469574', 'wFG4ty1H65.jpg', '/images/user-data/2015_11_19/wFG4ty1H65.jpg'),
 (58, 'qHQY1DnVVJ', '900:506', 'jpg', 'November 16, 2015, 2:39 am', '100006044469574', 'qHQY1DnVVJ.jpg', '/images/user-data/2015_11_16/qHQY1DnVVJ.jpg'),
-(57, 'xH2bVZT6yZ', '500:375', 'jpg', 'November 16, 2015, 2:39 am', '100006044469574', 'xH2bVZT6yZ.jpg', '/images/user-data/2015_11_16/xH2bVZT6yZ.jpg');
+(57, 'xH2bVZT6yZ', '500:375', 'jpg', 'November 16, 2015, 2:39 am', '100006044469574', 'xH2bVZT6yZ.jpg', '/images/user-data/2015_11_16/xH2bVZT6yZ.jpg'),
+(60, 'XWuMtP6vGu', '843:403', 'jpg', 'November 19, 2015, 5:51 am', '100006044469574', 'XWuMtP6vGu.jpg', '/images/user-data/2015_11_19/XWuMtP6vGu.jpg'),
+(61, 'FkkkxQreJs', '803:700', 'jpg', 'November 19, 2015, 5:51 am', '100006044469574', 'FkkkxQreJs.jpg', '/images/user-data/2015_11_19/FkkkxQreJs.jpg');
 
 -- --------------------------------------------------------
 
@@ -231,22 +234,25 @@ CREATE TABLE IF NOT EXISTS `pb_services` (
   `location` varchar(200) NOT NULL,
   `hours` varchar(200) NOT NULL,
   `established` varchar(200) NOT NULL,
+  `expires` varchar(200) NOT NULL,
   `bio` longtext NOT NULL,
   `cover` varchar(200) NOT NULL,
   `logo` varchar(200) NOT NULL,
   `owner` varchar(200) NOT NULL,
   `members` varchar(200) NOT NULL,
   `ratings` varchar(200) NOT NULL,
-  `portfolio` longtext NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `portfolio` longtext NOT NULL,
+  `status` varchar(200) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pb_services`
 --
 
-INSERT INTO `pb_services` (`id`, `service_id`, `category`, `title`, `cost`, `location`, `hours`, `established`, `bio`, `cover`, `logo`, `owner`, `members`, `ratings`, `portfolio`) VALUES
-(1, '1982619836198361836', 'Digital Media', 'Graphic & Web Design', '12.00', 'null', 'mon-fri:anytime', '11/14/2015', 'Whether you''re promoting services, a new book, or need an informational site for your organization, your website will be your most public face. A poorly designed website-or no website at all-will be a turn-off to prospective clients, something that should be avoided. We will discuss your specific needs and develop a site that''s not just attractive and well-functioning, but promotes your business even when you can''t.', 'http://inspirosity.net/img/slides/slide-inspirosityStudios.jpg', 'http://inspirosity.net/img/inspirosityStudios-acent.png', '100006044469574', '100001056120276', '4.5', ''),
-(2, '0193060916', 'Hair Care', 'llama care', '10.00', 'none', '', 'November 15, 2015, 7:40:36 pm', 'This is a super cool hair styling gig. word to the wide i use my pet llama to cut the hair.', 'qHQY1DnVVJ', 'xH2bVZT6yZ', '100006044469574', '', '', '');
+INSERT INTO `pb_services` (`id`, `service_id`, `category`, `title`, `cost`, `location`, `hours`, `established`, `expires`, `bio`, `cover`, `logo`, `owner`, `members`, `ratings`, `portfolio`, `status`) VALUES
+(2, '0193060916', 'Hair Care', 'llama care', '10.00', 'none', '', 'November 15, 2015, 7:40:36 pm', '', 'This is a super cool hair styling gig. word to the wide i use my pet llama to cut the hair.', 'qHQY1DnVVJ', 'xH2bVZT6yZ', '100006044469574', '', '2', '', 'open'),
+(3, '6162898267', 'Design', 'Inspirosoty', '10.00', 'none', '', 'November 18, 2015, 10:51:58 pm', '', 'Whether you&rsquo;re promoting services, a new book, or need an informational site for your organization, your website will be your most public face. A poorly designed website-or no website at all-will be a turn-off to prospective clients, something that should be avoided. We will discuss your specific needs and develop a site that&rsquo;s not just attractive and well-functioning, but promotes your business even when you can&rsquo;t.', 'XWuMtP6vGu', 'wFG4ty1H65', '100006044469574', '', '4.5', 'FkkkxQreJs', 'open'),
+(4, '6456584854', 'Ride Share', 'Going to New York', '50.00', 'Texas', '', 'November 18, 2015, 11:17:10 pm', '', 'Will give ride to New York city.', '', '', '100006044469574', '', '', '', 'open');
 
 -- --------------------------------------------------------
 
@@ -457,12 +463,12 @@ ALTER TABLE `pb_post`
 -- AUTO_INCREMENT for table `pb_safe_image`
 --
 ALTER TABLE `pb_safe_image`
-  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=59;
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=62;
 --
 -- AUTO_INCREMENT for table `pb_services`
 --
 ALTER TABLE `pb_services`
-  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `pb_short_url`
 --
