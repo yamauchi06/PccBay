@@ -70,6 +70,10 @@ a:hover {
 	background: <?php echo $brandColor; ?>;
 	border-color: <?php echo $brandColor; ?>;
 }
+
+.pb-post-flash{
+	background: <?php echo $brandColor; ?>;
+}
  
 .pb-sidebar-group::-webkit-scrollbar-thumb {
   background-color: <?php echo $brandColor; ?>

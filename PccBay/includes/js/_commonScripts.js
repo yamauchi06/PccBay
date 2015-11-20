@@ -70,7 +70,7 @@ $(document).ready(function(){
 		       if(type=="product"){ href('/item?id='+id); }
 		       if(type=="user"){ href('/@'+id); }
 		       if(type=="tag"){ href('/s/'+title); }
-		       if(type=="service"){ href('/services/'+id); }
+		       if(type=="service"){ href('/services/list#'+id); }
 		    },
 			onSearchComplete: function (query, suggestions) {
 				if(suggestions){
@@ -273,5 +273,14 @@ function pb_stars(selector, show_stars, show_numbers, size, color){
 			'color': color
 		});
 	});
+}
+
+function highlighBlock(id, color1, color2, speed){
+	$(id).animate({
+		backgroundColor: color1
+	}, speed);
+	$(id).animate({
+		backgroundColor: color2
+	}, speed);
 }
 

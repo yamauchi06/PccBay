@@ -502,6 +502,7 @@ legend{
 .pb-post{
 	padding: 0px;	
 	vertical-align: top;
+	border-radius: 5px;
 }
 .pb-post-block{
 	background: #ffffff;
@@ -588,6 +589,10 @@ legend{
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 */
+}
+
+.pb-post-flash{
+	border-radius: 3px;
 }
 
 .pb-collage{
