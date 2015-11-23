@@ -5,6 +5,12 @@
 	include_once('../includes/php/commonFunctions.php');
 	include_once("functions.php");
 	
+	//Token Get
+	if(isset($_GET['app_id'])){
+		header('Location: accessToken.php?app_id='.$_GET['app_id'].'&secret='.$_GET['secret'].'');
+		exit;
+	}
+	
 	//Authenticate
 	$root_app_id = "9827354187582375129873";
 	oAuthAccess($root_app_id);

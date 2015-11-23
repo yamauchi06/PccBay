@@ -1,6 +1,7 @@
 <?php
 	include_once('_db-config.php');
 	include_once('_pb_db.php');
+	include_once('pb_short_code.php');
 	
 	if(!empty($_GET['sessionSet'])){ $_SESSION[$_GET['sessionSet']] = $_GET['value']; }
 	if(!empty($_GET['sessionUnSet'])){ unset( $_SESSION[$_GET['sessionUnSet']] ); }
@@ -18,6 +19,14 @@
 		if($type=='tagline'){
 			return 'The eBay for PCC';
 		}
+	}
+	
+	function fDate($date, $modify){
+		//"2006-12-12"
+		$newDate = new DateTime($date);
+		//"+7 day"
+		$newDate->modify($modify);
+		return $newDate->format("Y-m-d");
 	}
 	
 	function rand_str($kind='mixed', $length = 10) {
@@ -263,24 +272,84 @@
 		return pb_db("DELETE FROM pb_safe_image WHERE uid='$imgId'");
 	}
 	
-	function pb_collage($imageArray, $height){
+	function pb_collage_build($row){
+		$pb_collage=array();
+		if(!empty($row['logo'])){ array_push($pb_collage, $row['logo']); }
+		if(!empty($row['cover'])){ array_push($pb_collage, $row['cover']); }
+		$port=explode(',',$row['portfolio']);
+		foreach($port as $item){
+			if(!empty($item)){ array_push($pb_collage, $item); }
+		}
+		return $pb_collage;
+	}
+	
+	function pb_collage($images, $height, $output='return', $temp='{{collage}}'){
 		$html='<div class="pb-collage">';
-		$heightH=$height/2;
-		$images=explode(',', str_replace(' ', '', $imageArray));
+		$heightH=(int)$height/2;
+		if(!is_array($images)){ $images=explode(',', str_replace(' ', '', $images)); }
+		$images=str_replace(' ', '', $images);
 		$imgCount=count($images);
-		foreach($images as $key=>$image){
-			$url=pb_safe_image_return($image, 'base64');
-			if($key==0){
-				$html.='<div class="pb-mask-half"style="background-image:url('.$url.');height:'.$height.'px;"></div><div class="pb-mask-half">';
-			}else{
-				$html.='<div class="pb-mask" style="background-image:url('.$url.');height:'.$heightH.'px;"></div>';
+		if(!empty($images[0])){
+			if($imgCount==1){
+				$url=pb_safe_image_return($images[0], 'base64');
+				$html.='<div class="pb-mask" style="background-image:url('.$url.');height:'.$height.'px;"></div>';
 			}
-			if($key>=$imgCount){
+			else if($imgCount==2){
+				foreach($images as $key=>$image){
+					$url=pb_safe_image_return($image, 'base64');
+					$html.='<div class="pb-mask-half" style="background-image:url('.$url.');height:'.$height.'px;"></div>';
+				}
+			}
+			else if($imgCount==3){
+				foreach($images as $key=>$image){
+					$url=pb_safe_image_return($image, 'base64');
+					if($key==0){
+						$html.='<div class="pb-mask-half" style="background-image:url('.$url.');height:'.$height.'px;"></div>';
+						$html.='<div class="pb-mask-half">';
+					}else{
+						$html.='<div class="pb-mask" style="background-image:url('.$url.');height:'.$heightH.'px;"></div>';
+					}
+				}
+				$html.='</div>';
+			}
+			else if($imgCount==4){
+				foreach($images as $key=>$image){
+					$url=pb_safe_image_return($image, 'base64');
+					if($key==0){
+						$html.='<div class="pb-mask-half" style="background-image:url('.$url.');height:'.$height.'px;"></div>';
+						$html.='<div class="pb-mask-half">';
+					}else{
+						if($key<=3){
+							if($key==1){
+								$html.='<div class="pb-mask" style="background-image:url('.$url.');height:'.$heightH.'px;"></div>';
+								$html.='<div class="pb-mask">';
+							}else{
+								$html.='<div class="pb-mask-half" style="background-image:url('.$url.');height:'.$heightH.'px;"></div>';
+							}
+						}
+					}
+				}
+				$html.='</div>';
+				$html.='</div>';
+			}
+			else if($imgCount==5){
+				foreach($images as $key=>$image){
+					$url=pb_safe_image_return($image, 'base64');
+					if($key==0){
+						$html.='<div class="pb-mask-half" style="background-image:url('.$url.');height:'.$height.'px;"></div>';
+						$html.='<div class="pb-mask-half">';
+					}else{
+						if($key<=4){
+							$html.='<div class="pb-mask-half" style="background-image:url('.$url.');height:'.$heightH.'px;"></div>';
+						}
+					}
+				}
 				$html.='</div>';
 			}
 		}
 		$html.='</div>';
-		return $html;
+		if($output=='return'){return str_replace('{{collage}}', $html, $temp);}
+		if($output=='print'){print str_replace('{{collage}}', $html, $temp);;}
 	}
 
 	function pb_my_notifications($user_id){
@@ -388,7 +457,10 @@
         $current_date = date("F j, Y, g:i:s a");
 		$comment = htmlify($_POST['comment']);
 		$post_id = $_POST['post_id'];
-		$post_owner = pb_table_data('pb_post', 'user_id', "product_id='$post_id'");
+		if(!isset($_POST['add_reveiw'])){
+			$post_owner = pb_table_data('pb_services', 'owner', "service_id='$post_id'"); }else{
+			$post_owner = pb_table_data('pb_post', 'user_id', "product_id='$post_id'");
+		}
 		pb_notify($post_owner, $user_id, $post_id, 'Commented on', get_words($comment, 20), '/item?id='.$post_id);
 		return pb_db("INSERT INTO pb_comments (post_id, date, author, status, comment) VALUES ('$post_id', '$current_date','$user_id','open', '$comment')"); 
 	}
@@ -429,12 +501,37 @@
 		if($s==0){$result=$emptyMsg;}	
 		return $result;
 	}
+	
+	function pb_add_reveiw($user_id) {
+		pb_add_comment($user_id);
+		$svr_id = $_POST['post_id'];
+		$ratings = $_POST['ratings'];
+		if($ratings>'0'){
+			if($ratings > '0') { $r = '3';   }
+			if($ratings > '25'){ $r = '3.5'; }
+			if($ratings > '50'){ $r = '4';   }
+			if($ratings > '75'){ $r = '4.5'; }
+			if($ratings > '90'){ $r = '5';   }
+		}else{
+			if($ratings < '0') {  $r = '3';   }
+			if($ratings < '-25'){ $r = '3.5'; }
+			if($ratings < '-50'){ $r = '2';   }
+			if($ratings < '-75'){ $r = '1.5'; }
+			if($ratings < '-90'){ $r = '1';   }
+		}
+		$indb=pb_table_data('pb_services', 'ratings', "service_id='$svr_id'");
+		$tot=(float)$r+(float)$indb;
+		$adv=$tot/2;
+		return pb_db("UPDATE pb_services SET ratings='$adv' WHERE service_id='$svr_id'"); 
+	}
 
 	function pb_add_servise($user_id) {
         $current_date = date("F j, Y, g:i:s a");
+        $exp=fDate(date("Y-m-d"), '+6 month');
 		$about = htmlify($_POST['about']);
 		$service_id = pb_new_id('pb_services', 'service_id', 10, 'numbers');
-		return pb_db("INSERT INTO pb_services (service_id, category, title, cost, location, hours, established, bio, cover, logo, owner, members, ratings, portfolio) 
-				VALUES ('$service_id', '$_POST[category]', '$_POST[title]', '$_POST[cost]', '$_POST[location]', '', '$current_date', '$about', '$_POST[profile_cover]', '$_POST[profile_img]', '$user_id', '', '', '$_POST[profile_logo]')");
+		return pb_db("INSERT INTO pb_services (service_id, category, title, cost, location, hours, established, expires, bio, cover, logo, owner, members, ratings, portfolio, status) 
+				VALUES ('$service_id', '$_POST[category]', '$_POST[title]', '$_POST[cost]', '$_POST[location]', '', '$current_date', '$exp', '$about', '$_POST[profile_cover]', '$_POST[profile_img]', '$user_id', '', '', '$_POST[profile_logo]', 'open')");
 	}	
+	
 ?>

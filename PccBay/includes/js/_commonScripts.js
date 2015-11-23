@@ -244,6 +244,7 @@ function pb_stars(selector, show_stars, show_numbers, size, color){
 	$(selector).each(function(){
 		var types={'empty':'<i class="zmdi zmdi-star-outline"></i>','half':'<i class="zmdi zmdi-star-half"></i>','full':'<i class="zmdi zmdi-star"></i>'}
 		var stars = $(this).data('stars');
+		var text = $(this).data('post-text');
 		var stkind;
 		var starArr=[];
 		var i=0;
@@ -261,12 +262,19 @@ function pb_stars(selector, show_stars, show_numbers, size, color){
 			i=i+.5;
 		}
 		if(show_numbers){
-			$(this).append('<span>'+stars+' </span>');
+			if(stars){
+				$(this).append('<span>'+parseFloat(stars).toFixed(1)+' </span>');
+			}
 		}
 		if(show_stars){
 			for(i = 1; i < starArr.length; i += 2) {
 			   $(this).append(types[ starArr[i] ]);
 			}
+		}
+		if(text){
+			m='';
+			if(text>1){m='(s)';}
+			$(this).append('<span> '+text+' review<sup>'+m+'</sup></span>');
 		}
 		$(this).css({
 			'font-size': size,
@@ -275,12 +283,28 @@ function pb_stars(selector, show_stars, show_numbers, size, color){
 	});
 }
 
-function highlighBlock(id, color1, color2, speed){
-	$(id).animate({
-		backgroundColor: color1
-	}, speed);
-	$(id).animate({
-		backgroundColor: color2
-	}, speed);
+function hexToRgba(hex,opacity){
+    hex = hex.replace('#','');
+    r = parseInt(hex.substring(0,2), 16);
+    g = parseInt(hex.substring(2,4), 16);
+    b = parseInt(hex.substring(4,6), 16);
+
+    result = 'rgba('+r+','+g+','+b+','+opacity/100+')';
+    return result;
+}
+
+function highlighBlock(id, classOrColor, ini1, ini2, speed){
+	if(classOrColor=='color'){
+		$(id).animate({
+			backgroundColor: ini1
+		}, speed);
+		$(id).animate({
+			backgroundColor: ini2
+		}, speed);
+	}
+	if(classOrColor=='class'){
+		$(id).addClass(ini1, {duration:speed});
+		$(id).removeClass(ini1, {duration:speed});
+	}
 }
 

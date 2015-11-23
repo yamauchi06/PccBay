@@ -18,4 +18,9 @@
 	if(isset($_POST['add_servise'])) {
    		pb_add_servise($_SESSION['user_id']);
 	}
+	
+	// My Service Reveiw
+	if(isset($_POST['add_reveiw'])) {
+   		pb_add_reveiw($_SESSION['user_id']);
+	}
 ?>
