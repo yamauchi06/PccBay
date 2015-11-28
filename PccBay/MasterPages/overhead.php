@@ -17,4 +17,5 @@
 	
 	//Begin the inludes
 	include_once($_SERVER['DOCUMENT_ROOT'].DOCUMENT_ROOT_EXT.'/includes/php/commonFunctions.php');
+	
 ?>

@@ -1,8 +1,12 @@
+<?php
+	include_once('../../MasterPages/overhead.php');
+	if(!isset($_SESSION['user_id'])){ header('Location: /admin/'); }
+?>
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Flat Admin V.2 - Free Bootstrap Admin Templates</title>
+    <title><?php print domain('title'). ' | Admin Dashboard'; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400' rel='stylesheet' type='text/css'>
@@ -85,15 +89,15 @@
                             </ul>
                         </li>
                         <li class="dropdown profile">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Emily Hart <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php print pb_user()->name ?><span class="caret"></span></a>
                             <ul class="dropdown-menu animated fadeInDown">
                                 <li class="profile-img">
-                                    <img src="../img/profile/picjumbo.com_HNCK4153_resize.jpg" class="profile-img">
+                                    <img src="<?php print pb_user()->avatar ?>" class="profile-img">
                                 </li>
                                 <li>
                                     <div class="profile-info">
-                                        <h4 class="username">Emily Hart</h4>
-                                        <p>emily_hart@email.com</p>
+                                        <h4 class="username"><?php print pb_user()->name ?></h4>
+                                        <p><?php print pb_user()->email ?></p>
                                         <div class="btn-group margin-bottom-2x" role="group">
                                             <button type="button" class="btn btn-default"><i class="fa fa-user"></i> Profile</button>
                                             <button type="button" class="btn btn-default"><i class="fa fa-sign-out"></i> Logout</button>

@@ -675,7 +675,7 @@
                 return;
             }
 
-            // Build suggestions inner HTML:
+            // Build suggestions inner HTML: 
             $.each(that.suggestions, function (i, suggestion) {
                 if (groupBy){
                     html += formatGroup(suggestion, value, i);
@@ -684,8 +684,12 @@
                 if(suggestion.data.small){
 	                innSmall=' <i class="fa fa-angle-right"></i> '+suggestion.data.small
                 }
-
-				var imgCss = 'background: no-repeat center center url('+suggestion.data.image+');background-size:cover';
+				var imgCss = 'background: no-repeat center center url();background-size:cover',imgTxt='';
+				if(suggestion.data.image){
+					imgCss = 'background: no-repeat center center url('+suggestion.data.image+');background-size:cover';
+				}else{
+					imgTxt = '<i class="zmdi zmdi-broken-image></i>';
+				}
 				var imagePlace='';
 					if(suggestion.data.category=='tag'){
 						imagePlace = '<div class="acri zmdi zmdi-tag" />'; 

@@ -1,3 +1,4 @@
+<?php pb_include('/MasterPages/admin-header'); ?>
 <div class="row">
 		
 	<div class="col-md-3">
@@ -40,13 +41,9 @@
 			      </span>
 			    </div>
 				'
-			); 
+			);
+			pb_include('/MasterPages/header-search');
 		?>
-		<div class="autocomplete-wrapper">
-			<div class="autocomplete-suggestions col-md-12"></div>
-		</div>
-	</div>
+	</div>	
 	
-		
-
 </div>

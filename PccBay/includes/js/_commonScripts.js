@@ -90,6 +90,10 @@ $(document).ready(function(){
 	
 	pb_stars('.pb-stars', true, true, '17px', '#E7711B');
 	
+	$('img').on('onerror', function(){
+		$(this).replaceWith('<i style="width:'+$(this).width()+';height:'+$(this).height()+'" class="zmdi zmdi-broken-image"></i>');
+	});
+	
 	
 });//END READY
 

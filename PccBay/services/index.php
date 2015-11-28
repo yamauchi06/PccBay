@@ -16,7 +16,7 @@
 		<div class="row">
 			
 			<div class="col-lg-10 col-lg-offset-1 pb-page-block" style="background: no-repeat center url('/images/interior-images/students/MissionRun3.jpg');background-size:cover;height: 360px;padding: 0px;">
-				<div class="pb-grade-lr-blue col-lg-12">
+				<div class="pb-grade-lr-theme col-lg-12">
 					
 					<div class="col-md-5 pb-page-block-highlight">
 						<h1>Join Forces Today</h1>

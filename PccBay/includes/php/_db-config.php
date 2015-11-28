@@ -43,4 +43,8 @@
 	define('DB_PASSWORD', $password);
 	
 	define('DB_NAME', $dbname);
+	
+	define('OG_APPID', '9827354187582375129873');
+	
+	define('OG_APPSECRET', '712638715312875');
 ?>

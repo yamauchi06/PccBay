@@ -48,16 +48,21 @@ else if($_GET['page']=='discussions'){
 else if($_GET['page']=='comments'){ 
 	$slq_table = 'pb_comments';  
 	if(!empty($query)){
-		$sql = "SELECT * FROM pb_comments WHERE post_id='$query' ORDER BY id $listBy";
+		$sql = "SELECT * FROM pb_comments WHERE (post_id='$query' OR author='$query') ORDER BY id $listBy";
 	}else{
 		$sql = "SELECT * FROM pb_comments ORDER BY id $listBy";
 	}
 }
 
 else if($_GET['page']=='tags'){ 
-	$slq_table = 'pb_tags';  
-	if(empty($query)){$query='tag_id';$listBy='ASC';}
-	$sql = "SELECT * FROM pb_tags ORDER BY $query $listBy";
+	$slq_table = 'pb_tags'; 
+	$listBy='ASC'; 
+	if(empty($query)){
+		$query='tag_id';$listBy='ASC';
+		$sql = "SELECT * FROM pb_tags ORDER BY tag_id $listBy";
+	}else{
+		$sql = "SELECT * FROM pb_tags WHERE (tag='$query' OR tag_id='$query') ORDER BY tag_id $listBy";
+	}
 }
 
 else if($_GET['page']=='users'){ 
@@ -65,7 +70,7 @@ else if($_GET['page']=='users'){
 	if(empty($query)){
 		$sql = "SELECT * FROM pb_users";
 	}else{
-		$sql = "SELECT * FROM pb_users WHERE (user_id='$query' OR username='$query')";
+		$sql = "SELECT * FROM pb_users WHERE (user_id='$query' OR username='$query' OR id_card_key='$query')";
 	}
 }
 

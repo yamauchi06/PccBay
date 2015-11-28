@@ -1,6 +1,30 @@
 <?php
     header("Content-type: text/css; charset: UTF-8");
 	include('colors/'.$_GET['t'].'.php');
+	function rgba($color, $opacity = false) {
+		$default = 'rgb(0,0,0)';
+		if(empty($color))
+	          return $default;  
+	        if ($color[0] == '#' ) {
+	        	$color = substr( $color, 1 );
+	        }
+	        if (strlen($color) == 6) {
+	                $hex = array( $color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5] );
+	        } elseif ( strlen( $color ) == 3 ) {
+	                $hex = array( $color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2] );
+	        } else {
+	                return $default;
+	        }
+	        $rgb =  array_map('hexdec', $hex);
+	        if($opacity){
+	        	if(abs($opacity) > 1)
+	        		$opacity = 1.0;
+	        	$output = 'rgba('.implode(",",$rgb).','.$opacity.')';
+	        } else {
+	        	$output = 'rgb('.implode(",",$rgb).')';
+	        }
+	        return $output;
+	}
 ?>
 header{
 	background-color: <?php echo $brandColor; ?>;
@@ -123,4 +147,12 @@ a:hover {
 
 .autocomplete-suggestion strong{
 	border-color:<?php echo $brandColor; ?>;
+}
+
+
+.pb-grade-lr-theme{
+	background: -webkit-linear-gradient(left, <?php echo $brandColor; ?>, <?php echo rgba($brandColor, 0.4); ?>); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, <?php echo $brandColor; ?>, <?php echo rgba($brandColor, 0.4); ?>); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, <?php echo $brandColor; ?>, <?php echo rgba($brandColor, 0.4); ?>); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, <?php echo $brandColor; ?>, <?php echo rgba($brandColor, 0.4); ?>); /* Standard syntax (must be last) */
 }

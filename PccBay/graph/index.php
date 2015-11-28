@@ -19,6 +19,7 @@
 	$mainJson = array();
 	$query='';if(isset($_GET['q'])){$query=$_GET['q'];}if($query=='null'){$query='';}
 	$listBy='DESC';if(isset($_GET['l'])){$listBy=$_GET['l'];}
+	$max=10000000;if(isset($_GET['max'])){$max=$_GET['max'];}
 	
 	//Set Query
 	if(isset($_GET['page'])){
@@ -39,8 +40,11 @@
 			} 
 			$result = $conn->query($sql);
 			if ($result->num_rows > 0) {
+				$i=0;
 			    while($val = $result->fetch_assoc()) {
 					include('arrays.php');
+					if($i==$max){break;}
+					$i++;
 			    }
 			}
 			$conn->close();

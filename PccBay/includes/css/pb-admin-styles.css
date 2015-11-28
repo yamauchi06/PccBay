@@ -1,0 +1,107 @@
+/* Resets */
+header, .MainSideBar{
+	top: 33px !important;
+}
+body{
+	margin-top: 33px;
+}
+/* Resets */
+
+
+/* Admin Bar Styles */
+.pb-admin-header{
+	background: #3e3b3b;
+	width: 100% !important;
+	height: 33px;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	margin: 0px;
+	color: #ffffff;
+}
+
+.pb-admin-header .nav-right{
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+
+.pb-admin-header .nav-left{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+
+.pb-admin-header .nav{
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+.pb-admin-header .nav li{
+	display: inline-block;
+	margin: 0px;
+	padding: 0px;
+	margin-right: -3px;
+	border-right: 1px #564f4f solid;
+}
+.pb-admin-header .nav li:last-child{
+	border-right: 1px transparent solid;
+}
+
+.pb-admin-header .nav a{
+	color: #ffffff;
+	padding: 6.5px 30px;
+	padding-right: 10px;
+	margin: 0px;
+	display: inline-block;
+	position: relative;
+}
+.pb-admin-header .nav a:hover, .pb-admin-header .nav a:visited:hover{
+	background: #4a4444;
+}
+.pb-admin-header .nav a:visited{
+	background: #3e3b3b;
+}
+
+.pb-admin-header .nav a .icon{
+	font-size: 20px;
+	position: absolute;
+	left: 10px;
+}
+
+.pb-admin-header .nav a img{
+	position: absolute;
+	left: 5px;
+	width: 20px;
+	border-radius: 1px;
+}
+
+.pb-admin-header .nav a .pb-nav-bub{
+	width: 12px;
+	height: 12px;
+	border-radius: 100%;
+	background: #e74c3c;
+	color: #ffffff;
+	font-size: 8px;
+	text-align: center;
+	position: absolute;
+	top: 1px;
+	right: 1px;
+}
+
+
+
+/* Admin Bar Styles */
+
+
+/* Over Head */
+.overHead-close{
+	margin-top: 30px;
+}
+
+
+/* Main search */
+.autocomplete-suggestions{
+	top: 81px !important;
+}

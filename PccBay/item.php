@@ -177,20 +177,14 @@
 				<div id="side_account" class="pb-sidebar-group full-width">
 					<?php pb_include('/includes/content/pbRightBar/side_account.php'); ?>
 				</div>
+				
+				<!-- Sticky menu -->
+				<?php pb_include('/MasterPages/sticky-menu-bottom'); ?>
 					
 			</div>
 		</div>
 	</div>
 	
-	<!-- Sticky side buttons -->
-	<div class="pb-sticky-side <?php pb_isset(pb_isset_session('user_id'), '', 'hide') ?>">
-		<a href="#" class="pb-sticky-btn feedback" data-overHead="#feedbackBox">
-			<i class="zmdi zmdi-assignment-check"></i>
-		</a>
-		<a class="pb-sticky-btn" data-overHead="#invitationCodeBox">
-			<i class="zmdi zmdi-card-giftcard"></i>
-		</a>
-	</div>
 	
 
 	<!-- Place Hidden Popups and lightbox frames here -->

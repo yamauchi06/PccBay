@@ -1,7 +1,10 @@
 <?php
 	include_once('_db-config.php');
 	include_once('_pb_db.php');
+	include_once('_pb_og.php');
+	include_once('_pb_filters.php');
 	include_once('pb_short_code.php');
+	
 	
 	if(!empty($_GET['sessionSet'])){ $_SESSION[$_GET['sessionSet']] = $_GET['value']; }
 	if(!empty($_GET['sessionUnSet'])){ unset( $_SESSION[$_GET['sessionUnSet']] ); }
@@ -17,6 +20,9 @@
 			return 'PCCbay.com';
 		}
 		if($type=='tagline'){
+			return 'The eBay for PCC';
+		}
+		if($type=='description'){
 			return 'The eBay for PCC';
 		}
 	}
@@ -224,16 +230,101 @@
 		});
 	}	
 	
+	function add_tag($tag, $each=false){
+		if($each==true){
+			if(!is_array($tag)){
+				$tag=explode(',',$tag);
+			}
+			foreach($tag as $pTag){ 
+				add_tag($pTag);
+			}
+		}else{
+			$result = pb_db("SELECT * FROM pb_tags Where tag='$tag'");
+			if($result->num_rows>0){
+				pb_db("UPDATE pb_tags SET count = count + 1 WHERE tag='$tag'");
+			}else{
+				pb_db("INSERT INTO pb_tags (tag, count) VALUES ('$tag', '1')");
+			}
+		}
+	}
+	
+	function pb_is_allowed($perm='0', $user_id=''){
+		if(empty($user_id)){
+			if(isset($_SESSION['user_id'])){
+				$user_id=$_SESSION['user_id'];
+			}
+		}
+		if(!empty($user_id)){
+			$userPerm=pb_table_data('pb_users', 'permissions', "(user_id='$user_id' OR username='$user_id')");
+			if($userPerm>=$perm){
+				return true; }else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+		
+	}
+	
 	function pb_graph_token($app_id='', $secret='', $expire='days'){
 		return json_decode(file_get_contents('http://'.domain().'/graph/accessToken.php?app_id='.$app_id.'&secret='.$secret.'&expire='.$expire))->token;
 	}
 	
-	function pb_user_data($user_id, $row){
+	function pb_user_data($user_id, $row, $loop=false){
 		$result = pb_db("SELECT * FROM  pb_users Where (user_id='$user_id' OR username='$user_id' OR id_card_key='$user_id')");
 		if ($result->num_rows > 0) {
 		    while($sqlrow = $result->fetch_assoc()) {
-				return $sqlrow[$row];
+				$return = $sqlrow[$row];
 		    }
+		}
+		if($loop==true){
+			foreach($return as $data){
+				$re[] = $data;
+			} 
+			$return=$re;
+		}
+		
+		return $return;
+	}
+	
+	function objectToArray($d) {if (is_object($d)) {$d = get_object_vars($d);}if (is_array($d)) {return array_map(__FUNCTION__, $d);}else {return $d;}}
+	function arrayToObject($d) {if (is_array($d)) {return (object) array_map(__FUNCTION__, $d);}else {return $d;}}
+	
+	function pb_switch($d){
+		if(is_array($d)) { $r = arrayToObject($d); }
+		if(is_object($d)){ $r = objectToArray($d); }
+		return $r;
+	}
+	
+	function pb_user($type='object', $user_id='', $save=true){
+		if(empty($user_id)){if(isset($_SESSION['user_id'])){ $user_id=$_SESSION['user_id']; }}
+		if(empty($user_id)){
+			return '{{no user id}}';
+		}else{
+			if(!isset($_SESSION['user_data'.$user_id])){
+				$user_data = json_decode(pb_user_data($user_id, 'user_data'))[0];
+				$contact_info = json_decode(pb_user_data($user_id, 'contact_info'))[0];		
+				$arrs = array_merge(pb_switch($user_data), pb_switch($contact_info));
+				$session = array(
+					'card_id' => pb_user_data($user_id, 'id_card_key'),
+					'ratings' => pb_user_data($user_id, 'total_ratings'),
+					'ratings_num' => pb_user_data($user_id, 'num_of_ratings'),
+					'steps' => pb_user_data($user_id, 'steps'),
+					'lastLogin' => strtotime(date("F j, Y, g:i:s a")),
+					'utid' => 'pb:'.sha1($user_data->ID.$user_data->registered), 
+					'session'=>'false'
+				);
+				$arrs = array_merge($arrs, $session);
+				if($save){$_SESSION['user_data'.$user_id]=$arrs;}
+			}else{
+				$arrs=$_SESSION['user_data'.$user_id];
+				$arrs['session']='true';
+				$arrs['utid']='pb:'.sha1($arrs['ID'].$arrs['registered']);
+			}
+			if($type=='object'){
+				return pb_switch($arrs); }else{
+				return $arrs;
+			}
 		}
 	}
 	
@@ -386,10 +477,10 @@
 		return pb_db("UPDATE pb_notify SET seen='$seen' WHERE id='$id'");
 	}
 	
-	function pb_notify($to, $from, $item, $intro, $content, $link){
+	function pb_notify($to, $from, $item, $intro, $content, $link, $type="0"){
 		$date = date("F j, Y, g:i:s a");			
-		return pb_db("INSERT INTO pb_notify (notify_to, notify_from, item, intro, content, link, date, seen) 
-		VALUES ('$to', '$from', '$item', '$intro', '$content', '$link', '$date', '0')"); 
+		return pb_db("INSERT INTO pb_notify (notify_to, notify_from, item, intro, content, link, date, seen, type) 
+		VALUES ('$to', '$from', '$item', '$intro', '$content', '$link', '$date', '0', '$type')"); 
 	}
 	
 	function pb_add_product($user_id) {
@@ -414,7 +505,9 @@
            "sold_to"   => 0,
            "date_sold" => 0
         ));
-      		
+        
+        add_tag($_POST['product_tags'], true);
+        	
       	$trans_info = json_encode($trans_info);
 		return pb_db("INSERT INTO pb_post (type, user_id, product_info, trans_info, status) VALUES ('$post_type', '$user_id','$product_info','$trans_info', 'open')");
 	}
@@ -461,8 +554,12 @@
 			$post_owner = pb_table_data('pb_services', 'owner', "service_id='$post_id'"); }else{
 			$post_owner = pb_table_data('pb_post', 'user_id', "product_id='$post_id'");
 		}
+		if( pb_explicit($_POST['comment'])=='true' ){
+			$status='flagged'; }else{
+			$status='open';
+		}
 		pb_notify($post_owner, $user_id, $post_id, 'Commented on', get_words($comment, 20), '/item?id='.$post_id);
-		return pb_db("INSERT INTO pb_comments (post_id, date, author, status, comment) VALUES ('$post_id', '$current_date','$user_id','open', '$comment')"); 
+		return pb_db("INSERT INTO pb_comments (post_id, date, author, status, comment) VALUES ('$post_id', '$current_date','$user_id','$status', '$comment')"); 
 	}
 	function pb_comment_count($post_id){
 		$json = json_decode( file_get_contents('http://'.domain().'/graph/index.php?page=comments&accessToken=rootbypass_9827354187582375129873&q='.$post_id.'&timeago=true') );$c=0;foreach($json as $data){ if(!empty($data->id)){$c++;} }return $c;

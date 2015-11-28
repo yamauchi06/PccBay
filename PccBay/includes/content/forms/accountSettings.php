@@ -1,29 +1,5 @@
-<?php 
-	
+<?php $pb_user=pb_user('array'); ?>
 
-	
-	 
-$user_data = json_decode(pb_user_data($_SESSION['user_id'], 'user_data'), true);
-$contact_info = json_decode(pb_user_data($_SESSION['user_id'], 'contact_info'), true);
-foreach($user_data as $data){
-	$pb_user['theme']=$data['theme'];
-	$pb_user['interest']=$data['interest'];
-	$pb_user['avatar']=$data['avatar'];
-	$pb_user['username']=$data['username'];
-	$pb_user['name']=$data['name'];
-	$pb_user['registered']=$data['registered'];
-	$pb_user['permissions']=$data['permissions'];
-} 
-foreach($contact_info as $data){
-	$pb_user['email']=$data['email'];
-	$pb_user['phone']=$data['phone'];
-	$pb_user['building']=$data['building'];
-	$pb_user['room']=$data['room'];
-	$pb_user['resident']=$data['resident'];
-	$pb_user['notify_d']=$data['notify_d'];
-	$pb_user['notify_m']=$data['notify_m'];
-}  
-?>
 <div class="oh-section oh-section-half">
 	
 	<h3 class="pb-rule-below"><img src="<?php print $pb_user['avatar']; ?>" class="pb-post-avatar" /> 

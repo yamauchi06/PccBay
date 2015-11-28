@@ -1,7 +1,7 @@
 <?php
-	include_once('../includes/php/commonFunctions.php');	
+	include_once('../MasterPages/overhead.php');
 	if(isset($_SESSION['user_id'])){
-		header('Location: /admin/html/');
+		header('Location: /admin/pb/');
 	}
 ?>
 <!DOCTYPE html>

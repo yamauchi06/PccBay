@@ -67,6 +67,36 @@ small{
 	border-bottom: #34495E solid 2px;
 }
 
+
+
+.pb-menu-bottom-sticky{
+	background-color: #ffffff;
+	border-top: 1px #E6E9ED solid;
+	height: 50px;
+	position: absolute;
+	bottom: 40px;
+	right: 0px;
+	padding: 0px;
+	z-index: 9999; 
+}
+.pb-menu-bottom-clickable{
+	display: inline-block;
+	float: right;
+	width: 50px;
+	height: 50px;
+	margin: 0px;
+	font-size: 39px;
+	text-align: center;
+	border-right: 1px #E6E9ED solid;
+	color: #E6E9ED;
+}
+.pb-menu-bottom-clickable:hover{
+	color: #afb0b2
+}
+
+
+
+
 #MobMenu { margin-top: 8px; position: relative; }
 
 #MobMenu { cursor: pointer; padding: 10px 35px 16px 0px; }
@@ -124,7 +154,7 @@ a:hover{
 }
 .MainSideBar{
 	background-color: #ffffff;
-	height: 100vh;
+	height: 100%;
 	position: fixed;
 	top: 0px;
 	right: 0px;
@@ -188,6 +218,19 @@ a:hover{
 	width: 100%;
 	height: 100%;
 	border-radius: 3px;
+ }
+ 
+ .pb-grade-lr-theme{
+	background: -webkit-linear-gradient(left, #3A5795, rgba(255,0,0,0)); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, #3A5795, rgba(255,0,0,0)); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, #3A5795, rgba(255,0,0,0)); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, #3A5795, rgba(255,0,0,0)); /* Standard syntax (must be last) */
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	border-radius: 3px; 
  }
  
  .pb-service-list{
