@@ -74,7 +74,7 @@ small{
 	border-top: 1px #E6E9ED solid;
 	height: 50px;
 	position: absolute;
-	bottom: 40px;
+	bottom: 32px;
 	right: 0px;
 	padding: 0px;
 	z-index: 9999; 
@@ -828,6 +828,86 @@ legend{
 }
 
 
+.pb-item{
+	min-height: 300px;
+	background: #ffffff;
+	vertical-align: top;
+	border-radius: 2px;
+}
+
+.pb-item-gallery{
+	min-height: 300px;
+	vertical-align: top;
+	margin: 0px;
+}
+
+.pb-item-info{
+	min-height: 300px;
+	vertical-align: top;
+	margin: 0px;
+	word-wrap: break-word;
+}
+.pb-item-gallery .pb-item-box{
+	border-right: 1px #E6E9ED solid;
+}
+@media (max-width: 991px) {
+  .pb-item-gallery .pb-item-box{
+    border-right: none;
+    border-bottom: 1px #E6E9ED solid;
+  }
+  .pb-item{
+	  margin-bottom: 20px;
+  }
+}
+
+.pb-item-box{
+	min-height: 300px;
+	padding: 10px;
+}
+
+
+
+
+
+.pb-item-button{
+	display: block;
+	width: 100%;
+	height: 50px;
+	border: 2px #3A5795 solid;
+	border-radius: 2px;
+	padding: 7px;
+	text-decoration: none;
+	margin: 10px 0px;
+	position: relative;
+}
+.pb-item-button:hover{
+	text-decoration: none;
+	background: #3A5795;
+	color: #E6E9ED;
+}
+.pb-item-button span{
+	display: block;
+	margin-left: 40px;
+	font-weight: 500;
+	font-size: 18px;
+	font-family: sans-serif;
+	line-height: 15px;
+}
+.pb-item-button:before{
+	display: block;
+	position: absolute;
+	font-family: Material-Design-Iconic-Font;
+	content: "\f198";
+	font-size: 30px;
+	padding: 3px 9px;
+	color: #E6E9ED;
+	top: -1px;
+	left: 0px;
+	-ms-transform: rotate(-15deg);
+    -webkit-transform: rotate(-15deg);
+    transform: rotate(-15deg);
+}
+
 /* Comments */
 .pb-comment{
 	box-shadow: 1px 1px 6px rgba(0,0,0,0.15);
@@ -1129,7 +1209,7 @@ form hr{
 	display: block;
 	position: absolute;
 	font-family: Material-Design-Iconic-Font;
-	content: "\f1cb";
+	content: "\f1ca";
 	font-size: 20px;
 	padding: 3px 9px;
 	background: #ffffff;
@@ -1153,16 +1233,21 @@ form hr{
 	list-style: none;
 	display: inline-block;
 	width: 100px;
-	margin: 2px 1px 0px 0px;
-	vertical-align: top;
+	height: 100px;
+	margin: 2px 4px 0px 0px;
+	vertical-align: middle;
 	background: #ffffff;
+	border: 2px #E6E9ED solid;
+	cursor: pointer;
+	white-space: nowrap;
 }
 .pb-product-gallery li img{
 	display: inline-block;
-	width: 100px;
+	width: 100%;
 	border: 1px #ffffff solid;
-	cursor: pointer;
+	vertical-align: middle;
 }	
+
 
 .pb-u-p-bubble{
 	padding: 2px 5px;
@@ -1610,4 +1695,20 @@ input[type=range]:focus::-ms-fill-upper {
 	background: #F5F7FA;
 	cursor: pointer;
 	text-decoration: none; 
+}
+
+
+.magniflier_glass {
+  width: 350px;
+  height: 350px;
+  position: absolute;
+  background: #ffffff;
+  background-size: 230% auto;
+  border-radius: 100%;
+  cursor: crosshair;
+  box-shadow:
+    0 0 0 7px rgba(255, 255, 255, 0.85),
+    0 0 7px 7px rgba(0, 0, 0, 0.25), 
+    inset 0 0 40px 2px rgba(0, 0, 0, 0.25);
+  display: none;
 }

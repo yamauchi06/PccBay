@@ -42,6 +42,14 @@
 		header('HTTP/1.0 404 Not Found');
 	    include('404.php');
 	    exit();
+	}
+	function price(){
+		global $product;
+		if(empty($product['price'])){
+			return 'No set price';
+		}else{
+			return '$'.$product['price'];
+		}
 	}	
 ?>
 <!DOCTYPE html>
@@ -61,66 +69,82 @@
 			
 			<!-- Begin Content -->
 			<div class="col-md-9 MainFeed">
+				
+				
+				<div class="pb-item col-md-12">
+					
+					<div class="pb-item-gallery col-md-8">
+						<div class="pb-item-box">
+							<?php
+								if(!empty($product['images'])){
+									?>
+										<div class="pb-product-gallery">
+											<img class="magniflier figure-feature" src="" />
+											<div class="figureOptions">
+												<ul>
+													<?php
+													$images = explode(',', $product['images']);
+													if(count($images) <= 1){
+														$hidImages = 'hide';
+													}else{$hidImages='';}
+													foreach($images as $image){
+														print '<li class="'.$hidImages.'" style="background: no-repeat center center url('.pb_safe_image_return($image, 
+															'url', ' class="lazy figureOp"',
+															'false'
+														).');background-size:contain" data-tumb="'.pb_safe_image_return($image, 
+															'url', ' class="lazy figureOp"',
+															'false'
+														).'"></li>';
+													} 
+													?>
+												</ul>
+											</div>
+										</div>
+									<?php
+								}
+							?>
+						</div>
+					</div>
+					
+					<div class="pb-item-info col-md-4">
+						<div class="pb-item-box">
+							<div class="col-md-12">
+								<h2 style="margin:0px"><?php print $product['title']; ?></h2>
+								<span>From: <b><?php print $pb_user['name']; ?></b></span>
+							</div>
+							
+							<div class="col-md-12">
+								
+								<div class="pb-full-rule"></div>
+								
+								<p><?php print $product['description']; ?></p>
 
-				<?php
-					if(!empty($product['images'])){
-						?>
-						<div class="col-md-5">
-							<div class="pb-product-gallery">
-								<div class="figure-feature"></div>
-								<div class="figureOptions">
-									<ul>
-										<?php
-											$images = explode(',', $product['images']);
-											if(count($images) <= 1){
-												$hidImages = 'hide';
-											}else{$hidImages='';}
-											foreach($images as $image){
-												print '<li class="'.$hidImages.'">';
-												pb_safe_image(
-													$image, 
-													'image-lazy', ' class="lazy figureOp"',
-													'false'
-												);
-												print '</li>';
-											} 
-										?>
-									</ul>
-								</div>
+								<a href="<?php echo pb_addtocart($product_id); ?>" class="pb-item-button transition-200">
+									<span>
+										<?php print get_words($product['title'], 3); ?><br />
+										<small><?php print price(); ?></small>
+									</span>
+								</a>
+							</div>
+							
+							
+							
+							
+							<div class="pb-post-tags col-md-12">
+								<strong>Tags</strong>
+								<ul>
+									<?php
+									foreach (explode(',', $product['tags']) as $index => $category) {
+										print '<li><a href="/s/'.str_replace(' ', '+', $category).'">'.ucwords($category).'</a></li>';
+									}
+									?>
+								</ul>
 							</div>
 						</div>
-						
-						<div class="col-md-7">
-						<?php
-					}else{
-						print '<div class="col-md-12">';
-					}	
-				?>
-					
-					<div class="col-md-12">
-						<h2 style="margin:0px"><?php print $product['title']; ?></h2>
-						<span>From: <b><?php print $pb_user['name']; ?></b></span>
 					</div>
 					
-					<div class="col-md-12">
-						<h4><span style="font-size: 13px">Price:</span> <span style="color:#c0392b">$<?php print $product['price']; ?></span></h4>
-						<p><?php print $product['description']; ?></p>
-					</div>
+				</div>
 
-				</div>
-				
-				<div class="pb-post-tags col-md-12">
-					<div class="col-md-offset-5 col-md-7">
-						<strong>Tags</strong>
-						<ul>
-							<?php
-							foreach (explode(',', $product['tags']) as $index => $category) {
-								print '<li><a href="/s/'.str_replace(' ', '+', $category).'">'.ucwords($category).'</a></li>';
-							}
-							?>
-						</ul>
-					</div>
-				</div>
 				
 			</div>
 			
@@ -151,11 +175,6 @@
 			?>
 				<div id="side_shopping" class="pb-sidebar-group activeSet">
 					<div class="side_shopping">
-						<form action="" method="post">
-							<input type="hidden" name="product_id" value="<?php print $product_id; ?>">
-							<button class="pb-addtocart themeBG">Get This</button>
-						</form>
-						
 						<!-- Begin Comments -->
 						<form class="pb-comment-form" id="ProductComments">
 							<div class="pb-comment-area">
@@ -215,38 +234,42 @@
 		</div>
 	</div>
 
+<script src="http://thecodeplayer.com/uploads/js/prefixfree.js" type="text/javascript"></script>
+
 <script src="/includes/js/pb-product-slider.js"></script>
 <script src="/includes/js/pb-comments.js"></script>
 <?php pb_include('/MasterPages/footer.php'); ?>
 <script>
-$( window ).resize(function() {
+var moveComments=function(){
 	if( $(window).width() < 992 ){
 		$('.side_shopping').appendTo('.MainFeed');
 	}else{
 		$('.side_shopping').appendTo('#side_shopping');
 	}
+}	
+$( window ).resize(function() {
+	moveComments();
 });	
 $(document).ready(function(){
-	
+	moveComments();
+	if( $(window).width() > 992 ){ magniflier(); }
 	$('#product_comemnts').pbcomments({
-		uploads: false,
+		uploads: true,
 		form: true
 	});
+	var ffHeight = 400; 
+	var imgurl = $('.pb-product-gallery').find('li:eq(0)').attr('data-tumb');
+	$('.pb-product-gallery').find('.figure-feature').attr('src', imgurl);
 	
-	var ffHeight = $('.figure-feature').width(); 
-	$('.pb-product-gallery').find('.figure-feature').css({
-		'background': 'no-repeat center top url('+$('.pb-product-gallery').find('img:eq(0)').attr('src')+')',
-		'background-size': 'contain',
-		height: ffHeight
-	});
-	$('body').on('click', '.figureOp', function(){
-		$('.pb-product-gallery').find('.figure-feature').css({
-			'background': 'no-repeat center top url('+$(this).attr('src')+')',
-			'background-size': 'contain',
-			height: ffHeight
-		});
+	$('.pb-product-gallery').find('li:eq(0)').addClass('active');
+	$('body').on('click', '.figureOptions li', function(){
+		$('.figureOptions li').removeClass('active');
+		$(this).addClass('active');
+		$('.pb-product-gallery').find('.figure-feature').attr('src', $(this).attr('data-tumb'));
 	});
 });
+
+
 </script>
 </body>
 </html>

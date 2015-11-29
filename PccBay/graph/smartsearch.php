@@ -13,7 +13,7 @@
 	if(!empty($slq_table)){
 		
 			//pb_post
-			$conn = new mysqli($servername, $username, $password, $dbname);
+			$conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
 			if ($conn->connect_error) {
 			    die("Connection failed: " . $conn->connect_error);
 			}
@@ -46,7 +46,7 @@
 			$conn->close();
 			
 			//pb_users
-			$conn = new mysqli($servername, $username, $password, $dbname);
+			$conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
 			if ($conn->connect_error) {
 			    die("Connection failed: " . $conn->connect_error);
 			}
@@ -78,7 +78,7 @@
 			
 			
 			//pb_tags
-			$conn = new mysqli($servername, $username, $password, $dbname);
+			$conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
 			if ($conn->connect_error) {
 			    die("Connection failed: " . $conn->connect_error);
 			}
@@ -102,7 +102,7 @@
 			
 			
 			//pb_tags
-			$conn = new mysqli($servername, $username, $password, $dbname);
+			$conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
 			if ($conn->connect_error) {
 			    die("Connection failed: " . $conn->connect_error);
 			}

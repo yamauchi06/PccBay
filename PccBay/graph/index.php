@@ -27,6 +27,10 @@
 			include('smartsearch.php');
 			exit;
 		}
+		if($_GET['page']=='addtocart'){
+			include('addtocart.php');
+			exit;
+		}
 		include('querys.php'); }else{
 		array_push($mainJson, 'Query not defined'); }
 		

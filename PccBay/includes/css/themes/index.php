@@ -156,3 +156,14 @@ a:hover {
     background: -moz-linear-gradient(right, <?php echo $brandColor; ?>, <?php echo rgba($brandColor, 0.4); ?>); /* For Firefox 3.6 to 15 */
     background: linear-gradient(to right, <?php echo $brandColor; ?>, <?php echo rgba($brandColor, 0.4); ?>); /* Standard syntax (must be last) */
 }
+
+.pb-item-button{
+	border: 2px <?php echo $brandColor; ?> solid;
+}
+.pb-item-button:hover{
+	background: <?php echo $brandColor; ?>;
+}
+
+.figureOptions li.active{
+	border: 2px <?php echo $brandColor; ?> solid;
+}

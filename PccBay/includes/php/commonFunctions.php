@@ -142,7 +142,7 @@
 		    while($row = $result->fetch_assoc()) {
 			    $size=explode(':', $row['size']);
 			    if($popup=='true'){$attr .= 'data-overHead-img="'.$row['string'].'" data-original="'.$row['string'].'"';}
-		        if($method=='base64'){ $results = $row['string']; }
+		        if($method=='base64' || $method=='url'){ $results = $row['string']; }
 		        if($method=='image'){  $results = '<img src="'.$row['string'].'" alt="'.$row['alt'].'" title="'.$row['title'].'" '.$attr.' />';}
 		        if($method=='image-lazy'){$results = '<img src="'.$row['string'].'" '.$attr.' />';}
 		    }print str_replace('{{image}}', $results, $html);
@@ -155,7 +155,7 @@
 		    while($row = $result->fetch_assoc()) {
 			    $size=explode(':', $row['size']);
 			    if($popup=='true'){$attr .= 'data-overHead-img="'.$row['string'].'" data-original="'.$row['string'].'"';}
-		        if($method=='base64'){ $results = $row['string']; }
+		        if($method=='base64' || $method=='url'){ $results = $row['string']; }
 		        if($method=='image'){  $results = '<img src="'.$row['string'].'" alt="'.$row['alt'].'" title="'.$row['title'].'" '.$attr.' />';}
 		        if($method=='image-lazy'){$results = '<img src="'.$row['string'].'" '.$attr.' />';}
 		    }return $results;
@@ -630,5 +630,9 @@
 		return pb_db("INSERT INTO pb_services (service_id, category, title, cost, location, hours, established, expires, bio, cover, logo, owner, members, ratings, portfolio, status) 
 				VALUES ('$service_id', '$_POST[category]', '$_POST[title]', '$_POST[cost]', '$_POST[location]', '', '$current_date', '$exp', '$about', '$_POST[profile_cover]', '$_POST[profile_img]', '$user_id', '', '', '$_POST[profile_logo]', 'open')");
 	}	
+	
+	function pb_addtocart($item_id){
+		return '/graph/addtocart?id='.$item_id.'&accessToken='.pb_graph_token('9827354187582375129873', '712638715312875');
+	}
 	
 ?>
