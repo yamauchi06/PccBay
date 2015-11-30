@@ -5,10 +5,18 @@
 	</ul>
 </div>
 
-<label>Price Range</label>
-<input type="range" step="5" />
-<br />
 
-<label> Price </label>
-<input type="range" step="5" />
-<br />
+<div id="FilterPriceRange"></div>
+<script>
+	$(document).ready(function(){
+		pb_range(
+			'#FilterPriceRange', 
+			'Price Range', 
+			10,0, 
+			['All items', '$0-10', '$10-20', '$20-30', '$30-40', '$40-50', '$50-60', '$60-70', '$70-80', '$80-90', '$90-100+'], 
+			function(ui, value, step){ 
+				//Do somthing on change
+			}
+		);	
+	});
+</script>

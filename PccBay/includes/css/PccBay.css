@@ -833,6 +833,7 @@ legend{
 	background: #ffffff;
 	vertical-align: top;
 	border-radius: 2px;
+	position: relative;
 }
 
 .pb-item-gallery{
@@ -1220,14 +1221,17 @@ form hr{
 .pb-product-gallery{
 	width: 100%;
 	height: auto;
+	text-align: center;
 }
 .pb-product-gallery .figure-feature{
-	width: 100%;
-	min-height: 100px;
+	max-width: 100%;
+	height: 400px;
 	background: #ffffff;
+	text-align: center;
 }
 .pb-product-gallery ul{
 	padding: 0px;
+	text-align: left;
 }
 .pb-product-gallery li{
 	list-style: none;
@@ -1559,13 +1563,6 @@ input[type=range]::-ms-thumb {
   background: #FFFFFF;
   cursor: pointer;
 }
-input[type=range]:focus::-ms-fill-lower {
-  background: #3A5795;
-}
-input[type=range]:focus::-ms-fill-upper {
-  background: #3A5795;
-}
-
 
 
 .autocomplete-suggestions::-webkit-scrollbar {
@@ -1711,4 +1708,53 @@ input[type=range]:focus::-ms-fill-upper {
     0 0 7px 7px rgba(0, 0, 0, 0.25), 
     inset 0 0 40px 2px rgba(0, 0, 0, 0.25);
   display: none;
+  z-index: 99999999;
+}
+
+
+
+.corner-text-wrapper {
+  -webkit-transform: rotate(-45deg);  
+     -moz-transform: rotate(-45deg);  
+      -ms-transform: rotate(-45deg);  
+       -o-transform: rotate(-45deg);  
+          transform: rotate(-45deg);
+    clip: rect(0px, 141.421px, 70.7107px, 0px);
+    height: 80px;
+    position: absolute;
+    left: -32px;
+    top: 10px;
+    width: 80px;
+    z-index: 1;
+}
+.corner-text {
+  color: white;
+ -webkit-transform: rotate(-45deg);  
+     -moz-transform: rotate(-45deg); 
+      -ms-transform: rotate(-45deg); 
+       -o-transform: rotate(-45deg); 
+          transform: rotate(-45deg);
+    left: 20px;
+    top: 20px;
+    background-color: #27AE60;
+    display: block;
+    height: 100px;
+    position: absolute;
+    width: 100px;
+    font-size: 20px;
+    z-index: 2;
+}
+.corner-text span {
+  position: relative;
+  top: 25px;
+  left: 15px;
+  display: block;
+  text-align: center;
+  color: #ffffff;
+  text-transform: capitalize;
+   -webkit-transform: rotate(45deg);  
+     -moz-transform: rotate(45deg); 
+      -ms-transform: rotate(45deg); 
+       -o-transform: rotate(45deg); 
+          transform: rotate(45deg);
 }

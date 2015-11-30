@@ -449,3 +449,18 @@ function magniflier(){
 	  });
 }
 
+function pb_range(selector, title, steps, start, stArr, callback){
+	var inStep=function(that){
+		var inStep = Math.ceil( parseInt($(that).val()) / stArr.length );
+		$('#'+mkId).text(stArr[inStep]);
+	}
+	var mkId = 'pb_range_'+title.replace(/ /g, '');
+	$(selector).prepend('<label>'+title+'</label><input type="range" name="'+mkId+'" step="'+steps+'" value="'+start+'" /><div id="'+mkId+'"></div><br />');
+	inStep('[name="'+mkId+'"]');
+	$(selector).find('input[name="'+mkId+'"]').on('change', function(){ 
+		inStep(this); 
+		callback(this, $(this).val(), Math.ceil( parseInt($(this).val()) / stArr.length ) ); 
+	});
+	
+}
+

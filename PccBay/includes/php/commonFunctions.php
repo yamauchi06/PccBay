@@ -25,6 +25,9 @@
 		if($type=='description'){
 			return 'The eBay for PCC';
 		}
+		if($type=='actual_link'){
+			return "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		}
 	}
 	
 	function fDate($date, $modify){
@@ -198,7 +201,11 @@
 	
 	function pb_isset($var, $isset='', $unset=''){
 		if($var == 'session_unset'){ unset($var); }
-		if( isset($var)){ print $isset; }else{ print $unset; }
+		if(empty($isset) || empty($unset)){
+			return isset($var);
+		}else{
+			if( isset($var)){ print $isset; }else{ print $unset; }
+		}
 	}
 	
 	function pb_ifset($var){
@@ -248,6 +255,17 @@
 		}
 	}
 	
+	function pb_order($post_id){
+		$return='';
+		$result=pb_db("SELECT * FROM pb_orders WHERE post_id='$post_id'");
+		if ($result->num_rows > 0) {
+		    while($row = $result->fetch_assoc()) {
+				$return=$row;
+		    }
+		}
+		return pb_switch($return);
+	}	
+	
 	function pb_is_allowed($perm='0', $user_id=''){
 		if(empty($user_id)){
 			if(isset($_SESSION['user_id'])){
@@ -291,9 +309,13 @@
 	function arrayToObject($d) {if (is_array($d)) {return (object) array_map(__FUNCTION__, $d);}else {return $d;}}
 	
 	function pb_switch($d){
-		if(is_array($d)) { $r = arrayToObject($d); }
-		if(is_object($d)){ $r = objectToArray($d); }
-		return $r;
+		if(!empty($d)){
+			if(is_array($d)) { $r = arrayToObject($d); }
+			if(is_object($d)){ $r = objectToArray($d); }
+			return $r;
+		}else{
+			return false;
+		}
 	}
 	
 	function pb_user($type='object', $user_id='', $save=true){
@@ -632,7 +654,7 @@
 	}	
 	
 	function pb_addtocart($item_id){
-		return '/graph/addtocart?id='.$item_id.'&accessToken='.pb_graph_token('9827354187582375129873', '712638715312875');
+		return '/graph/addtocart?id='.$item_id.'&accessToken='.pb_graph_token('9827354187582375129873', '712638715312875').'&redirect='.domain('actual_link');
 	}
 	
 ?>

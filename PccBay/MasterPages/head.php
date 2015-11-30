@@ -55,5 +55,3 @@ if(isset($_SESSION['user_id'])){
 }
 print '<link id="userThemeCSS" rel="stylesheet" href="/includes/css/themes/?t='.$pb_user['theme'].'" type="text/css" >';
 ?>
-
-<?php if( pb_is_allowed('50') ){ print '<link rel="stylesheet" href="/includes/css/pb-admin-styles.css" type="text/css" />'; } ?>

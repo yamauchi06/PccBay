@@ -9,5 +9,4 @@
 	
 	//print pb_is_allowed('50');
 	
-	print pb_user()->utid;
 ?>

@@ -167,3 +167,23 @@ a:hover {
 .figureOptions li.active{
 	border: 2px <?php echo $brandColor; ?> solid;
 }
+
+.corner-text{
+	background-color: <?php echo $brandColor; ?>;
+}
+
+input[type=range]:focus::-ms-fill-lower {
+  background: <?php echo $brandColor; ?>;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: <?php echo $brandColor; ?>;
+}
+input[type=range]::-ms-fill-lower {
+  background: <?php echo $brandColor; ?>;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: <?php echo $brandColor; ?>;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  background: <?php echo $brandColor; ?>;
+}

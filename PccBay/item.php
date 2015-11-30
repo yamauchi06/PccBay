@@ -72,6 +72,13 @@
 				
 				
 				<div class="pb-item col-md-12">
+			    <?php $proStatuseClass=''; if(isset(pb_order($product_id)->user_id)){ if( pb_order($product_id)->user_id == $_SESSION['user_id'] ){ $proStatuseClass='hide'; ?>	
+				<div class="corner-text-wrapper">
+			        <div class="corner-text">
+			          <span><?php print pb_order($product_id)->status; ?></span>
+			      	</div>
+			    </div>	
+			    <?php } } ?>
 					
 					<div class="pb-item-gallery col-md-8">
 						<div class="pb-item-box">
@@ -119,7 +126,7 @@
 								
 								<p><?php print $product['description']; ?></p>
 
-								<a href="<?php echo pb_addtocart($product_id); ?>" class="pb-item-button transition-200">
+								<a href="<?php echo pb_addtocart($product_id); ?>" class="pb-item-button transition-200 <?php print $proStatuseClass; ?>">
 									<span>
 										<?php print get_words($product['title'], 3); ?><br />
 										<small><?php print price(); ?></small>
@@ -156,7 +163,7 @@
 					<nav>
 						<a href="#" class="transition-300 activeSet" data-obj="side_shopping">
 							<div class="col-md-4">
-								<i class="zmdi zmdi-shopping-cart"></i>
+								<i class="zmdi zmdi-comment-more"></i>
 							</div>
 						</a>
 						<a href="#" class="transition-300" data-obj="side_notifications">
@@ -234,7 +241,6 @@
 		</div>
 	</div>
 
-<script src="http://thecodeplayer.com/uploads/js/prefixfree.js" type="text/javascript"></script>
 
 <script src="/includes/js/pb-product-slider.js"></script>
 <script src="/includes/js/pb-comments.js"></script>
