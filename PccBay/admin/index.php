@@ -1,5 +1,6 @@
 <?php
 	include_once('../MasterPages/overhead.php');
+	pb_members_only('login');
 	if(isset($_SESSION['user_id'])){
 		header('Location: /admin/pb/');
 	}

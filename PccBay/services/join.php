@@ -1,4 +1,4 @@
-<?php  include_once('../MasterPages/overhead.php'); ?>
+<?php  include_once('../MasterPages/overhead.php'); pb_members_only('login'); ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>

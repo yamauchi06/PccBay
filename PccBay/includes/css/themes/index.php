@@ -49,6 +49,19 @@ a:hover {
 	color: <?php echo $brandColor; ?>;
 }
 
+.themeBG-80{
+	background: <?php echo rgba($brandColor, 0.8); ?>;
+}
+.themeBG-60{
+	background: <?php echo rgba($brandColor, 0.6); ?>;
+}
+.themeBG-50{
+	background: <?php echo rgba($brandColor, 0.5); ?>;
+}
+.themeBG-20{
+	background: <?php echo rgba($brandColor, 0.2); ?>;
+}
+
 .MainSideBar nav a:hover{
 	color: <?php echo $brandColor; ?>;
 }
@@ -186,4 +199,13 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 }
 input[type=range]::-webkit-slider-runnable-track {
   background: <?php echo $brandColor; ?>;
+}
+
+.pb-page-block-highlight .pb-page-button-theme{
+	color: <?php echo $brandColor; ?>;
+	border-color: <?php echo $brandColor; ?>;
+	font-size: 19px;
+}.pb-page-block-highlight .pb-page-button-theme:hover{
+	background: <?php echo $brandColor; ?>;
+	color: #ffffff;
 }

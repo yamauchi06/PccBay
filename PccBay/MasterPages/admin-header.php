@@ -1,4 +1,4 @@
-<?php if( pb_is_allowed(50) ){ ?>
+<?php if(!CHROME_APP){ if( pb_is_allowed(50) ){ ?>
 <link rel="stylesheet" href="/includes/css/pb-admin-styles.css" type="text/css" />
 <div class="row pb-admin-header">
 	
@@ -25,4 +25,4 @@
 	</ul>
 	
 </div>
-<?php }	?>
+<?php } }	?>

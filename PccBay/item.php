@@ -1,13 +1,9 @@
 <?php 
 	include_once('MasterPages/overhead.php');
+	pb_members_only('login');
 	if( isset($_GET['id']) ){ $product_id=$_GET['id']; }else{$product_id='';}
-	if( !isset($_SESSION['user_id']) || empty($product_id) ){ header('Location: /#userLogin'); }
-	$conn = new mysqli($servername, $username, $password, $dbname);
-	if ($conn->connect_error) {
-	    die("Connection failed: " . $conn->connect_error);
-	} 
-	$sql = "SELECT * FROM pb_post Where product_id='$product_id'";
-	$result = $conn->query($sql);
+	
+	$result = pb_db("SELECT * FROM pb_post Where product_id='$product_id'");
 	if ($result->num_rows > 0) {
 	    while($row = $result->fetch_assoc()) {
 		    $product['user_id']      = $row['user_id'];
@@ -16,41 +12,15 @@
 		    $product['trans_info']   = json_decode($row['trans_info']);
 	    }
 	    $allowed=true;
-	}else{
-		$allowed=false;
-	}
-	$conn->close();
+	}else{ $allowed=false; }
+	
 	if($allowed){
-		foreach($product['product_info'] as $data){
-			$product['timestamp']   = $data->timestamp;
-			$product['title']       = htmlspecialchars_decode($data->title);
-			$product['description'] = htmlspecialchars_decode($data->desc);
-			$product['tags']        = $data->tags;
-			$product['price']       = $data->price;
-			$product['condition']   = $data->condition;
-			$product['images']      = $data->images;
-		}
-		
-		$user_data = json_decode(pb_user_data($product['user_id'], 'user_data'), true);
-		foreach($user_data as $data){
-			$pb_user['name']=$data['name'];
-			$pb_user['avatar']=$data['avatar'];
-			$pb_user['registered']=date("F d, Y", strtotime($data['registered']));
-			$pb_user['theme']=$data['theme'];
-		}
+		$pi=$product['product_info'][0];
 	}else{
 		header('HTTP/1.0 404 Not Found');
 	    include('404.php');
 	    exit();
 	}
-	function price(){
-		global $product;
-		if(empty($product['price'])){
-			return 'No set price';
-		}else{
-			return '$'.$product['price'];
-		}
-	}	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,14 +53,14 @@
 					<div class="pb-item-gallery col-md-8">
 						<div class="pb-item-box">
 							<?php
-								if(!empty($product['images'])){
+								if(!empty($pi->images)){
 									?>
 										<div class="pb-product-gallery">
 											<img class="magniflier figure-feature" src="" />
 											<div class="figureOptions">
 												<ul>
 													<?php
-													$images = explode(',', $product['images']);
+													$images = explode(',', $pi->images);
 													if(count($images) <= 1){
 														$hidImages = 'hide';
 													}else{$hidImages='';}
@@ -116,20 +86,20 @@
 					<div class="pb-item-info col-md-4">
 						<div class="pb-item-box">
 							<div class="col-md-12">
-								<h2 style="margin:0px"><?php print $product['title']; ?></h2>
-								<span>From: <b><?php print $pb_user['name']; ?></b></span>
+								<h2 style="margin:0px"><?php print $pi->title; ?></h2>
+								<span>From: <b><?php print pb_user('object', $product['user_id'])->name; ?></b></span>
 							</div>
 							
 							<div class="col-md-12">
 								
 								<div class="pb-full-rule"></div>
 								
-								<p><?php print $product['description']; ?></p>
+								<p><?php print $pi->desc; ?></p>
 
 								<a href="<?php echo pb_addtocart($product_id); ?>" class="pb-item-button transition-200 <?php print $proStatuseClass; ?>">
 									<span>
-										<?php print get_words($product['title'], 3); ?><br />
-										<small><?php print price(); ?></small>
+										<?php print get_words($pi->title, 3); ?><br />
+										<small><?php print pb_price($pi->price); ?></small>
 									</span>
 								</a>
 							</div>
@@ -141,7 +111,7 @@
 								<strong>Tags</strong>
 								<ul>
 									<?php
-									foreach (explode(',', $product['tags']) as $index => $category) {
+									foreach (explode(',', $pi->tags) as $index => $category) {
 										print '<li><a href="/s/'.str_replace(' ', '+', $category).'">'.ucwords($category).'</a></li>';
 									}
 									?>

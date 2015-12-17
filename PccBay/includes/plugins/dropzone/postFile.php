@@ -7,7 +7,7 @@ include_once('../../php/commonFunctions.php');
 	 
 $backStep = '../../../';
 
-$date_format = 'Y_m_j';
+$date_format = 'Y_m'; // Y_m_j = older than dec 6 2015
 
 $cropImagesWidth = 900;
 

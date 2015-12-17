@@ -65,12 +65,18 @@
 		<fieldset class="pb-rule-around">
 			<legend>Notifications</legend>
 			<div class="row">
-				<div class="col-md-4" style="padding-top:6px;margin-left:7px;">Desktop Notifications?</div>
+				<div class="col-md-4" style="padding-top:6px;margin-left:7px;">Chrome Notifications?
+					<br /><small><a href="#">Download Google Chrome Extension</a></small>
+					
+				</div>
 				<div class="col-md-3"><input type="checkbox" name="account_note_desktop" value="true" data-toggleswitch <?php if($pb_user['notify_d']=='true') print 'checked' ?> data-on-color="theme"></div>
 			</div>
-			<br />
 			<div class="row">
-				<div class="col-md-4" style="padding-top:6px;margin-left:7px;">Mobile Notifications?</div>
+				<div class="col-md-4" style="padding-top:6px;margin-left:7px;">Mobile Notifications?
+					<br />
+					<img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" width="100px" />
+					<img alt="Get it on the App Store" src="http://www.mosa.nl/files/8613/8668/4836/available-in-app-store-badge.png" width="100px" />
+				</div>
 				<div class="col-md-3"><input type="checkbox" name="account_note_mobile" value="true" data-toggleswitch <?php if($pb_user['notify_m']=='true') print 'checked' ?> data-on-color="theme"></div>
 			</div>
 		</fieldset>

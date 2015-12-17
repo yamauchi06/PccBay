@@ -13,7 +13,7 @@
 			return false;
 		}
 	}
-	function pb_db($sql, $callback='', $callbackNoResults=''){
+	function pb_db($sql, $callback='', $callbackNoResults='', $return='array'){
 		//SQL CONNECT
 		$conn=pb_sql_connect();
 		//SQL QUERY
@@ -28,7 +28,9 @@
 				if( pb_sql_is_callback($callback)==true ){
 					return $callback; }else{
 					while($row = $query->fetch_assoc()) {
-						$callback($row);
+						if($return=='array'){ $callback($row); }else{
+							$callback(pb_switch($row));
+						}
 					}
 				}
 			}else{

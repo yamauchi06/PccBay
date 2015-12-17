@@ -17,31 +17,33 @@
 			if ($conn->connect_error) {
 			    die("Connection failed: " . $conn->connect_error);
 			}
-			$sql="SELECT * FROM pb_post WHERE status='open' LIMIT 200";
+			$sql="SELECT * FROM pb_post WHERE LIMIT 200";
 			$result = $conn->query($sql);
-			if ($result->num_rows > 0) {
-			    while($val = $result->fetch_assoc()) {
-				    $info='';
-				    $title='';
-				    foreach(json_decode($val['product_info']) as $data){
-					    $info .= $data->title;
-					    $info .= str_replace(',', '', $data->tags);
-					    //$info .= ' '.strip_tags($data->desc);
-					    $title = $data->title;
-					    $images = explode(',', $data->images)[0];
+			if(is_object($result)){
+				if ($result->num_rows > 0) {
+				    while($val = $result->fetch_assoc()) {
+					    $info='';
+					    $title='';
+					    foreach(json_decode($val['product_info']) as $data){
+						    $info .= $data->title;
+						    $info .= str_replace(',', '', $data->tags);
+						    //$info .= ' '.strip_tags($data->desc);
+						    $title = $data->title;
+						    $images = explode(',', $data->images)[0];
+					    }
+					    $img=pb_table_data('pb_safe_image', 'string', "uid='$images'");
+						$entity = array(
+							'id' => $val['product_id'],
+							'type' => strtolower($val['type']),
+							'title' => $title,
+							'image' => $img,
+							'info' => strtolower($info),
+							'small' => '',
+							'status' => strtolower($val['status'])
+						);
+						array_push($mainJson, $entity);
 				    }
-				    $img=pb_table_data('pb_safe_image', 'string', "uid='$images'");
-					$entity = array(
-						'id' => $val['product_id'],
-						'type' => strtolower($val['type']),
-						'title' => $title,
-						'image' => $img,
-						'info' => strtolower($info),
-						'small' => '',
-						'status' => strtolower($val['status'])
-					);
-					array_push($mainJson, $entity);
-			    }
+				}
 			}
 			$conn->close();
 			
@@ -52,27 +54,29 @@
 			}
 			$sql="SELECT * FROM pb_users";
 			$result = $conn->query($sql);
-			if ($result->num_rows > 0) {
-			    while($val = $result->fetch_assoc()) {
-				    $info='';
-				    $title='';
-				    foreach(json_decode($val['user_data']) as $data){
-					    $info .= $data->username;
-					    $info .= ' '.$data->name;
-					    $title=$data->name;
-					    $images = $data->avatar;
+			if(is_object($result)){
+				if ($result->num_rows > 0) {
+				    while($val = $result->fetch_assoc()) {
+					    $info='';
+					    $title='';
+					    foreach(json_decode($val['user_data']) as $data){
+						    $info .= $data->username;
+						    $info .= ' '.$data->name;
+						    $title=$data->name;
+						    $images = $data->avatar;
+					    }
+						$entity = array(
+							'id' => $val['user_id'],
+							'type' => 'user',
+							'title' => $title,
+							'image' => $images,
+							'info' => strtolower($info),
+							'small' => '',
+							'status' => 'open'
+						);
+						array_push($mainJson, $entity);
 				    }
-					$entity = array(
-						'id' => $val['user_id'],
-						'type' => 'user',
-						'title' => $title,
-						'image' => $images,
-						'info' => strtolower($info),
-						'small' => '',
-						'status' => 'open'
-					);
-					array_push($mainJson, $entity);
-			    }
+				}
 			}
 			$conn->close();
 			
@@ -84,19 +88,21 @@
 			}
 			$sql="SELECT * FROM pb_tags LIMIT 200";
 			$result = $conn->query($sql);
-			if ($result->num_rows > 0) {
-			    while($val = $result->fetch_assoc()) {
-					$entity = array(
-						'id' => $val['tag_id'],
-						'type' => 'tag',
-						'info' => strtolower($val['tag']),
-						'small' => '',
-						'title' => strtolower($val['tag']),
-						'image' => '',
-						'status' => 'open'
-					);
-					array_push($mainJson, $entity);
-			    }
+			if(is_object($result)){
+				if ($result->num_rows > 0) {
+				    while($val = $result->fetch_assoc()) {
+						$entity = array(
+							'id' => $val['tag_id'],
+							'type' => 'tag',
+							'info' => strtolower($val['tag']),
+							'small' => '',
+							'title' => strtolower($val['tag']),
+							'image' => '',
+							'status' => 'open'
+						);
+						array_push($mainJson, $entity);
+				    }
+				}
 			}
 			$conn->close();
 			
@@ -108,19 +114,21 @@
 			}
 			$sql="SELECT * FROM pb_services LIMIT 200";
 			$result = $conn->query($sql);
-			if ($result->num_rows > 0) {
-			    while($val = $result->fetch_assoc()) {
-				    $img=pb_table_data('pb_safe_image', 'string', "uid='$val[logo]'");
-					$entity = array(
-						'id' => $val['service_id'],
-						'type' => 'service',
-						'title' => strtolower($val['title']),
-						'info' => strtolower($val['category']),
-						'small' => strtolower($val['category'].'<div class="pb-stars-search" data-stars="'.$val['ratings'].'"></div>'),
-						'image' => $img
-					);
-					array_push($mainJson, $entity);
-			    }
+			if(is_object($result)){
+				if ($result->num_rows > 0) {
+				    while($val = $result->fetch_assoc()) {
+					    $img=pb_table_data('pb_safe_image', 'string', "uid='$val[logo]'");
+						$entity = array(
+							'id' => $val['service_id'],
+							'type' => 'service',
+							'title' => strtolower($val['title']),
+							'info' => strtolower($val['category']),
+							'small' => strtolower($val['category'].'<div class="pb-stars-search" data-stars="'.$val['ratings'].'"></div>'),
+							'image' => $img
+						);
+						array_push($mainJson, $entity);
+				    }
+				}
 			}
 			$conn->close();
 			

@@ -45,6 +45,7 @@ function get_comments($post_id){
 }
 
 function oAuthAccess($app_id){
+	if($_GET['page']=='phpinfo'){ header('Content-Type: text/html; charset=utf-8'); print phpinfo();exit;}
 	global $servername;
 	global $username;
 	global $password;

@@ -1,4 +1,4 @@
-<?php include_once('MasterPages/overhead.php'); ?>
+<?php include_once('../../../MasterPages/overhead.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -7,7 +7,7 @@
 	</head>	
 <body>
 	<header>		
-		<?php pb_include('/MasterPages/header'); ?>
+		<?php pb_include('/MasterPages/header~noAdmin'); ?>
 	</header>
 	<?php 
 	if(isset($_SESSION['user_id'])){
@@ -226,7 +226,7 @@ $(document).ready(function(){
 	var tail='null';
 	if(thispage().indexOf('@') !== -1){ tail=thispage().substring(1); userUrl(tail); }
 	var ini_gridCount=0;
-	var JsonURI = '/graph/feed?accessToken=<?php print pb_graph_token('9827354187582375129873', '712638715312875'); ?>&loop=12&q='+tail;
+	var JsonURI = '/graph/feed?accessToken=<?php print pb_graph_token('9827354187582375129873', '712638715312875'); ?>&loop=20&q='+tail;
 	$( 'div#freewall' ).lazyjson({
 	    api: {
 	        uri: JsonURI

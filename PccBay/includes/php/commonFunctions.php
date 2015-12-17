@@ -126,6 +126,22 @@
 	    }
 	}
 	
+	function isCurrency($number){
+	  return preg_match("/^-?[0-9]+(?:\.[0-9]{1,2})?$/", $number);
+	}
+		
+	function pb_price($price='', $empty='free', $currency='$'){
+		if(!empty($price)){
+			if(isCurrency($price)){
+				return $currency.$price;
+			}else{
+				return $price;
+			}
+		}else{
+			return $empty;
+		}
+	}
+	
 	function htmlify($str){
 		$str=str_replace('–', '&#8211;', $str);
 		$str=str_replace('—', '&#8212;', $str);
@@ -137,6 +153,21 @@
 		$str=str_replace("‘", '&#8216;', $str);
 		$str=str_replace("’", '&#8217;', $str);
 		return $str;
+	}
+	
+	function pb_members_only($do='nothing', $text="<h2>Access Denied, You must be logged in to view this page.</h2>"){
+		if(!isset($_SESSION['user_id'])){
+			if($do=='nothing'){
+				print $text;
+				exit;
+			}
+			if($do=='homepage'){
+				header('Location: /');
+			}
+			if($do=='login'){
+				header('Location: /?redirect_on_login='.domain('actual_link').'#userLogin');
+			}
+		}
 	}
 	
 	function pb_safe_image($unique_id, $method='image', $attr='', $popup='true', $html='{{image}}'){
@@ -191,6 +222,10 @@
 		}
 	}
 	
+	function pb_date(){
+		return date("F j, Y, g:i:s a");
+	}
+	
 	function pb_isset_session($sessionName){
 		if(isset($_SESSION[$sessionName])){
 			return $_SESSION[$sessionName];
@@ -201,7 +236,7 @@
 	
 	function pb_isset($var, $isset='', $unset=''){
 		if($var == 'session_unset'){ unset($var); }
-		if(empty($isset) || empty($unset)){
+		if(empty($isset) && empty($unset)){
 			return isset($var);
 		}else{
 			if( isset($var)){ print $isset; }else{ print $unset; }
@@ -350,6 +385,23 @@
 		}
 	}
 	
+	function pb_post($post_id='', $type='object'){
+		$result = pb_db("SELECT * FROM pb_post WHERE product_id='$post_id'");
+		if ($result->num_rows > 0) {
+		    while($row = $result->fetch_assoc()) {
+				$post=array(
+					'id' => $row['product_id'],
+					'type' => $row['type'],
+					'user' => $row['user_id'],
+					'status' => $row['status'],
+					'info' => json_decode($row['product_info'])[0],
+					'trans' => json_decode($row['trans_info'])[0]
+				);
+		    }
+		}
+		return pb_switch($post);
+	}
+	
 	function pb_user_permission($user_id, $get, $style){
 		$user_data = pb_user_data($user_id, 'permissions');
 		$allowedKind=array('permission', 'label');
@@ -466,6 +518,7 @@
 	}
 
 	function pb_my_notifications($user_id){
+		pb_expired($user_id, 'notify');
 		$result = pb_db("SELECT * FROM  pb_notify Where notify_to IN ($user_id) AND seen='0'");
 		if ($result->num_rows > 0) {
 		    while($row = $result->fetch_assoc()) {
@@ -474,21 +527,30 @@
 			    foreach($postTitle as $data){
 					$item_t=$data->title;
 				} 
-			    $user_data = json_decode(pb_user_data($row['notify_from'], 'user_data'), true);
-				foreach($user_data as $data){
-					$pb_user['name']=$data['name'];
-					$pb_user['username']=$data['username'];
-					$pb_user['avatar']=$data['avatar'];
-				} 
-				print '<li class="pb-notify-item" id="notify_'.$row['id'].'">
-					<a href="'.$row['link'].'#notify='.$row['id'].'">
-						<img src="'.$pb_user['avatar'].'" class="pb-post-avatar">
-						<span><strong>'.$pb_user['name'].'</strong> '.$row['intro'].' <em>'.$item_t.' </em>&nbsp;"'.$row['content'].'"</span><br />
-						<span class="pb-post-timestamp pb-rule-above"> <i class="zmdi zmdi-calendar-note"></i> <i class="pb-post-timestamp-o">
-						'.time_ago( strtotime($row['date']) ).'
-						</i></span>
-					</a>
-				</li>';
+			    if($row['notify_from']!=='system'){
+				    $user_data = json_decode(pb_user_data($row['notify_from'], 'user_data'), true);
+					foreach($user_data as $data){
+						$pb_user['name']=$data['name'];
+						$pb_user['username']=$data['username'];
+						$pb_user['avatar']=$data['avatar'];
+					} 
+					print '<li class="pb-notify-item" id="notify_'.$row['id'].'">
+						<a href="'.$row['link'].'#notify='.$row['id'].'">
+							<img src="'.$pb_user['avatar'].'" class="pb-post-avatar">
+							<span><strong>'.$pb_user['name'].'</strong> '.$row['intro'].' <em>'.$item_t.' </em>&nbsp;"'.$row['content'].'"</span><br />
+							<span class="pb-post-timestamp pb-rule-above"> <i class="zmdi zmdi-calendar-note"></i> <i class="pb-post-timestamp-o">
+							'.time_ago( strtotime($row['date']) ).'
+							</i></span>
+						</a>
+					</li>';
+			    }else{
+				    print '<li class="pb-notify-item pb-notify-warning" id="notify_'.$row['id'].'" style="padding:5px;">
+							<span>'.$row['intro'].'<em>'.$item_t.'</em>'.$row['content'].'</span><br />
+							<span class="pb-post-timestamp pb-rule-above"> <i class="zmdi zmdi-calendar-note"></i> <i class="pb-post-timestamp-o">
+							'.time_ago( strtotime($row['date']) ).'
+							</i></span>
+					</li>';
+			    }
 		    }
 		}else{
 			print '<p style="text-align:center">No new notifications.</p>';
@@ -499,11 +561,30 @@
 		return pb_db("UPDATE pb_notify SET seen='$seen' WHERE id='$id'");
 	}
 	
+	function pb_reactivate_post($id){
+		$curr=pb_post($id)->info;
+		$cDate = $curr->timestamp;
+		$s = print_r($curr, 1);	
+		$output = str_replace($cDate,  pb_date(), $s);
+		return pb_db("UPDATE pb_post SET product_info='$output' WHERE product_id='$id'");
+	}
+	
+	
+	
 	function pb_notify($to, $from, $item, $intro, $content, $link, $type="0"){
 		$date = date("F j, Y, g:i:s a");			
 		return pb_db("INSERT INTO pb_notify (notify_to, notify_from, item, intro, content, link, date, seen, type) 
 		VALUES ('$to', '$from', '$item', '$intro', '$content', '$link', '$date', '0', '$type')"); 
 	}
+	function pb_db_last($table, $ob){
+		$result = pb_db("SELECT * FROM $table ORDER BY $ob DESC LIMIT 1");
+		if ($result->num_rows > 0) { return pb_switch($result->fetch_assoc()); }
+	}
+	function pb_db_first($table, $ob){
+		$result = pb_db("SELECT * FROM $table ORDER BY $ob ASC LIMIT 1");
+		if ($result->num_rows > 0) { return pb_switch($result->fetch_assoc()); }
+	}
+
 	
 	function pb_add_product($user_id) {
 		$post_type = $_POST['post_type'];
@@ -656,5 +737,34 @@
 	function pb_addtocart($item_id){
 		return '/graph/addtocart?id='.$item_id.'&accessToken='.pb_graph_token('9827354187582375129873', '712638715312875').'&redirect='.domain('actual_link');
 	}
+	
+	
+	function pb_expired($user_id, $action){
+/*
+		$return=array();
+		$result = pb_db("SELECT product_id FROM pb_post WHERE user_id='$user_id' AND status='open'");
+		if ($result->num_rows > 0) {
+		    while($row = $result->fetch_assoc()) {
+			    $id=$row['product_id'];
+				$posted = pb_post($row['product_id'], 'object')->info->timestamp;
+				if(strtotime($posted) < strtotime('30 days ago')){
+					array_push($return, array(
+						'id' => $row['product_id'],
+						'date' => $posted,
+					));
+					if($action=='notify'){
+						if( pb_db_last('pb_notify', 'id') ){ $next=pb_db_last('pb_notify', 'id')->id+1; }
+						pb_notify($user_id, 'system', $row['product_id'], 'Your post (', ') has expired: <br /> <a class="pb-notify-button" href="#notify='.$next.'">Discard</a> or <a class="pb-notify-button" href="#notify_keep='.$next.'">Re-activate</a>', '/item?id='.$row['product_id']);
+					}
+					pb_db("UPDATE pb_post SET status='expired' WHERE product_id='$id'");
+				}
+		    }
+		}
+*/
+		
+	//	return $return;
+	}
+	
+	
 	
 ?>

@@ -26,6 +26,15 @@
 										<small><?php print $row['category']; ?></small>
 										<div class="pb-stars" data-stars="<? print $row['ratings']; ?>" data-post-text="<?php print pb_comment_count($row['service_id']); ?>"></div>
 									</div>
+									
+									<div class="pb-desc-list">
+										<ul>
+											<li>Cost: <? print pb_price($row['cost']); ?></li>
+											<li>Hours: <? print $row['hours']; ?></li>
+											<li>Location: <? print $row['location']; ?></li>
+										</ul>
+									</div>
+									
 									<div class="pb_Pdesc"><p><?php print $row['bio']; ?></p></div>
 								</div>
 								<div style="margin-top: -8px">

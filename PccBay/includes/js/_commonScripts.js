@@ -182,6 +182,10 @@ function handleHash(hash){
 	if(hashName=='notify'){
 		$('#notify_'+hashValue).hide();
 		$.post( '/includes/php/async.php?function=pb_update_notifications&params='+hashValue+',1', function( data ) {  });
+	}
+	else if(hashName=='notify_keep'){
+		$('#notify_'+hashValue).hide();
+		$.post( '/includes/php/async.php?function=pb_update_notifications&params='+hashValue+',1', function( data ) {  });
 	}else{
 		$('.HiddenFrame').each(function(){
 			if( this.id == hashName ){
