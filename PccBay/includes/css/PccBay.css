@@ -1808,3 +1808,32 @@ input[type=range]::-ms-thumb {
 	content: "\f058";
 }
 
+.pb_ad{
+	display: inline-block;
+	height: 120px;
+	border: 2px #e6e9ed solid;
+	margin: 0px auto;
+	text-decoration: none;
+	position: relative;
+	margin-bottom: 10px;
+}
+.pb_ad:hover{
+	text-decoration: none;
+}
+.pb_ad:hover > div{
+	opacity: 1;
+}
+.pb_ad div{
+	width: 100%;
+	height: 30px;
+	padding: 6px;
+	text-align: center;
+	background: #e6e9ed;
+	color: #444444;
+	font-weight: 400;
+	position: absolute;
+	bottom: 0px;
+	opacity: 0.7;
+}
+
+

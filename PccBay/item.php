@@ -77,7 +77,14 @@
 												</ul>
 											</div>
 										</div>
+									<br />	
+									<h5 style="text-align: left;">You may be interested</h5>	
 									<?php
+									
+									pb_ad(["style"=>"width:130px;margin:0px 5px", "id"=>"paid", "caption"=>false]);
+									pb_ad(["style"=>"width:130px;margin:0px 5px", "id"=>"free", "caption"=>false]);
+									pb_ad(["style"=>"width:130px;margin:0px 5px", "id"=>"free", "caption"=>false]);
+									pb_ad(["style"=>"width:130px;margin:0px 5px", "id"=>"free", "caption"=>false]);
 								}
 							?>
 						</div>

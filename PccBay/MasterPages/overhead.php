@@ -10,7 +10,6 @@
 		session_start('');
 		define('CHROME_APP', true);
 	}else{ define('CHROME_APP', false); }
-		
 	
 	//Set Default Timezone
 	date_default_timezone_set('America/Chicago');
@@ -26,5 +25,8 @@
 	
 	//Begin the inludes
 	include_once($_SERVER['DOCUMENT_ROOT'].DOCUMENT_ROOT_EXT.'/includes/php/commonFunctions.php');
+	
+	define('PAGE_LOAD_CODE', rand_str($kind='mixed', $length = 64));
+	
 	
 ?>

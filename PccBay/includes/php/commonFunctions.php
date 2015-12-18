@@ -30,6 +30,24 @@
 		}
 	}
 	
+	function pb_page_code($prefix, $return=false){
+		if($return==true){
+			if(isset($_SESSION[$prefix.PAGE_LOAD_CODE])){
+				return $_SESSION[$prefix.PAGE_LOAD_CODE];
+			}else{
+				return false;
+			}
+		}else{
+			if(!isset($_SESSION[$prefix.PAGE_LOAD_CODE])){
+				$_SESSION[ $_SESSION[$prefix.'_last'] ]='';
+				unset( $_SESSION[ $_SESSION[$prefix.'_last'] ] );
+				$_SESSION[$prefix.PAGE_LOAD_CODE]=array();
+			}else{
+				$_SESSION[$prefix.'_last']=$prefix.PAGE_LOAD_CODE;
+			} 
+		}
+	}
+	
 	function fDate($date, $modify){
 		//"2006-12-12"
 		$newDate = new DateTime($date);
@@ -222,6 +240,12 @@
 		}
 	}
 	
+	function pb_file_exists($path){
+		if( file_exists($_SERVER['DOCUMENT_ROOT'].$path) ){
+			return true;
+		}else{return false;}
+	}
+	
 	function pb_date(){
 		return date("F j, Y, g:i:s a");
 	}
@@ -343,15 +367,32 @@
 	function objectToArray($d) {if (is_object($d)) {$d = get_object_vars($d);}if (is_array($d)) {return array_map(__FUNCTION__, $d);}else {return $d;}}
 	function arrayToObject($d) {if (is_array($d)) {return (object) array_map(__FUNCTION__, $d);}else {return $d;}}
 	
-	function pb_switch($d){
-		if(!empty($d)){
-			if(is_array($d)) { $r = arrayToObject($d); }
-			if(is_object($d)){ $r = objectToArray($d); }
-			return $r;
-		}else{
-			return false;
+	function pb_switch($d, $set=''){
+		if(empty($set)){
+			if(!empty($d)){
+				if(is_array($d)) { $r = arrayToObject($d); }
+				if(is_object($d)){ $r = objectToArray($d); }
+				return $r;
+			}else{
+				return false;
+			}
+		}
+		else if($set=='object'){
+			return arrayToObject($d);
+		}
+		else if($set=='array'){
+			return objectToArray($d);
 		}
 	}
+	
+	function pb_obj($object, $property, $return=''){
+		if(property_exists($object, $property)){
+			return $object->$property;
+		}else{return $return;}
+	}
+	
+	function e($s){if(empty($s)){return false;}else{return true;}}
+
 	
 	function pb_user($type='object', $user_id='', $save=true){
 		if(empty($user_id)){if(isset($_SESSION['user_id'])){ $user_id=$_SESSION['user_id']; }}
@@ -516,6 +557,7 @@
 		if($output=='return'){return str_replace('{{collage}}', $html, $temp);}
 		if($output=='print'){print str_replace('{{collage}}', $html, $temp);;}
 	}
+	
 
 	function pb_my_notifications($user_id){
 		pb_expired($user_id, 'notify');
@@ -763,6 +805,57 @@
 */
 		
 	//	return $return;
+	}
+	
+
+	function pb_ad($defaults){
+		$defaults=pb_switch($defaults);
+		
+		$ad_id=pb_obj($defaults, 'id');
+		$width=pb_obj($defaults, 'style');
+		$keywords=pb_obj($defaults, 'tags');
+		$caption=pb_obj($defaults, 'caption', true);
+		
+		$_SESSION['pb_ad_style']=$width;
+		$_SESSION['pb_ad_cap']=$caption;
+		
+		pb_page_code('pb_ad');
+
+		if(empty($ad_id) || $ad_id=='paid'){
+			$result= pb_db("SELECT * FROM pb_doubleclick WHERE status=1 order by RAND() LIMIT 1");
+			if($result->num_rows>0){$ad_id=$result->fetch_assoc()['id'];}
+		}
+		if($ad_id=='free'){
+			$ran = pb_db("SELECT product_id, user_id, product_info FROM pb_post WHERE type='product' AND status='open' order by RAND() LIMIT 1", true);
+			$data = json_decode($ran->product_info)[0];
+			$img_id = explode(',', $data->images)[0];
+			$img_cta = $data->title;
+			$img_user = $ran->user_id;
+			$pid = $ran->product_id;
+			$pb_safe_image=pb_db("SELECT string FROM pb_safe_image WHERE uid='$img_id'", true);
+			if(!in_array('free_ads_'.$pid, pb_page_code('pb_ad', true) )){
+			    $img_url=$pb_safe_image->string;
+			    array_push($_SESSION['pb_ad'.PAGE_LOAD_CODE], 'free_ads_'.$pid);
+				print '<a class="pb_ad transition-300" href="/pb_doubleclick?path=/item?id='.$pid.'&marketplace=free_user_ads&pg='.PAGE_LOAD_CODE.'&user_id='.$img_user.'"';
+				print 'style="background:no-repeat top url('.$img_url.');background-size:cover;'.$_SESSION['pb_ad_style'].'">';
+				if(!empty($img_cta) && e($_SESSION['pb_ad_cap']) ){ print '<div class="transition-300">'.$img_cta.'</div>'; }
+				print '</a>';
+		    }
+		}else{
+			pb_db("SELECT * FROM pb_doubleclick WHERE id='$ad_id' AND status=1 LIMIT 1", function($row){
+				global $width;
+				$ad=pb_switch($row);
+				$img = $ad->cover;
+				if(!pb_file_exists($img)){$img=pb_db("SELECT string FROM pb_safe_image WHERE uid='$img'", true)->string;}
+				if(!in_array($ad->id, pb_page_code('pb_ad', true) )){
+				    array_push($_SESSION['pb_ad'.PAGE_LOAD_CODE], $ad->id);
+					print '<a class="pb_ad transition-300" href="/pb_doubleclick?path='.$ad->link.'&pg='.PAGE_LOAD_CODE.'&marketplace=user_ad&id='.$ad->id.'"';
+					print 'style="background:no-repeat center url('.$img.');background-size:cover;'.$_SESSION['pb_ad_style'].'">';
+					if(!empty($ad->cta) && e($_SESSION['pb_ad_cap']) ){ print '<div class="transition-300">'.$ad->cta.'</div>'; }
+					print '</a>';
+				}
+			});	
+		}
 	}
 	
 	

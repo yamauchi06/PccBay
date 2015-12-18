@@ -6,7 +6,7 @@
 	
 	include('commonFunctions.php');
 
+	print pb_file_exists('/includes/php/test_add.php');
 	
-	print pb_reactivate_post('17');
 	
 ?>

@@ -23,7 +23,11 @@
 		//CHECK CALLBACKS
 		if($callback==''){
 			return $query;
-		}else{
+		}
+		else if($callback===true){
+			return pb_switch( $query->fetch_assoc() );
+		}
+		else{
 			if ($query->num_rows > 0) {
 				if( pb_sql_is_callback($callback)==true ){
 					return $callback; }else{
