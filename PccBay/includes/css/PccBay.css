@@ -1779,34 +1779,112 @@ input[type=range]::-ms-thumb {
 	margin: 20px 0px 20px 0px;
 	padding: 0px 0px 10px 0px;;
 	list-style: none;
+	margin: 0px;
+	padding: 0px;
 }
 
 .ul-faq > li{
 	position: relative;
-	margin-left: 25px;
 	font-size: 18px;
+	width: 100%;
+	display: inline-block;
+	height: auto;
+	border-bottom: 1px #e6e9ed solid;
+	padding:10px;
 }
-.ul-faq > li:before{
-	display: block;
+.ul-faq > li:last-child{
+	border-bottom: none;
+}
+
+
+.ul-faq > li:hover{
+	background: #f2f3f5;
+	cursor: pointer;
+}
+
+.ul-faq > li h3{
+	padding: 0px;
+	margin: 0px;
+	font-size: 18px;
+	-o-transition:.5s;
+	-ms-transition:.5s;
+	-moz-transition:.5s;
+	-webkit-transition:.5s;
+	transition:.5s;
+}
+
+.ul-faq > li.active{
+	background: #f5f6f8;
+}
+
+.ul-faq > li.active h3:after{
+	content: "\f136";
+	top: 14px;
+	font-size: 17px;
+}
+
+.ul-faq > li h3:after{
 	position: absolute;
-	top: 2px;
-	left: -25px;
-	width: 18px;
-	height: 18px;
-	font-family: FontAwesome;
-	font-size: 18px;
-	color: #444444;
+	right: 10px;
+	top: 10px;
+	width: 20px;
+	height: 20px;
+	font-family: Material-Design-Iconic-Font;
+	content: "\f2f9";
+	font-size: 20px;
 }
-.ul-faq .q{
-	font-weight: bold;
-}
-.ul-faq .q:before{
-	content: "\f059";
+
+.ul-faq .a{
+	display: none;
+	font-size: 13px;
 }
 
 .ul-faq .a:before{
 	content: "\f058";
 }
+
+.a-inner{
+	min-height: 25px;
+}
+
+.faq-links{
+	margin: 0px;
+	padding: 0px;
+}
+
+.faq-links li{
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+.faq-links li > div{
+	width: 100%;
+	height: 1px;
+	border-bottom: 1px #e6e9ed solid;
+}
+
+.faq-links li a{
+	display: block;
+	width: 100%;
+	height: auto;
+	border-bottom: 1px #e6e9ed solid;
+	padding: 8px;
+}
+.faq-links li a:hover, .faq-links li a:active, .faq-links li a:focus{
+	text-decoration: none;
+	outline: none;
+	background: #f2f3f5;
+}
+.faq-links li a.active{
+	background: #f5f6f8;
+}
+
+
+.sticky-sidebar{
+	width: 100%;
+	position: relative;
+}
+
 
 .pb_ad{
 	display: inline-block;
@@ -1835,5 +1913,7 @@ input[type=range]::-ms-thumb {
 	bottom: 0px;
 	opacity: 0.7;
 }
+
+
 
 

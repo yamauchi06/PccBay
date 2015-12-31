@@ -1,6 +1,6 @@
 <?php
 	function pb_og_fgc($call,$query){
-		return file_get_contents('http://'.domain().'/graph/'.$call.'?accessToken='.pb_og('token', OG_APPID.':'.OG_APPSECRET).'&'.$query);
+		return file_get_contents('http://'.domain().'/graph/'.$call.'?accessToken='.pb_og('token').'&'.$query);
 	}
 	function pb_og($call=null, $data=null){
 		$openGraphPages=array(
@@ -17,6 +17,7 @@
 		);
 		$return=null;
 		if($call=='token'){
+			if($data===null){ $data=OG_APP; }
 			$data=explode(':',$data);
 			$return = pb_graph_token($data[0], $data[1]);
 		}

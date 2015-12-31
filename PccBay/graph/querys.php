@@ -5,7 +5,28 @@ if($_GET['page']=='feed'){
 		$slq_table = 'pb_post_html'; 
 	}else{ $slq_table = 'pb_post'; } 
 	if(!empty($query)){
-		$sql = "SELECT * FROM pb_post WHERE (product_id='$query' OR user_id='$query') AND status='open'  ORDER BY product_id $listBy";
+		if(isset($_GET['search'])){
+			
+			$terms = explode(" ", $query);
+			$sql = "SELECT * FROM pb_post WHERE ";
+			$i=0;
+			foreach ($terms as $each){
+				$i++;
+				if ($i == 1){
+					$sql .= "product_info LIKE '%$each%' ";
+				}
+				else{
+					$sql .= "OR type LIKE '%$each%' ";
+					// $query .= "OR menu LIKE '%$each%' ";
+					// $query .= "OR content LIKE '%$each%' ";
+					// $query .= "OR author LIKE '%$each%' ";
+				}
+			}
+			$sql .= "AND status='open' ORDER BY product_id $listBy";
+			
+		}else{
+			$sql = "SELECT * FROM pb_post WHERE (product_id='$query' OR user_id='$query') AND status='open'  ORDER BY product_id $listBy";
+		}
 	}
 	else if(isset($_GET['range'])){
 		$r=explode('-', $_GET['range']);

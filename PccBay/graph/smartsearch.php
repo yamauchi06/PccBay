@@ -11,13 +11,13 @@
 		
 	//Run Query	
 	if(!empty($slq_table)){
-		
+			
 			//pb_post
 			$conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
 			if ($conn->connect_error) {
 			    die("Connection failed: " . $conn->connect_error);
 			}
-			$sql="SELECT * FROM pb_post WHERE LIMIT 200";
+			$sql="SELECT product_id, type, status, product_info FROM pb_post WHERE product_info LIKE '%$query%' LIMIT 200";
 			$result = $conn->query($sql);
 			if(is_object($result)){
 				if ($result->num_rows > 0) {
@@ -46,13 +46,13 @@
 				}
 			}
 			$conn->close();
-			
+
 			//pb_users
 			$conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
 			if ($conn->connect_error) {
 			    die("Connection failed: " . $conn->connect_error);
 			}
-			$sql="SELECT * FROM pb_users";
+			$sql="SELECT user_data, user_id FROM pb_users WHERE (username LIKE '%$query%' OR user_data LIKE '%$query%')";
 			$result = $conn->query($sql);
 			if(is_object($result)){
 				if ($result->num_rows > 0) {
@@ -86,7 +86,7 @@
 			if ($conn->connect_error) {
 			    die("Connection failed: " . $conn->connect_error);
 			}
-			$sql="SELECT * FROM pb_tags LIMIT 200";
+			$sql="SELECT tag_id, tag FROM pb_tags WHERE tag LIKE '%$query%' LIMIT 200";
 			$result = $conn->query($sql);
 			if(is_object($result)){
 				if ($result->num_rows > 0) {
@@ -107,12 +107,12 @@
 			$conn->close();
 			
 			
-			//pb_tags
+			//pb_services
 			$conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
 			if ($conn->connect_error) {
 			    die("Connection failed: " . $conn->connect_error);
 			}
-			$sql="SELECT * FROM pb_services LIMIT 200";
+			$sql="SELECT service_id, title, category, ratings, logo FROM pb_services WHERE (category LIKE '%$query%' OR title LIKE '%$query%' OR bio LIKE '%$query%') LIMIT 200";
 			$result = $conn->query($sql);
 			if(is_object($result)){
 				if ($result->num_rows > 0) {
@@ -125,6 +125,31 @@
 							'info' => strtolower($val['category']),
 							'small' => strtolower($val['category'].'<div class="pb-stars-search" data-stars="'.$val['ratings'].'"></div>'),
 							'image' => $img
+						);
+						array_push($mainJson, $entity);
+				    }
+				}
+			}
+			$conn->close();
+			
+			
+			//pb_services
+			$conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
+			if ($conn->connect_error) {
+			    die("Connection failed: " . $conn->connect_error);
+			}
+			$sql="SELECT id, question FROM pb_faq WHERE question LIKE '%$query%' LIMIT 200";
+			$result = $conn->query($sql);
+			if(is_object($result)){
+				if ($result->num_rows > 0) {
+				    while($val = $result->fetch_assoc()) {
+						$entity = array(
+							'id' => $val['id'],
+							'type' => "FAQ",
+							'title' => strtolower($val['question']),
+							'info' => '',
+							'small' => '',
+							'image' => ''
 						);
 						array_push($mainJson, $entity);
 				    }

@@ -1,5 +1,4 @@
 <?php
-	header("Content-Type: application/json");
 	if(!empty($_GET['app_id'])){
 		$app_id = $_GET['app_id'] or '';
 		$secret = $_GET['secret'] or '';
@@ -14,7 +13,13 @@
 		    while($val = $result->fetch_assoc()) {
 				$accessToken = '';
 				include_once('accessToken-algorithm.php');
-				$r=array('token'=>$accessToken, 'expires'=>date("F j, Y").', 12:00:00 pm');
+				$r=array(
+					'token'=>$accessToken, 
+					'expir'=>date("F j, Y").', 12:00:00 pm',
+					'user'=>$val['user'],
+					'perm'=>$val['permissions'],
+					'data'=>$val['user_data']
+				);
 				print json_encode($r, 128);
 		    }
 		}else{

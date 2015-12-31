@@ -3,7 +3,8 @@
 		<a href="/privacypolicy">Privacy Policy</a> |
 		<a href="/faq">FAQ's</a> |
 		<a href="/services">Services</a> |
-		<a href="/downloads">Downloads</a>
+		<a href="/downloads">Downloads</a> |
+		<a href="/s">Search</a>
 	</div>
 	&copy; copyright <?php print date('Y'); ?>, <?php print domain('domain'); ?> All rights reserved.
 	<br />

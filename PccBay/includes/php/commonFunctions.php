@@ -39,13 +39,22 @@
 			}
 		}else{
 			if(!isset($_SESSION[$prefix.PAGE_LOAD_CODE])){
-				$_SESSION[ $_SESSION[$prefix.'_last'] ]='';
-				unset( $_SESSION[ $_SESSION[$prefix.'_last'] ] );
 				$_SESSION[$prefix.PAGE_LOAD_CODE]=array();
+				if(isset($_SESSION[$prefix.'_last'])){
+					$_SESSION[ $_SESSION[$prefix.'_last'] ]='';
+					unset( $_SESSION[ $_SESSION[$prefix.'_last'] ] );
+				}
 			}else{
 				$_SESSION[$prefix.'_last']=$prefix.PAGE_LOAD_CODE;
 			} 
 		}
+	}
+	
+	function clean($string) {
+	   $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+	   $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+	
+	   return preg_replace('/-+/', '-', $string); // Replaces multiple hyphens with single one.
 	}
 	
 	function fDate($date, $modify){
@@ -404,6 +413,7 @@
 				$contact_info = json_decode(pb_user_data($user_id, 'contact_info'))[0];		
 				$arrs = array_merge(pb_switch($user_data), pb_switch($contact_info));
 				$session = array(
+					'user_id' => pb_user_data($user_id, 'user_id'),
 					'card_id' => pb_user_data($user_id, 'id_card_key'),
 					'ratings' => pb_user_data($user_id, 'total_ratings'),
 					'ratings_num' => pb_user_data($user_id, 'num_of_ratings'),
@@ -652,9 +662,12 @@
         ));
         
         add_tag($_POST['product_tags'], true);
+        
+        $expire=fDate(date("F j, Y, g:i a"), '+1 month');
         	
       	$trans_info = json_encode($trans_info);
-		return pb_db("INSERT INTO pb_post (type, user_id, product_info, trans_info, status) VALUES ('$post_type', '$user_id','$product_info','$trans_info', 'open')");
+		return pb_db("INSERT INTO pb_post (type, user_id, product_info, trans_info, status, expires, expires_tick) 
+		VALUES ('$post_type', '$user_id','$product_info','$trans_info', 'open', '$expire', '0')");
 	}
 
 	function pb_update_account($user_id) {
@@ -777,7 +790,7 @@
 	}	
 	
 	function pb_addtocart($item_id){
-		return '/graph/addtocart?id='.$item_id.'&accessToken='.pb_graph_token('9827354187582375129873', '712638715312875').'&redirect='.domain('actual_link');
+		return '/graph/addtocart?id='.$item_id.'&accessToken='.pb_og('token').'&redirect='.domain('actual_link');
 	}
 	
 	
@@ -807,54 +820,58 @@
 	//	return $return;
 	}
 	
+	
 
-	function pb_ad($defaults){
+	function pb_ad($defaults, $loop=1, $location=''){
 		$defaults=pb_switch($defaults);
-		
+		$location=clean($location);
 		$ad_id=pb_obj($defaults, 'id');
 		$width=pb_obj($defaults, 'style');
 		$keywords=pb_obj($defaults, 'tags');
 		$caption=pb_obj($defaults, 'caption', true);
+		$type=pb_obj($defaults, 'type', 'long');
 		
 		$_SESSION['pb_ad_style']=$width;
 		$_SESSION['pb_ad_cap']=$caption;
-		
-		pb_page_code('pb_ad');
-
-		if(empty($ad_id) || $ad_id=='paid'){
-			$result= pb_db("SELECT * FROM pb_doubleclick WHERE status=1 order by RAND() LIMIT 1");
-			if($result->num_rows>0){$ad_id=$result->fetch_assoc()['id'];}
-		}
-		if($ad_id=='free'){
-			$ran = pb_db("SELECT product_id, user_id, product_info FROM pb_post WHERE type='product' AND status='open' order by RAND() LIMIT 1", true);
-			$data = json_decode($ran->product_info)[0];
-			$img_id = explode(',', $data->images)[0];
-			$img_cta = $data->title;
-			$img_user = $ran->user_id;
-			$pid = $ran->product_id;
-			$pb_safe_image=pb_db("SELECT string FROM pb_safe_image WHERE uid='$img_id'", true);
-			if(!in_array('free_ads_'.$pid, pb_page_code('pb_ad', true) )){
-			    $img_url=$pb_safe_image->string;
-			    array_push($_SESSION['pb_ad'.PAGE_LOAD_CODE], 'free_ads_'.$pid);
-				print '<a class="pb_ad transition-300" href="/pb_doubleclick?path=/item?id='.$pid.'&marketplace=free_user_ads&pg='.PAGE_LOAD_CODE.'&user_id='.$img_user.'"';
-				print 'style="background:no-repeat top url('.$img_url.');background-size:cover;'.$_SESSION['pb_ad_style'].'">';
-				if(!empty($img_cta) && e($_SESSION['pb_ad_cap']) ){ print '<div class="transition-300">'.$img_cta.'</div>'; }
-				print '</a>';
-		    }
-		}else{
-			pb_db("SELECT * FROM pb_doubleclick WHERE id='$ad_id' AND status=1 LIMIT 1", function($row){
-				global $width;
-				$ad=pb_switch($row);
-				$img = $ad->cover;
+		$code_previx="pb_ad".$location;
+		pb_page_code($code_previx);
+		$adCount=1;
+		while($adCount <= $loop){
+			if(empty($ad_id) || $ad_id=='paid'){
+				$result= pb_db("SELECT * FROM pb_doubleclick WHERE status=1 order by RAND() LIMIT 1");
+				if($result->num_rows>0){$ad_id=$result->fetch_assoc()['id'];}
+			}
+			if($ad_id=='free'){
+				$ran = pb_db("SELECT product_id, user_id, product_info FROM pb_post WHERE type='product' AND status='open' order by RAND() LIMIT 1", true);
+				$data = json_decode($ran->product_info)[0];
+				$img_id = explode(',', $data->images)[0];
+				$img_cta = $data->title;
+				$img_user = $ran->user_id;
+				$pid = $ran->product_id;
+				$pb_safe_image=pb_db("SELECT string FROM pb_safe_image WHERE uid='$img_id'", true);
+				if(!in_array('free_ads_'.$pid, pb_page_code($code_previx, true) )){
+				    $img_url=$pb_safe_image->string;
+				    array_push($_SESSION[$code_previx.PAGE_LOAD_CODE], 'free_ads_'.$pid);
+					print '<a class="pb_ad transition-300" href="/pb_doubleclick?path=/item?id='.$pid.'&marketplace=free_user_ads&pg='.PAGE_LOAD_CODE.'&source='.$location.'&session='.$code_previx.'&user_id='.$img_user.'"';
+					print 'style="background:no-repeat top url('.$img_url.');background-size:cover;'.$_SESSION['pb_ad_style'].'">';
+					if(!empty($img_cta) && e($_SESSION['pb_ad_cap']) ){ print '<div class="transition-300">'.$img_cta.'</div>'; }
+					print '</a>';
+			    }
+			}else{
+				$ad=pb_db("SELECT * FROM pb_doubleclick WHERE id='$ad_id' AND status=1 LIMIT 1", true);
+				if($type=='long'){$img = $ad->cover;}
+				if($type=='square'){$img = $ad->cover_square;}
+				if(empty($img)){$img = $ad->cover;}
 				if(!pb_file_exists($img)){$img=pb_db("SELECT string FROM pb_safe_image WHERE uid='$img'", true)->string;}
-				if(!in_array($ad->id, pb_page_code('pb_ad', true) )){
-				    array_push($_SESSION['pb_ad'.PAGE_LOAD_CODE], $ad->id);
-					print '<a class="pb_ad transition-300" href="/pb_doubleclick?path='.$ad->link.'&pg='.PAGE_LOAD_CODE.'&marketplace=user_ad&id='.$ad->id.'"';
+				if(!in_array($ad->id, pb_page_code($code_previx, true) )){
+				    array_push($_SESSION[$code_previx.PAGE_LOAD_CODE], $ad->id);
+					print '<a class="pb_ad transition-300" href="/pb_doubleclick?path='.$ad->link.'&pg='.PAGE_LOAD_CODE.'&source='.$location.'&session='.$code_previx.'&marketplace=user_ad&id='.$ad->id.'"';
 					print 'style="background:no-repeat center url('.$img.');background-size:cover;'.$_SESSION['pb_ad_style'].'">';
 					if(!empty($ad->cta) && e($_SESSION['pb_ad_cap']) ){ print '<div class="transition-300">'.$ad->cta.'</div>'; }
 					print '</a>';
-				}
-			});	
+				}	
+			}
+		$adCount++;	
 		}
 	}
 	

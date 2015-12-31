@@ -11,7 +11,6 @@
 	</div>	
 	
 	<div class="col-md-2 col-md-offset-3" id="headerBtns">
-		
 		<?php 
 			if(!CHROME_APP){
 				print '
@@ -43,7 +42,7 @@
 			    </div>
 				', 
 				'
-				<a href="#" data-overHead="#userLogin" class="transition-300 pb-flat-btn" id="LogOnBtn">Sign in / Sign up</a>
+				<a href="#" data-overHead="#userLogin" class="transition-300 pb-flat-btn" id="LogOnBtn"><i class="fa fa-facebook"></i> <b>Login with Facebook</b></a>
 				<div class="input-group MainSearchBox transition-300">
 			      <input type="text" class="form-control" placeholder="Search '.$siteTitle.'" id="headerSearch">
 			      <span class="input-group-btn">

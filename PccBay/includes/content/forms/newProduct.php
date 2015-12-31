@@ -55,6 +55,7 @@
 			<div style="text-align: right;width: 100%;">
 				<input type="submit" class="btn btn-default" name="add_product" value="Post it!">
 				<a href="#" style="float: left;margin: 5px;">Privacy Policy </a>
+				<a href="#" style="float: left;margin: 5px;color: #e74c3c">Permanently delete this item </a>
 			</div>
 			
 		</form>

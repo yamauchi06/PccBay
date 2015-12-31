@@ -6,7 +6,9 @@
 	
 	include('commonFunctions.php');
 
-	print pb_file_exists('/includes/php/test_add.php');
-	
+	$user_feed=pb_switch( json_decode( pb_og('feed', $_SESSION['user_id']) ) );
+	foreach($user_feed as $post){
+		print $post->type;
+	}
 	
 ?>

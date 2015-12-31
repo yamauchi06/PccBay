@@ -70,7 +70,7 @@ function oAuthAccess($app_id){
 		if($appCleared){ if($getStr=='rootbypass_'.$app_id){$accessToken = $getStr;} }
 	}else{$getStr=null;};
 	if($getStr !== $accessToken|| $getStr==null){
-		print json_encode(array('Authentication Failed' => 'A bad accessToken or no accessToken was supplied.'), 128);	
+		print json_encode(array('OG_ERROR' => 'Authentication Failed. A bad accessToken or no accessToken was given.'), 128);	
 		exit;
 	}else{
 		header("Access-Control-Allow-Origin: *"); }

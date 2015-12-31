@@ -80,11 +80,8 @@
 									<br />	
 									<h5 style="text-align: left;">You may be interested</h5>	
 									<?php
-									
-									pb_ad(["style"=>"width:130px;margin:0px 5px", "id"=>"paid", "caption"=>false]);
-									pb_ad(["style"=>"width:130px;margin:0px 5px", "id"=>"free", "caption"=>false]);
-									pb_ad(["style"=>"width:130px;margin:0px 5px", "id"=>"free", "caption"=>false]);
-									pb_ad(["style"=>"width:130px;margin:0px 5px", "id"=>"free", "caption"=>false]);
+									pb_ad(["style"=>"width:130px;margin:0px 5px", "id"=>"paid", "caption"=>false, "type"=>"square"], 1, 'item_gallery');
+									pb_ad(["style"=>"width:130px;margin:0px 5px", "id"=>"free", "caption"=>false, "type"=>"square"], 3, 'item_gallery');
 								}
 							?>
 						</div>
@@ -110,10 +107,7 @@
 									</span>
 								</a>
 							</div>
-							
-							
-							
-							
+
 							<div class="pb-post-tags col-md-12">
 								<strong>Tags</strong>
 								<ul>
@@ -172,6 +166,11 @@
 						</form>
 						<div id="product_comemnts" data-form="#ProductComments" data-id="<?php print $product_id; ?>"><!-- Comments go here --></div>
 						<!-- End Comments -->
+						<h5 style="text-align: left;margin: 0px;padding: 3px">You may be interested</h5>
+						<?php 
+							pb_ad(["style"=>"width:100%;"], 1, 'sidebar');
+							pb_ad(["style"=>"width:100%;", "id"=>"free"], 1, 'sidebar');	
+						?>
 					</div>
 				</div>
 				<div id="side_notifications" class="pb-sidebar-group">

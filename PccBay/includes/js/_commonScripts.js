@@ -94,6 +94,12 @@ $(document).ready(function(){
 		$(this).replaceWith('<i style="width:'+$(this).width()+';height:'+$(this).height()+'" class="zmdi zmdi-broken-image"></i>');
 	});
 	
+	MainSearch();
+	
+	$('.match-window-height').each(function(){
+		$(this).css('min-height', $(window).height() + 'px');
+	});
+	
 	
 });//END READY
 
@@ -148,9 +154,16 @@ $(window).load(function () {
 */
 
 
-function thispage(){
+function thispage(action){
 	var page = window.location.href.split('/');
-	return page[page.length-1];
+	if(action){
+		if(action=='dir'){
+			return page[page.length-2];
+		}
+	}else{
+		return page[page.length-1];
+	}
+	
 }
 
 function userUrl(user_id){
@@ -466,5 +479,49 @@ function pb_range(selector, title, steps, start, stArr, callback){
 		callback(this, $(this).val(), Math.ceil( parseInt($(this).val()) / stArr.length ) ); 
 	});
 	
+}
+
+function onDoneTyping(inputOBJ, callback, time){
+	var typingTimer;                //timer identifier
+	var doneTypingInterval = time;  //time in ms, 5 second for example
+	var $input = inputOBJ;
+	$input.on('keyup', function () {
+	  clearTimeout(typingTimer);
+	  typingTimer = setTimeout(callback, doneTypingInterval);
+	});
+	$input.on('keydown', function () {
+	  clearTimeout(typingTimer);
+	});
+}
+
+function MainSearch(){
+	var form = $('.pb-main-search');
+	var text = form.find('input[type="text"]');
+	var submit = form.find('input[type="submit"]');
+	var results = form.find('.pb-main-search-results');
+	var token=null;
+	var input;
+	form.submit(function(e){ e.preventDefault(); });
+	//get token
+	$.get("/graph/?app_id=9827354187582375129873&secret=712638715312875",function(d){token=d.token;});
+	
+	//do search
+	onDoneTyping(text, function(){
+		results.empty();
+		input=text.val();
+		if(token!=null){
+			$.get("/graph/smartsearch?q="+input+"&accessToken="+token+"",function(json){
+				$.each(json.suggestions, function(index, data){
+					if(data.value){
+						var result ='<div class="pb-main-search-result">'+
+								'<h4>'+data.value+'</h4>'+
+								'<p></p>'+
+							    '</div>';
+						results.append(result);
+					}
+				});
+			});
+		}else{ alert('no token'); }
+	}, 200);
 }
 

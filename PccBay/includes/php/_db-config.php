@@ -47,4 +47,6 @@
 	define('OG_APPID', '9827354187582375129873');
 	
 	define('OG_APPSECRET', '712638715312875');
+	
+	define('OG_APP', OG_APPID.':'.OG_APPSECRET);
 ?>

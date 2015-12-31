@@ -16,13 +16,13 @@
 		<form class="pb-rule-above-thick" method="post">
 			<span>Login to begin using your PCC Card</span>
 		
-			<input class="form-control" rows="3" type="text" placeholder="Student ID" maxlength="6">
+			<input class="form-control" rows="2" type="text" placeholder="Student ID" maxlength="6">
 		
-			<input class="form-control" rows="3" type="password" placeholder="Student Password" maxlength="8">
+			<input class="form-control" rows="2" type="password" placeholder="Student Password" maxlength="8">
 			
 			<div style="text-align: right;width: 100%;" class="pb-rule-above">
 				<input type="submit" class="btn btn-default" value="Link it!">
-				<a href="#" style="float: left;margin: 5px;">Privacy Policy </a>
+				<a href="/privacypolicy" style="float: left;margin: 5px;">Privacy Policy </a>
 			</div>
 	
 		</form>

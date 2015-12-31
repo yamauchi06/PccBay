@@ -1,15 +1,15 @@
 <?php
-	header("Content-Type: application/json");
+	$format='application/json';
+	if(!empty($_GET['format'])){$format=$_GET['format'];}
+	header("Content-Type: ".$format);
+	
 	//Includes	
 	include_once("../includes/php/_db-config.php");
 	include_once('../includes/php/commonFunctions.php');
 	include_once("functions.php");
 	
 	//Token Get
-	if(isset($_GET['app_id'])){
-		header('Location: accessToken.php?app_id='.$_GET['app_id'].'&secret='.$_GET['secret'].'');
-		exit;
-	}
+	if(isset($_GET['app_id'])){ include('accessToken.php'); exit; }
 	
 	//Authenticate
 	$root_app_id = "9827354187582375129873";
