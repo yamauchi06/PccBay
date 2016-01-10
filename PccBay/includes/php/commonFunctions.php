@@ -30,6 +30,12 @@
 		}
 	}
 	
+	function in_str($needle, $haystack){
+		if(!empty(explode($needle, $haystack)[1])){
+			return true;
+		}
+	}
+	
 	function pb_page_code($prefix, $return=false){
 		if($return==true){
 			if(isset($_SESSION[$prefix.PAGE_LOAD_CODE])){
@@ -862,7 +868,9 @@
 				if($type=='long'){$img = $ad->cover;}
 				if($type=='square'){$img = $ad->cover_square;}
 				if(empty($img)){$img = $ad->cover;}
-				if(!pb_file_exists($img)){$img=pb_db("SELECT string FROM pb_safe_image WHERE uid='$img'", true)->string;}
+				if(!in_str('/', $img)){ 
+					$img=pb_db("SELECT string FROM pb_safe_image WHERE uid='$img'", true)->string; 
+				}
 				if(!in_array($ad->id, pb_page_code($code_previx, true) )){
 				    array_push($_SESSION[$code_previx.PAGE_LOAD_CODE], $ad->id);
 					print '<a class="pb_ad transition-300" href="/pb_doubleclick?path='.$ad->link.'&pg='.PAGE_LOAD_CODE.'&source='.$location.'&session='.$code_previx.'&marketplace=user_ad&id='.$ad->id.'"';
@@ -875,6 +883,12 @@
 		}
 	}
 	
+	
+	function pb_delete_this(){
+		if(isset($_GET['edit'])){
+			print '<a href="/graph/edit.php?id='.$_GET['edit'].'&action=delete" style="float: left;margin: 5px;color: #e74c3c">Permanently delete this item </a>';
+		}
+	}
 	
 	
 ?>
