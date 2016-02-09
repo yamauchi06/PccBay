@@ -1,3 +1,3 @@
 <ul class="li-full-width">
-	<?php pb_my_notifications($_SESSION['user_id']); ?>
+	<?php pb_my_notifications( pb_user()->user_id ); ?>
 </ul>

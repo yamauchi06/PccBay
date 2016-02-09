@@ -9,7 +9,7 @@
 		<!--<a class="btn btn-block btn-social btn-reddit"href="/?sessionUnSet=user_id">
 			<i class="zmdi zmdi-close"></i> Sign Out
 		</a>-->
-		<a class="btn btn-block btn-social btn-reddit"href="/?sessionUnSet=user_id" onclick="FB.logout()">
+		<a class="btn btn-block btn-social btn-reddit"href="/includes/php/fbapp/signout.php" onclick="FB.logout()">
 			<i class="zmdi zmdi-close"></i> Sign Out
 		</a>
 	</div>

@@ -29,9 +29,15 @@
 
 <script src="/includes/plugins/devbridgeAutocomplete/jquery.autocomplete.js"></script>
 
-<script src="/includes/plugins/freewall/freewall.js"></script>
-<!-- <script src="/includes/plugins/Masonry/masonry.min.js"></script> -->
-<script src="/includes/plugins/lazyLoad/jquery.lazyjson.js"></script>
+<?php
+if($include_cmd !== 'nolazyjson'){
+	?>
+	<script src="/includes/plugins/freewall/freewall.js"></script>
+	<!-- <script src="/includes/plugins/Masonry/masonry.min.js"></script> -->
+	<script src="/includes/plugins/lazyLoad/jquery.lazyjson.js"></script>
+	<?php
+}	
+?>
 
 
 <!-- All included scripts go above here -->

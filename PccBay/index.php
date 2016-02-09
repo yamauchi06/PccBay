@@ -1,4 +1,6 @@
-<?php include_once('MasterPages/overhead.php'); ?>
+<?php 
+include_once('MasterPages/overhead.php'); 
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -48,6 +50,9 @@
 				', '<div style="display:none">' 
 			);	
 			?>
+			<?php
+			if(isset($_SESSION['user_id'])){
+				?>
 				<div id="side_dashboard" class="pb-sidebar-group activeSet">
 					<?php pb_include('/includes/content/pbRightBar/side_dashboard'); ?>
 				</div>
@@ -57,9 +62,11 @@
 				<div id="side_account" class="pb-sidebar-group full-width">
 					<?php pb_include('/includes/content/pbRightBar/side_account'); ?>
 				</div>
-				
-				<!-- Sticky menu -->
-				<?php pb_include('/MasterPages/sticky-menu-bottom'); ?>
+				<?php
+					
+				pb_include('/MasterPages/sticky-menu-bottom'); 
+			}	
+			?>
 					
 			</div>
 		</div>
@@ -75,27 +82,33 @@
 		</div>
 		<div id="pb-j"></div>
 		<div id="HiddenFrames" class="<?php pb_isset(pb_isset_session('user_id'), 'col-md-9', 'col-md-12') ?>">
-			<div id="NewProductBox" class="HiddenFrame">
+			<?php
+			if(isset($_SESSION['user_id'])){
+				?>
+				<div id="NewProductBox" class="HiddenFrame">
 				<?php pb_include('/includes/content/forms/newProduct'); ?>
-			</div>
-			<div id="MyCardBox" class="HiddenFrame">
-				<?php pb_include('/includes/content/forms/myPCCcard'); ?>
-			</div>
-			<div id="postViewer" class="HiddenFrame">
-				<?php pb_include('/includes/content/forms/postViewer'); ?>
-			</div>
-			<div id="invitationCodeBox" class="HiddenFrame">
-				<?php pb_include('/includes/content/info/invitationCode'); ?>
-			</div>
-			<div id="feedbackBox" class="HiddenFrame">
-				<?php pb_include('/includes/content/forms/feedback'); ?>
-			</div>
-			<div id="userAccountSettingBox" class="HiddenFrame">
-				<?php pb_include('/includes/content/forms/accountSettings'); ?>
-			</div>
-			<div id="userLogin" class="HiddenFrame">
-				<?php pb_include('/includes/content/forms/UserLogin'); ?>
-			</div>
+				</div>
+				<div id="MyCardBox" class="HiddenFrame">
+					<?php pb_include('/includes/content/forms/myPCCcard'); ?>
+				</div>
+				<div id="postViewer" class="HiddenFrame">
+					<?php pb_include('/includes/content/forms/postViewer'); ?>
+				</div>
+				<div id="invitationCodeBox" class="HiddenFrame">
+					<?php pb_include('/includes/content/info/invitationCode'); ?>
+				</div>
+				<div id="feedbackBox" class="HiddenFrame">
+					<?php pb_include('/includes/content/forms/feedback'); ?>
+				</div>
+				<div id="userAccountSettingBox" class="HiddenFrame">
+					<?php pb_include('/includes/content/forms/accountSettings'); ?>
+				</div>
+				<div id="userLogin" class="HiddenFrame">
+					<?php pb_include('/includes/content/forms/UserLogin'); ?>
+				</div>
+				<?php
+			}	
+			?>
 		</div>
 	</div>
 	
@@ -230,7 +243,7 @@ $(document).ready(function(){
 	var JsonURI = '/graph/feed?accessToken=<?php print pb_og('token'); ?>';
 	if(thisDir=='s'){
 		JsonURI += '&search&q='+tail; }else{
-		JsonURI += '&loop=12&q='+tail;	
+		JsonURI += '&q='+tail;	
 	}
 	$( 'div#freewall' ).lazyjson({
 	    api: {

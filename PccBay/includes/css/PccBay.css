@@ -912,8 +912,10 @@ legend{
 
 /* Comments */
 .pb-comment{
-	box-shadow: 1px 1px 6px rgba(0,0,0,0.15);
+/* 	box-shadow: 1px 1px 6px rgba(0,0,0,0.15); */
+	border-bottom: 1px solid #f8f8f8;
 	margin-bottom:12px;
+	border-radius: 0px;
 }
 .pb-comment-inline .pb-post-block{
 	margin: 0px;

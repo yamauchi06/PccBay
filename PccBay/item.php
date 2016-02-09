@@ -102,7 +102,7 @@
 
 								<a href="<?php echo pb_addtocart($product_id); ?>" class="pb-item-button transition-200 <?php print $proStatuseClass; ?>">
 									<span>
-										<?php print get_words($pi->title, 3); ?><br />
+										Get This <i class="fa fa-long-arrow-right"></i><br />
 										<small><?php print pb_price($pi->price); ?></small>
 									</span>
 								</a>
@@ -187,7 +187,7 @@
 		</div>
 	</div>
 	
-	
+
 
 	<!-- Place Hidden Popups and lightbox frames here -->
 	<div class="overHeadPullout" style="width: 100%">
@@ -229,11 +229,8 @@ var moveComments=function(){
 		$('.side_shopping').appendTo('#side_shopping');
 	}
 }	
-$( window ).resize(function() {
-	moveComments();
-});	
+
 $(document).ready(function(){
-	moveComments();
 	if( $(window).width() > 992 ){ magniflier(); }
 	$('#product_comemnts').pbcomments({
 		uploads: true,
@@ -241,6 +238,7 @@ $(document).ready(function(){
 	});
 	var ffHeight = 400; 
 	var imgurl = $('.pb-product-gallery').find('li:eq(0)').attr('data-tumb');
+	console.log(imgurl)
 	$('.pb-product-gallery').find('.figure-feature').attr('src', imgurl);
 	
 	$('.pb-product-gallery').find('li:eq(0)').addClass('active');
@@ -249,7 +247,11 @@ $(document).ready(function(){
 		$(this).addClass('active');
 		$('.pb-product-gallery').find('.figure-feature').attr('src', $(this).attr('data-tumb'));
 	});
+	moveComments();
 });
+$( window ).resize(function() {
+	moveComments();
+});	
 
 
 </script>

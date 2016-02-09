@@ -42,7 +42,7 @@
 			    </div>
 				', 
 				'
-				<a href="#" data-overHead="#userLogin" class="transition-300 pb-flat-btn" id="LogOnBtn"><i class="fa fa-facebook"></i> <b>Login with Facebook</b></a>
+				<a href="/includes/php/fbapp/login.php?inicode='.PAGE_LOAD_CODE.'&ext=true&redirect_on_login=/" class="transition-300 pb-flat-btn" id="LogOnBtn"><i class="fa fa-facebook"></i> <b>Login with Facebook</b></a>
 				<div class="input-group MainSearchBox transition-300">
 			      <input type="text" class="form-control" placeholder="Search '.$siteTitle.'" id="headerSearch">
 			      <span class="input-group-btn">

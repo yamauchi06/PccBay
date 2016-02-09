@@ -31,7 +31,8 @@
 	}
 	
 	function in_str($needle, $haystack){
-		if(!empty(explode($needle, $haystack)[1])){
+		$p=explode($needle, $haystack);
+		if(!empty($p[1])){
 			return true;
 		}
 	}
@@ -93,6 +94,16 @@
 			pb_new_id($table, $row, $length, $kind);	
 		}else{
 			return $token;
+		}
+	}
+	
+	function pb_new_row($table, $row, $sting) {
+		$token = rand_str('numbers', 3);
+		$result = pb_db("SELECT $row FROM $table Where $row='$sting'");
+		if ($result->num_rows > 0) { 
+			return pb_new_row($table, $row, $sting.$token);	
+		}else{
+			return $sting;
 		}
 	}
 	
@@ -198,9 +209,13 @@
 				header('Location: /');
 			}
 			if($do=='login'){
-				header('Location: /?redirect_on_login='.domain('actual_link').'#userLogin');
+				header('Location: /includes/php/fbapp/login.php?redirect_on_login='.domain('actual_link').'&ext=true');
 			}
 		}
+	}
+	
+	function pb_safe_image_point($string){ 
+		return '/?i='.str_replace('/', ':', str_replace('/images/user-data/', '', $string) ).'&day_code='.md5(date('MdY')).sha1(date('MdY')); 
 	}
 	
 	function pb_safe_image($unique_id, $method='image', $attr='', $popup='true', $html='{{image}}'){
@@ -208,6 +223,7 @@
 		if ($result->num_rows > 0) {
 		    while($row = $result->fetch_assoc()) {
 			    $size=explode(':', $row['size']);
+			    $row['string'] = pb_safe_image_point($row['string']);
 			    if($popup=='true'){$attr .= 'data-overHead-img="'.$row['string'].'" data-original="'.$row['string'].'"';}
 		        if($method=='base64' || $method=='url'){ $results = $row['string']; }
 		        if($method=='image'){  $results = '<img src="'.$row['string'].'" alt="'.$row['alt'].'" title="'.$row['title'].'" '.$attr.' />';}
@@ -221,6 +237,7 @@
 		if ($result->num_rows > 0) {
 		    while($row = $result->fetch_assoc()) {
 			    $size=explode(':', $row['size']);
+			    $row['string'] = pb_safe_image_point($row['string']);
 			    if($popup=='true'){$attr .= 'data-overHead-img="'.$row['string'].'" data-original="'.$row['string'].'"';}
 		        if($method=='base64' || $method=='url'){ $results = $row['string']; }
 		        if($method=='image'){  $results = '<img src="'.$row['string'].'" alt="'.$row['alt'].'" title="'.$row['title'].'" '.$attr.' />';}
@@ -363,7 +380,10 @@
 	}
 	
 	function pb_user_data($user_id, $row, $loop=false){
-		$result = pb_db("SELECT * FROM  pb_users Where (user_id='$user_id' OR username='$user_id' OR id_card_key='$user_id')");
+		if(is_object($user_id)){
+			$user_id = $user_id->user_id;
+		}
+		$result = pb_db("SELECT * FROM pb_users Where (user_id='$user_id' OR username='$user_id' OR id_card_key='$user_id') LIMIT 1");
 		if ($result->num_rows > 0) {
 		    while($sqlrow = $result->fetch_assoc()) {
 				$return = $sqlrow[$row];
@@ -859,7 +879,7 @@
 				    $img_url=$pb_safe_image->string;
 				    array_push($_SESSION[$code_previx.PAGE_LOAD_CODE], 'free_ads_'.$pid);
 					print '<a class="pb_ad transition-300" href="/pb_doubleclick?path=/item?id='.$pid.'&marketplace=free_user_ads&pg='.PAGE_LOAD_CODE.'&source='.$location.'&session='.$code_previx.'&user_id='.$img_user.'"';
-					print 'style="background:no-repeat top url('.$img_url.');background-size:cover;'.$_SESSION['pb_ad_style'].'">';
+					print 'style="background:no-repeat center url('.pb_safe_image_point($img_url).');background-size:cover;'.$_SESSION['pb_ad_style'].'">';
 					if(!empty($img_cta) && e($_SESSION['pb_ad_cap']) ){ print '<div class="transition-300">'.$img_cta.'</div>'; }
 					print '</a>';
 			    }

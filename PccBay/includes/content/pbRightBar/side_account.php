@@ -1,6 +1,6 @@
 <?php  
 if(pb_user()->resident=='true'){
-	$home = $pb_user['building'].': '.$pb_user['room'];
+	$home = pb_user()->building.': '.pb_user()->room;
 }else{
 	$home = 'Town';
 }
@@ -26,28 +26,30 @@ if(pb_user()->resident=='true'){
 
 <div class="pb-sidebar-overflow" style="padding-bottom: 20px;">
 	<?php
-	$user_feed=pb_switch( json_decode( pb_og('feed', $_SESSION['user_id']) ) );
-	foreach($user_feed as $post){
-		if($post->status=='open' || $post->status==1){
-			if($post->type=='product'){
-				?>
-				<a href="/item?id=<?php print $post->id; ?>">
-				<div class="col-md-12 pb-post pb-rule-below-thick">
-					<div class="pb-post-block">
-						<div class="pb-post-content">
-							<?php
-							if(!empty( $post->images->featured )){
-								print '<img src="'.$post->images->featured.'" class="pb-post-product lazy">';
-							}	
-							?>
-							<div style="position: absolute;bottom: 0px;left: 0px;width: 100%;padding: 15px;color: #000000">
-								 <?php print $post->timestamp->laps; ?>
+	$user_feed=pb_switch( json_decode( pb_og('feed', pb_user()->user_id) ) );
+	if(!is_array($user_feed)){
+		foreach($user_feed as $post){
+			if($post->status=='open' || $post->status==1){
+				if($post->type=='product'){
+					?>
+					<a href="/item?id=<?php print $post->id; ?>">
+					<div class="col-md-12 pb-post pb-rule-below-thick">
+						<div class="pb-post-block">
+							<div class="pb-post-content">
+								<?php
+								if(!empty( $post->images->featured )){
+									print '<img src="'.$post->images->featured.'" class="pb-post-product lazy">';
+								}	
+								?>
+								<div style="position: absolute;bottom: 0px;left: 0px;width: 100%;padding: 15px;color: #000000">
+									 <?php print $post->timestamp->laps; ?>
+								</div>
 							</div>
+							</a>
 						</div>
-						</a>
 					</div>
-				</div>
-				<?php
+					<?php
+				}
 			}
 		}
 	}

@@ -7,7 +7,9 @@ if($slq_table=='pb_post'){
 		$images = explode(',', $pd->images);
 		$timeAgo = time_ago(strtotime($pd->timestamp));
 		$date = $pd->timestamp;
-		foreach($images as $img){ array_push($saveImag, pb_table_data('pb_safe_image', 'string', "uid='$img'")); }
+		foreach($images as $img){ 
+			array_push($saveImag, pb_safe_image_point( pb_table_data('pb_safe_image', 'string', "uid='$img'") ) ); 
+		}
 		$title=$pd->title;
 		$desc=$pd->desc;
 		$tags=$pd->tags;
