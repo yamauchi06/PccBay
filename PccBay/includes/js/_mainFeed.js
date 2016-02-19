@@ -27,7 +27,6 @@ function ini_grid(ini_gridCount){
 
 $(document).ready(function(){
 	
-	
     $(function() {
         var indexCount, loadData, postWatcher, lastin=quantity, limit=0, post_size="col-md-3";
         var fin, lin, quantity = lazyFeed.load.end;
@@ -58,6 +57,11 @@ $(document).ready(function(){
 	                    for (index = i = 0, len = data.length; i < len; index = ++i) {
 	                        item = data[index];
 	                        if( $('#pb_post_'+item.id).length === 0 ){
+		                        var tags = (item.product_info.tags).split(',');
+		                        var tlist='';
+		                        $.each(tags, function(i, v){
+			                    	tlist += "<li><a href='/s/"+v+"'>"+v+"</a></li>"; 
+			                    });
 	                            html += '<div class="pb-post grid-item '+post_size+'">'+
 											'<div class="pb-post-block" id="pb_post_'+item.id+'">'+
 												'<div class="pb-post-head">'+
@@ -81,7 +85,7 @@ $(document).ready(function(){
 													'<img src="'+item.images.featured+'" class="pb-post-product lazy"></a>'+
 													'<h4>'+item.product_info.title+'</h4>'+
 													'<div class="pb_Pdesc"><p>'+item.product_info.desc+'</p></div>'+
-													'<div class="pb-post-tags" data-tags="'+item.product_info.tags+'"><ul></ul></div>'+
+													'<div class="pb-post-tags" data-tags="'+tags+'"><ul>'+tlist+'</ul></div>'+
 												'</div>'+
 											'</div>'+
 										'</div>';

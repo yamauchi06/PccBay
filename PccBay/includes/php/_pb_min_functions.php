@@ -156,6 +156,17 @@
 		$day_code = pb_time('token:new', array('expire'=>$expire, 'key'=>md5($dir)));
 		return '/?safe_image='.str_replace('/', ':', str_replace($dir, '', $string) ).':'.$dir_hidden.'&day_code='.$day_code; 
 	}
+	function pb_is_image($string){
+		$string = str_replace('/?safe_image=', '', $string);
+		$url_string = explode(':', $string);	
+		$remoteImage = $_SERVER['DOCUMENT_ROOT'].DOCUMENT_ROOT_EXT.''.pb_encrypt_decrypt('decrypt', $url_string[2]).''.$url_string[0].'/'.$url_string[1];
+		return $remoteImage;
+/*
+		if(file_exists($remoteImage)){
+			return true;
+		}
+*/
+	}
 	function time_ago($ptime)
 	{
 	    $etime = time() - $ptime;

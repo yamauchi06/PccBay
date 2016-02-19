@@ -25,7 +25,7 @@ elseif(file_exists($remoteImage) && !$confirm  ){
 	print "This image has expired.";
 }
 else{
-	header('Content-Type: image/Gif');
+	header('Content-Type: image/jpeg');
 	print file_get_contents($_SERVER['DOCUMENT_ROOT'].DOCUMENT_ROOT_EXT.'/images/interior-images/placeholder.jpg');
 }
 ?>
