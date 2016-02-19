@@ -156,16 +156,20 @@
 		$day_code = pb_time('token:new', array('expire'=>$expire, 'key'=>md5($dir)));
 		return '/?safe_image='.str_replace('/', ':', str_replace($dir, '', $string) ).':'.$dir_hidden.'&day_code='.$day_code; 
 	}
-	function pb_is_image($string){
-		$string = str_replace('/?safe_image=', '', $string);
-		$url_string = explode(':', $string);	
-		$remoteImage = $_SERVER['DOCUMENT_ROOT'].DOCUMENT_ROOT_EXT.''.pb_encrypt_decrypt('decrypt', $url_string[2]).''.$url_string[0].'/'.$url_string[1];
-		return $remoteImage;
-/*
-		if(file_exists($remoteImage)){
-			return true;
+	function pb_is_image($get_string){	
+		$get_string = explode('?', $get_string);
+		parse_str($get_string[1], $params);
+		$safe_image = str_replace('safe_image=', '', $params['safe_image']);
+		$url_string = explode(':', $safe_image);	
+		if( isset($url_string[0]) && isset($url_string[1]) && isset($url_string[2]) ){
+			$remoteImage = $_SERVER['DOCUMENT_ROOT'].'/'.pb_encrypt_decrypt('decrypt', $url_string[2]).''.$url_string[0].'/'.$url_string[1];
+		
+			$confirm = pb_time('token:check', array('key'=>md5(pb_encrypt_decrypt('decrypt', $url_string[2])), 'token'=>$params['day_code']));
+			
+			if(file_exists($remoteImage) && $confirm){
+				return true;
+			}
 		}
-*/
 	}
 	function time_ago($ptime)
 	{

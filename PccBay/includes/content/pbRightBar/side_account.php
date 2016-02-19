@@ -37,7 +37,7 @@ if(pb_user()->resident=='true'){
 						<div class="pb-post-block">
 							<div class="pb-post-content">
 								<?php
-								if(!empty( $post->images->featured ) ){
+								if(!empty( $post->images->featured ) && pb_is_image($post->images->featured) ){
 									print '<img src="'.$post->images->featured.'" class="pb-post-product lazy">';
 								}	
 								?>
