@@ -4,11 +4,12 @@ include_once('../../../MasterPages/overhead.php');
 require_once 'src/autoload.php';
 
   
-$fb = new Facebook\Facebook([
-	'app_id' => '880654705336638',
-	'app_secret' => 'e0f24d02ced5ae98077123f06ca04ace',
+$fb = new Facebook\Facebook(array(
+	'app_id' => FACEBOOK_APPID,
+	'app_secret' => FACEBOOK_SECRET,
 	'default_graph_version' => 'v2.5',
-]);
+	'cookie' => true,
+));
 
 $redirect = 'http://'.$_SERVER["HTTP_HOST"].'/includes/php/fbapp/login-callback.php';
 if(isset($_GET['redirect_on_login'])){
@@ -16,7 +17,7 @@ if(isset($_GET['redirect_on_login'])){
 }
 
 $helper = $fb->getRedirectLoginHelper();
-$permissions = ['email', 'public_profile']; // optional
+$permissions = array('email', 'public_profile'); // optional
 $loginUrl = $helper->getLoginUrl($redirect, $permissions);
 
 

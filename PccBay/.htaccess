@@ -6,5 +6,8 @@ RewriteRule ^(.*)$ $1.php
 RewriteCond %{REQUEST_URI} @
 RewriteRule ^(.+?)/?$ /index.php?username=$1 [L,QSA]
 
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-f
+RewriteRule \.(gif|jpe?g|png|bmp) /images/interior-images/placeholder.jpg [NC,L]
+
 ErrorDocument 404 /404.php?e=404
 

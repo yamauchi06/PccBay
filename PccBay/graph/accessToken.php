@@ -27,7 +27,12 @@
 		}
 		$conn->close();
 		
-	}else{
+	}
+	elseif(!empty($_GET['access_token'])){
+		$token = $_GET['access_token'].'==';
+		print pb_time('token:check', array('token'=>$token));;
+	}
+	else{
 		print json_encode(array('Access Blocked'), 128);
 	}
 ?>

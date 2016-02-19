@@ -1,64 +1,35 @@
 <?php
+	$format='application/json';
+	if(!empty($_GET['format'])){$format=$_GET['format'];}
+	header("Content-Type: ".$format);
+	
+	//Includes	
+	include_once("../includes/php/_db-config.php");
+	include_once('../includes/php/commonFunctions.php');
+	include_once("functions.php");
+	
+	//Token Get
+	if(isset($_GET['app_id'])){ include('accessToken.php'); exit; }
+	
+	//Authenticate
+	$root_app_id = "9827354187582375129873";
+	oAuthAccess($root_app_id);
+
+	// Default var set
+	$mainJson = array();
+	$query='';if(isset($_GET['q'])){$query=$_GET['q'];}if($query=='null'){$query='';}
+	$listBy='DESC';if(isset($_GET['l'])){$listBy=$_GET['l'];}
+	$max=10000000;if(isset($_GET['max'])){$max=$_GET['max'];}
 	
 	//Set Query
 	if(isset($_GET['page'])){
 		if($_GET['page']=='smartsearch'){
-			$format='application/json';
-			if(!empty($_GET['format'])){$format=$_GET['format'];}
-			header("Content-Type: ".$format);
-			
-			//Includes	
-			include_once("../includes/php/_db-config.php");
-			include_once('../includes/php/commonFunctions.php');
-			include_once("functions.php");
-			
-			//Token Get
-			if(isset($_GET['app_id'])){ include('accessToken.php'); exit; }
-			
-			//Authenticate
-			$root_app_id = "9827354187582375129873";
-			oAuthAccess($root_app_id);
-		
-			// Default var set
-			$mainJson = array();
-			$query='';if(isset($_GET['q'])){$query=$_GET['q'];}if($query=='null'){$query='';}
-			$listBy='DESC';if(isset($_GET['l'])){$listBy=$_GET['l'];}
-			$max=10000000;if(isset($_GET['max'])){$max=$_GET['max'];}
 			include('smartsearch.php');
 			exit;
 		}
 		else if($_GET['page']=='addtocart'){
 			include('addtocart.php');
 			exit;
-		}
-		else if($_GET['page']=='i'){
-			include('i.php');
-			exit;
-		}
-		else{
-			
-				$format='application/json';
-				if(!empty($_GET['format'])){$format=$_GET['format'];}
-				header("Content-Type: ".$format);
-				
-				//Includes	
-				include_once("../includes/php/_db-config.php");
-				include_once('../includes/php/commonFunctions.php');
-				include_once("functions.php");
-				
-				//Token Get
-				if(isset($_GET['app_id'])){ include('accessToken.php'); exit; }
-				
-				//Authenticate
-				$root_app_id = "9827354187582375129873";
-				oAuthAccess($root_app_id);
-			
-				// Default var set
-				$mainJson = array();
-				$query='';if(isset($_GET['q'])){$query=$_GET['q'];}if($query=='null'){$query='';}
-				$listBy='DESC';if(isset($_GET['l'])){$listBy=$_GET['l'];}
-				$max=10000000;if(isset($_GET['max'])){$max=$_GET['max'];}
-			
 		}
 		include('querys.php'); }else{
 		array_push($mainJson, 'Query not defined'); }

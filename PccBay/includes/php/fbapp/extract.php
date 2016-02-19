@@ -7,13 +7,13 @@ $accessTokens = array(
 );
 	
 require_once 'src/autoload.php';
-
-  
+ 
 $fb = new Facebook\Facebook([
-	'app_id' => '880654705336638',
-	'app_secret' => 'e0f24d02ced5ae98077123f06ca04ace',
+	'app_id' => FACEBOOK_APPID,
+	'app_secret' => FACEBOOK_SECRET,
 	'default_graph_version' => 'v2.5',
-]);	
+	'cookie' => true,
+]);
 
 // Sets the default fallback access token so we don't have to pass it to each request
 $fb->setDefaultAccessToken( $accessTokens['short'] );

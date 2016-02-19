@@ -1,8 +1,8 @@
 <div class="<?php if(!isset($_SESSION['user_id'])){print 'col-md-3';}else{print 'col-md-4';} ?> 
-	pb-post grid-item grid-noWall" id="template-freewall">
+	pb-post grid-item" id="template-freewall">
 	<div class="pb-post-block">
 		<div class="pb-post-head">
-			<img src="{{user.avatar}}" class="pb-post-avatar" />
+			<img src="{{user.avatar}}" class="pb-post-avatar" onerror="HideThisPost(this)" />
 			<div class="pb-post-author">
 				<strong><a href="/@{{user.id}}">{{user.name}}</a></strong><br />
 				<span class="pb-post-timestamp"> <i class="pb-post-timestamp-o">
@@ -22,7 +22,7 @@
 		</div>
 		<div class="pb-post-content">
 			
-			<a href="/item?id={{id}}"><img src="{{images.featured}}" class="pb-post-product lazy"></a>
+			<a href="/item?id={{id}}" class="tempFI_height"><img src="{{images.featured}}" class="pb-post-product lazy" onerror="HideThisPost(this)"></a>
 			
 			<h4>{{product_info.title}}</h4>
 			

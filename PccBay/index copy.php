@@ -20,7 +20,7 @@ include_once('MasterPages/overhead.php');
 		<div class="row">
 			<!-- Begin Content -->
 			<div class="<?php pb_isset(pb_isset_session('user_id'), 'col-md-9', 'col-md-12') ?> MainFeed">
-				<div id="freewall">
+				<div id="freewall" class="masonry">
 				    <?php pb_include('/MasterPages/post-temp'); ?>
 				</div>
 			</div>
@@ -200,7 +200,7 @@ function ini_grid_ext(JsonURI){
 					'</div>'+
 				'</div>';
 				<?php }else{ ?> foot=comm; <?php } ?>
-				ini_add_comments(pID, '#comment_'+randID, autheroId);
+				//ini_add_comments(pID, '#comment_'+randID, autheroId);
 			}if(pHead_type=='discussion'){ 
 				post.find('.pbPPHead').html('<i class="zmdi zmdi-comment-text-alt themeColor" style="font-size:30px"></i>');
 				<?php if(isset($_SESSION['user_id'])){  ?>
@@ -240,7 +240,8 @@ $(document).ready(function(){
 	var thisDir=thispage('dir');
 	if(thispage().indexOf('@') !== -1){ tail=thispage().substring(1); userUrl(tail); }
 	var ini_gridCount=0;
-	var JsonURI = '/graph/feed?accessToken=<?php print pb_og('token'); ?>';
+	//var JsonURI = '/graph/feed?accessToken=<?php print pb_og('token'); ?>&loop=10';
+	var JsonURI = '/graph/f/?s=false';
 	if(thisDir=='s'){
 		JsonURI += '&search&q='+tail; }else{
 		JsonURI += '&q='+tail;	
@@ -252,9 +253,7 @@ $(document).ready(function(){
 	    afterLoad: function (res) {
 		    clearTimeout(iniTimer);
 		    ini_grid_ext(JsonURI);
-		    if(ini_gridCount===0){
-			    ini_grid(ini_gridCount);
-		    }
+		    ini_grid(ini_gridCount);
 		    ini_gridCount++;
 	    },
 	   pagination: {
@@ -268,8 +267,9 @@ $(document).ready(function(){
 		noResults: '<div id="lj-noresponse"></div>',
 		noResultsText: '<h3>No More Post</h3>',
 	});
+	
+	
 });
-
 </script>
 </body>
 </html>

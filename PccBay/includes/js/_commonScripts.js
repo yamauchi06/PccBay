@@ -153,6 +153,10 @@ $(window).load(function () {
 });
 */
 
+function HideThisPost(img){
+	//var $this = $(img).closest('.pb-post');
+}
+
 
 function thispage(action){
 	var page = window.location.href.split('/');
@@ -206,20 +210,6 @@ function handleHash(hash){
 			}
 		});
 	}
-}
-
-function ini_grid(ini_gridCount){
-	var pb_post_plider_width = $('.pb-post-content').width();
-	$( window ).resize(function() { pb_post_plider_width = $('.pb-post-content').width(); });
-	var wall = new Freewall("#freewall");
-	wall.reset({
-		selector: '.grid-item',
-		animate: false,
-		cellW: pb_post_plider_width,
-		cellH: 'auto',
-		onResize: function() { wall.fitWidth(); },
-	});
-	wall.fitWidth();
 }
 
 function pb_graph_token(app_id, expire){

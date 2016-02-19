@@ -5,6 +5,8 @@
 	include_once('_pb_filters.php');
 	include_once('pb_short_code.php');
 	
+	include_once('_pb_min_functions.php');
+
 	
 	if(!empty($_GET['sessionSet'])){ $_SESSION[$_GET['sessionSet']] = $_GET['value']; }
 	if(!empty($_GET['sessionUnSet'])){ unset( $_SESSION[$_GET['sessionUnSet']] ); }
@@ -135,41 +137,6 @@
 		}
 	}
 	
-	function time_ago($ptime)
-	{
-	    $etime = time() - $ptime;
-	
-	    if ($etime < 1)
-	    {
-	        return '0 seconds';
-	    }
-	
-	    $a = array( 365 * 24 * 60 * 60  =>  'year',
-	                 30 * 24 * 60 * 60  =>  'month',
-	                      24 * 60 * 60  =>  'day',
-	                           60 * 60  =>  'hour',
-	                                60  =>  'minute',
-	                                 1  =>  'second'
-	                );
-	    $a_plural = array( 'year'   => 'years',
-	                       'month'  => 'months',
-	                       'day'    => 'days',
-	                       'hour'   => 'hours',
-	                       'minute' => 'minutes',
-	                       'second' => 'seconds'
-	                );
-	
-	    foreach ($a as $secs => $str)
-	    {
-	        $d = $etime / $secs;
-	        if ($d >= 1)
-	        {
-	            $r = round($d);
-	            return $r . ' ' . ($r > 1 ? $a_plural[$str] : $str) . ' ago';
-	        }
-	    }
-	}
-	
 	function isCurrency($number){
 	  return preg_match("/^-?[0-9]+(?:\.[0-9]{1,2})?$/", $number);
 	}
@@ -214,16 +181,12 @@
 		}
 	}
 	
-	function pb_safe_image_point($string){ 
-		return '/?i='.str_replace('/', ':', str_replace('/images/user-data/', '', $string) ).'&day_code='.md5(date('MdY')).sha1(date('MdY')); 
-	}
-	
 	function pb_safe_image($unique_id, $method='image', $attr='', $popup='true', $html='{{image}}'){
 		$result = pb_db("SELECT * FROM pb_safe_image Where uid='$unique_id'");
 		if ($result->num_rows > 0) {
 		    while($row = $result->fetch_assoc()) {
 			    $size=explode(':', $row['size']);
-			    $row['string'] = pb_safe_image_point($row['string']);
+			    $row['string'] = pb_safe_image_structure($row['string']);
 			    if($popup=='true'){$attr .= 'data-overHead-img="'.$row['string'].'" data-original="'.$row['string'].'"';}
 		        if($method=='base64' || $method=='url'){ $results = $row['string']; }
 		        if($method=='image'){  $results = '<img src="'.$row['string'].'" alt="'.$row['alt'].'" title="'.$row['title'].'" '.$attr.' />';}
@@ -237,7 +200,7 @@
 		if ($result->num_rows > 0) {
 		    while($row = $result->fetch_assoc()) {
 			    $size=explode(':', $row['size']);
-			    $row['string'] = pb_safe_image_point($row['string']);
+			    $row['string'] = pb_safe_image_structure($row['string']);
 			    if($popup=='true'){$attr .= 'data-overHead-img="'.$row['string'].'" data-original="'.$row['string'].'"';}
 		        if($method=='base64' || $method=='url'){ $results = $row['string']; }
 		        if($method=='image'){  $results = '<img src="'.$row['string'].'" alt="'.$row['alt'].'" title="'.$row['title'].'" '.$attr.' />';}
@@ -324,7 +287,9 @@
 	
 	function topTags($limit){
 		pb_db("SELECT * FROM pb_tags ORDER BY count DESC LIMIT $limit", function($row){
-			print '<li><a href="/s/'.$row['tag'].'">'.ucwords($row['tag']).'</a></li>';
+			if(!empty($row['tag']) && isset($row['tag'])){
+				print '<li><a href="/s/'.$row['tag'].'">'.ucwords($row['tag']).'</a></li>';
+			}
 		});
 	}	
 	
@@ -399,27 +364,6 @@
 		return $return;
 	}
 	
-	function objectToArray($d) {if (is_object($d)) {$d = get_object_vars($d);}if (is_array($d)) {return array_map(__FUNCTION__, $d);}else {return $d;}}
-	function arrayToObject($d) {if (is_array($d)) {return (object) array_map(__FUNCTION__, $d);}else {return $d;}}
-	
-	function pb_switch($d, $set=''){
-		if(empty($set)){
-			if(!empty($d)){
-				if(is_array($d)) { $r = arrayToObject($d); }
-				if(is_object($d)){ $r = objectToArray($d); }
-				return $r;
-			}else{
-				return false;
-			}
-		}
-		else if($set=='object'){
-			return arrayToObject($d);
-		}
-		else if($set=='array'){
-			return objectToArray($d);
-		}
-	}
-	
 	function pb_obj($object, $property, $return=''){
 		if(property_exists($object, $property)){
 			return $object->$property;
@@ -435,8 +379,8 @@
 			return '{{no user id}}';
 		}else{
 			if(!isset($_SESSION['user_data'.$user_id])){
-				$user_data = json_decode(pb_user_data($user_id, 'user_data'))[0];
-				$contact_info = json_decode(pb_user_data($user_id, 'contact_info'))[0];		
+				$user_data = json_decode(pb_user_data($user_id, 'user_data')); $user_data=$user_data[0];
+				$contact_info = json_decode(pb_user_data($user_id, 'contact_info')); $contact_info=$contact_info[0];		
 				$arrs = array_merge(pb_switch($user_data), pb_switch($contact_info));
 				$session = array(
 					'user_id' => pb_user_data($user_id, 'user_id'),
@@ -466,13 +410,15 @@
 		$result = pb_db("SELECT * FROM pb_post WHERE product_id='$post_id'");
 		if ($result->num_rows > 0) {
 		    while($row = $result->fetch_assoc()) {
+			    $j1=json_decode($row['product_info']);
+			    $j2=json_decode($row['trans_info']);
 				$post=array(
 					'id' => $row['product_id'],
 					'type' => $row['type'],
 					'user' => $row['user_id'],
 					'status' => $row['status'],
-					'info' => json_decode($row['product_info'])[0],
-					'trans' => json_decode($row['trans_info'])[0]
+					'info' => $j1[0],
+					'trans' => $j2[0]
 				);
 		    }
 		}
@@ -498,15 +444,6 @@
 			}else{
 				return $return;
 			}
-		}
-	}
-	
-	function pb_table_data($table, $row, $where){
-		$result = pb_db("SELECT * FROM $table Where $where");
-		if ($result->num_rows > 0) {
-		    while($sqlrow = $result->fetch_assoc()) {
-				return $sqlrow[$row];
-		    }
 		}
 	}
 	
@@ -647,7 +584,14 @@
 		return pb_db("UPDATE pb_post SET product_info='$output' WHERE product_id='$id'");
 	}
 	
-	
+	function pb_table_data($table, $row, $where){
+		$result = pb_db("SELECT * FROM $table Where $where");
+		if ($result->num_rows > 0) {
+		    while($sqlrow = $result->fetch_assoc()) {
+				return $sqlrow[$row];
+		    }
+		}
+	}
 	
 	function pb_notify($to, $from, $item, $intro, $content, $link, $type="0"){
 		$date = date("F j, Y, g:i:s a");			
@@ -865,23 +809,27 @@
 		while($adCount <= $loop){
 			if(empty($ad_id) || $ad_id=='paid'){
 				$result= pb_db("SELECT * FROM pb_doubleclick WHERE status=1 order by RAND() LIMIT 1");
-				if($result->num_rows>0){$ad_id=$result->fetch_assoc()['id'];}
+				if($result->num_rows>0){
+					$ad_id=$result->fetch_assoc(); $ad_id=$ad_id['id'];
+				}
 			}
 			if($ad_id=='free'){
 				$ran = pb_db("SELECT product_id, user_id, product_info FROM pb_post WHERE type='product' AND status='open' order by RAND() LIMIT 1", true);
-				$data = json_decode($ran->product_info)[0];
-				$img_id = explode(',', $data->images)[0];
+				$data = json_decode($ran->product_info); $data=$data[0];
+				$img_id = explode(',', $data->images);$img_id=$img_id[0];
 				$img_cta = $data->title;
 				$img_user = $ran->user_id;
 				$pid = $ran->product_id;
 				$pb_safe_image=pb_db("SELECT string FROM pb_safe_image WHERE uid='$img_id'", true);
 				if(!in_array('free_ads_'.$pid, pb_page_code($code_previx, true) )){
-				    $img_url=$pb_safe_image->string;
-				    array_push($_SESSION[$code_previx.PAGE_LOAD_CODE], 'free_ads_'.$pid);
-					print '<a class="pb_ad transition-300" href="/pb_doubleclick?path=/item?id='.$pid.'&marketplace=free_user_ads&pg='.PAGE_LOAD_CODE.'&source='.$location.'&session='.$code_previx.'&user_id='.$img_user.'"';
-					print 'style="background:no-repeat center url('.pb_safe_image_point($img_url).');background-size:cover;'.$_SESSION['pb_ad_style'].'">';
-					if(!empty($img_cta) && e($_SESSION['pb_ad_cap']) ){ print '<div class="transition-300">'.$img_cta.'</div>'; }
-					print '</a>';
+				    if(isset($pb_safe_image->string)){
+					    $img_url=$pb_safe_image->string;
+					    array_push($_SESSION[$code_previx.PAGE_LOAD_CODE], 'free_ads_'.$pid);
+						print '<a class="pb_ad transition-300" href="/pb_doubleclick?path=/item?id='.$pid.'&marketplace=free_user_ads&pg='.PAGE_LOAD_CODE.'&source='.$location.'&session='.$code_previx.'&user_id='.$img_user.'"';
+						print 'style="background:no-repeat center url('.pb_safe_image_structure($img_url).');background-size:cover;'.$_SESSION['pb_ad_style'].'">';
+						if(!empty($img_cta) && e($_SESSION['pb_ad_cap']) ){ print '<div class="transition-300">'.$img_cta.'</div>'; }
+						print '</a>';
+				    }
 			    }
 			}else{
 				$ad=pb_db("SELECT * FROM pb_doubleclick WHERE id='$ad_id' AND status=1 LIMIT 1", true);
@@ -903,10 +851,21 @@
 		}
 	}
 	
+	function pb_is_mine($table, $id, $itemType, $user_id){
+		if(isset($_SESSION['user_id'])){ $user_id=$_SESSION['user_id']; }
+		$result = pb_db("SELECT * FROM $table WHERE $itemType='$id' LIMIT 1");
+		if ($result->num_rows > 0) { 
+			return true; 
+		}
+	}
+	
 	
 	function pb_delete_this(){
 		if(isset($_GET['edit'])){
-			print '<a href="/graph/edit.php?id='.$_GET['edit'].'&action=delete" style="float: left;margin: 5px;color: #e74c3c">Permanently delete this item </a>';
+			if( pb_is_mine('pb_post', $_GET['id'], 'product_id', pb_user()->user_id) ){
+				print '<a href="/graph/edit.php?id='.$_GET['id'].'&action=delete" style="float: left;margin: 5px;color: #e74c3c">Permanently delete this item </a>';
+			}
+			
 		}
 	}
 	

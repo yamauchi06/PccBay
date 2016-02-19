@@ -3,12 +3,14 @@
 if($slq_table=='pb_post'){
 	$pData = json_decode($val['product_info']);
 	$saveImag=array();
+	$saveImag_size=array();
 	foreach($pData as $pd){
 		$images = explode(',', $pd->images);
 		$timeAgo = time_ago(strtotime($pd->timestamp));
 		$date = $pd->timestamp;
 		foreach($images as $img){ 
-			array_push($saveImag, pb_safe_image_point( pb_table_data('pb_safe_image', 'string', "uid='$img'") ) ); 
+			array_push($saveImag, pb_safe_image_structure( pb_table_data('pb_safe_image', 'string', "uid='$img'") ) ); 
+			array_push($saveImag_size, pb_safe_image_structure( pb_table_data('pb_safe_image', 'size', "uid='$img'") ) ); 
 		}
 		$title=$pd->title;
 		$desc=$pd->desc;
@@ -19,6 +21,7 @@ if($slq_table=='pb_post'){
 	$user_data = json_decode(pb_user_data($val['user_id'], 'user_data'), true);
 	foreach($user_data as $data){ $author=$data['name'];$user=$data['username'];$avatar=$data['avatar']; }
 	$comment = json_decode(get_comments($val['product_id']));
+	$imgSize = explode(':', $saveImag_size[0]);
 	$entity = array(
 		'id' => $val['product_id'],
 		'type' => $val['type'],
@@ -34,6 +37,8 @@ if($slq_table=='pb_post'){
 		),
 		'images' => array(
 			'featured'=>$saveImag[0],
+			'featured_width'=>$imgSize[0],
+			'featured_height'=>$imgSize[1],
 			'list'=>$saveImag
 		),
 		'product_info' => array(

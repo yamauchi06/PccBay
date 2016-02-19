@@ -62,7 +62,7 @@
 			<div class="col-lg-10 col-lg-offset-1 pb-page-block" style="background: no-repeat center url('/images/interior-images/students/coffee1.jpg');background-size:cover;height: 190px;padding: 0px;">
 				<div class="pb-grade-lr-theme col-lg-12">
 					
-					<div class="col-md-6 pb-page-block-highlight" style="margin-top: 20px;">
+					<div class="col-md-6" style="margin-top: 20px;">
 						<h1>Join Forces Today</h1>
 						<p>Word of mouth works, but this is better!</p>
 						<a href="/services/" style="color:#ffffff;">Services Home Page</a>

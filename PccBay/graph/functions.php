@@ -8,19 +8,14 @@ function return_graph($content='', $format='json', $dataText='data')	{
 }
 
 function get_comments($post_id){
-	global $servername;
-	global $username;
-	global $password;
-	global $dbname;
 	$comment = array();
 	$sql = "SELECT * FROM pb_comments WHERE post_id='$post_id'"; 
-	$conn = new mysqli($servername, $username, $password, $dbname);
+	$conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
 	if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); } 
 	$result = $conn->query($sql);
 	if ($result->num_rows > 0) {
 	    while($val = $result->fetch_assoc()) {
-		    $user_data = json_decode(pb_user_data($val['author'], 'user_data'), true);
-			foreach($user_data as $data){ $author=$data['name'];$user=$data['username'];$avatar=$data['avatar']; }
+		    $user_data = json_decode(pb_table_data('pb_users', 'user_data', "user_id='+$val[author]'"), true);
 			$item = array(
 				'id' => $val['id'],
 				'date' => $val['date'],
@@ -30,9 +25,9 @@ function get_comments($post_id){
 				),
 				'user' => array(
 					'id' => $val['author'],
-					'name' => $author,
-					'username' => $user,
-					'avatar' => $avatar,
+					'name' => $user_data[0]['name'],
+					'username' => $user_data[0]['username'],
+					'avatar' => $user_data[0]['avatar'],
 				),
 				'status' => $val['status'],
 				'comment' => $val['comment']

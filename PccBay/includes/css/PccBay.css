@@ -542,6 +542,10 @@ legend{
 	border: 0px;
 }
 
+.tempFI_height{
+	min-height: 150px;
+}
+
 /* Post Boxes */
 .pb-post{
 	padding: 0px;	
@@ -556,6 +560,9 @@ legend{
 	vertical-align: top;
 	float: none;
 	border-radius: 3px;
+}
+.pb-post-clear{
+	background: transparent !important;
 }
 .pb-post-head{
 	width: 100%;
@@ -634,6 +641,48 @@ legend{
 	border-top-right-radius: 3px;
 */
 }
+
+
+#freewall.masonry.logging_in {
+	padding-bottom: 120px;
+	
+/*
+	-moz-column-count:3;
+    -moz-column-gap: 3%;
+    -moz-column-width: 30%;
+    -webkit-column-count:3;
+    -webkit-column-gap: 3%;
+    -webkit-column-width: 30%;
+    column-count: 3;
+    column-gap: 3%;
+    column-width: 30%;
+*/
+}
+
+#freewall.fancy_grid.logging_out {
+	padding-bottom: 120px;
+	
+/*
+	-moz-column-count:4;
+    -moz-column-gap: 3%;
+    -moz-column-width: 30%;
+    -webkit-column-count:4;
+    -webkit-column-gap: 3%;
+    -webkit-column-width: 30%;
+    column-count: 4;
+    column-gap: 3%;
+    column-width: 30%;
+*/
+}
+
+.pb-post.grid-item { /* Masonry bricks or child elements */
+/*
+	display: inline-block;
+    width: 25%;
+    float: left;
+*/
+}
+
 
 .pb-post-flash{
 	border-radius: 3px;
@@ -866,9 +915,6 @@ legend{
 	min-height: 300px;
 	padding: 10px;
 }
-
-
-
 
 
 .pb-item-button{
@@ -1406,9 +1452,11 @@ form hr{
 
 #lj-loader{
 	position: absolute;
-	bottom: -80px;
+	bottom: -50px;
 	left: 45%;
 	z-index: 999999;
+	display: block;
+    width: 170px;
 }
 
 #lj-noresponse{

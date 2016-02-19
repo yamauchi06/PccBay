@@ -21,6 +21,15 @@
 			$data=explode(':',$data);
 			$return = pb_graph_token($data[0], $data[1]);
 		}
+		if($call=='access_token'){
+			$data=explode(':',$data);
+			$token = pb_time('token:'.$data[0], array('expire'=>$data[1], 'key'=>md5($data[1])));
+			$return = array(
+				'token'  => $token,
+				'expire' => $data[1],
+				'key'    => md5($data[1])
+			);
+		}
 		if($call=='site'){
 			$return=domain($data);
 		}

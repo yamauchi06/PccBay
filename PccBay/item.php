@@ -100,7 +100,7 @@
 								
 								<p><?php print $pi->desc; ?></p>
 
-								<a href="<?php echo pb_addtocart($product_id); ?>" class="pb-item-button transition-200 <?php print $proStatuseClass; ?>">
+								<a href="<?php echo pb_addtocart($product_id); ?>" class="transition-200 <?php print $proStatuseClass; ?> pb-item-button">
 									<span>
 										Get This <i class="fa fa-long-arrow-right"></i><br />
 										<small><?php print pb_price($pi->price); ?></small>
@@ -238,7 +238,6 @@ $(document).ready(function(){
 	});
 	var ffHeight = 400; 
 	var imgurl = $('.pb-product-gallery').find('li:eq(0)').attr('data-tumb');
-	console.log(imgurl)
 	$('.pb-product-gallery').find('.figure-feature').attr('src', imgurl);
 	
 	$('.pb-product-gallery').find('li:eq(0)').addClass('active');
