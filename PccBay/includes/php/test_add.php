@@ -8,13 +8,5 @@
 	
 	include('commonFunctions.php');
 
-/*
-	$tk = pb_time("token:new", array( 'expire'=>"+59 seconds", 'key' => '91621871872415724817581275'));
-print $tk.'<br />';
-*/
-	print pb_time("token", array(
-		'key' => '91621871872415724817581275',
-		'token'=>"TkUrdnQ4QkJPVlN0ZzRVaEVESU5hS0NXUlN0QzV3alJib2R1YmVxSjZoLzAzcFU2ZmpBL2VFUGZ4NVc5QUZpM2UwYVJKNEJnaTdtQTYvZitqdC9PaThoY0drYXdOd2pJZDYrcGtmMi8wSGRWeGcxUGV2VGFPcm5UeENvSzVCQ3JBRndCakZWbG9BdkdyNDhldzU2TnJnPT0"
-	));
-	
+	print pb_is_image('http://pccbay.localhost/?safe_image=2015_26_10:d15bddd1c93a813bf605e17acdbbfa36Z5iPPwi06S.jpg:U1dSVXNlMFJEa2t1Wmp0M3BFQ1ZZNmMvbEs1cEY0blFjeGNQQzZ3ZTR3Yz0=&day_code=dmJYUnU4OXlnaXozMXpvRGE0SWF4UlJWdE4zZFZySGxkdUpDc0ducnZZSmE3Y0lMbHJSSy9QSUpKRXdGS0I4cDN5ZURvWFVkTlBqODVvUThITmEzejUvNFdKOVAzVlhmdWZWZTJIS2RZY1ROZVQrZXpSbXdUaVRyY1JBa084SzI0c1E1YXU4SUZqQUZsQmNIeFM5ZDFRPT0');
 ?>
