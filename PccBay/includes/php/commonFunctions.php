@@ -348,7 +348,7 @@
 		if(is_object($user_id)){
 			$user_id = $user_id->user_id;
 		}
-		$result = pb_db("SELECT * FROM pb_users Where (user_id='$user_id' OR username='$user_id' OR id_card_key='$user_id') LIMIT 1");
+		$result = pb_db("SELECT * FROM pb_users WHERE (user_id='$user_id' OR username='$user_id') LIMIT 1");
 		if ($result->num_rows > 0) {
 		    while($sqlrow = $result->fetch_assoc()) {
 				$return = $sqlrow[$row];
@@ -401,7 +401,7 @@
 			}
 			if($type=='object'){
 				return pb_switch($arrs); }else{
-				return $arrs;
+				return $user_id;
 			}
 		}
 	}
@@ -641,8 +641,7 @@
 	}
 
 	function pb_update_account($user_id) {
-		global $_POST;
-		//var_dump($_POST);
+		unset($_SESSION['user_data'.$user_id]);
 		if(isset($_POST['account_residence'])){ $account_residence = 'true'; }else{ $account_residence = 'false'; }
 		if(isset($_POST['account_note_desktop'])){ $account_note_desktop = 'true'; }else{ $account_note_desktop = 'false'; }
 		if(isset($_POST['account_note_mobile'])){ $account_note_mobile = 'true'; }else{ $account_note_mobile = 'false'; }
