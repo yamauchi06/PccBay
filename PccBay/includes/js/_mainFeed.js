@@ -7,7 +7,7 @@ var lazyFeed = {
 	offset: '150%', 
 	animate: 100,
 	delay: 500,
-	filter: thispage()
+	filter: thispage() || 0
 };
 //Defaut variables
 
