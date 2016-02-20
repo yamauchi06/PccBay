@@ -39,7 +39,7 @@
 								<li><a href="">Chrome Plugin</a></li>
 							</ul>
 						</div>
-						<a href="#" style="padding: 10px;">Do you have a question?</a>
+						<a href="#" style="padding: 10px;">Can't find what your looking for?</a>
 					</div>
 				</div>
 				

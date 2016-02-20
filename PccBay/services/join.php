@@ -63,8 +63,8 @@
 				<div class="pb-grade-lr-theme col-lg-12">
 					
 					<div class="col-md-6" style="margin-top: 20px;">
-						<h1>Join Forces Today</h1>
-						<p>Word of mouth works, but this is better!</p>
+						<h1 style="color:#ffffff;">Join Forces Today</h1>
+						<p style="color:#ffffff;">Word of mouth works, but this is better!</p>
 						<a href="/services/" style="color:#ffffff;">Services Home Page</a>
 					</div>
 					

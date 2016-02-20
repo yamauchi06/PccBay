@@ -15,7 +15,7 @@
 		<div class="row"><br />
 			<div class="col-md-12 MainFeed">
 				<div id="freewall">
-				<?php pb_db("SELECT * FROM pb_services WHERE expires > '$today' AND status = 'open' ORDER BY UNIX_TIMESTAMP(expires) DESC", function($row){ ?>
+				<?php pb_db("SELECT * FROM pb_services WHERE expires > '$today' AND status = 'open' ORDER BY id DESC", function($row){ ?>
 					<div class="col-md-5 pb-post grid-item grid-noWall" id="<?php print $row['service_id']; ?>">
 						<div class="pb-post-block">
 							<?php pb_collage(pb_collage_build($row), 160, 'print', '<div class="pb-post-head">{{collage}}</div>'); ?>
@@ -118,7 +118,21 @@ $(document).ready(function(){
 
 <?php pb_include('/MasterPages/footer~col-md-12'); ?>
 <script>	
-$(document).ready(function(){ ini_grid(); });	
+$(document).ready(function(){ 
+
+	var pb_post_plider_width = $('.pb-post-content').width();
+	$( window ).resize(function() { pb_post_plider_width = $('.pb-post-content').width(); });
+	var wall = new Freewall("#freewall");
+	wall.reset({
+		selector: '.grid-item',
+		animate: false,
+		cellW: pb_post_plider_width,
+		cellH: 'auto',
+		onResize: function() { wall.fitWidth(); },
+	});
+	wall.fitWidth();	
+	
+});	
 </script>
 </body>
 </html>
