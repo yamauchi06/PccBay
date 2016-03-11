@@ -80,7 +80,11 @@ if($slq_table=='pb_safe_image'){
 //pb_comments
 if($slq_table=='pb_comments'){
 	$user_data = json_decode(pb_user_data($val['author'], 'user_data'), true);
-	foreach($user_data as $data){ $author=$data['name'];$user=$data['username'];$avatar=$data['avatar']; }
+	if(!empty($user_data)){
+		foreach($user_data as $data){ $author=$data['name']; $user=$data['username']; $avatar=$data['avatar']; }
+	}else{
+		$val['status'] = 'deleted';
+	}
 	if(isset($_GET['timeago'])){ $val['date']=time_ago(strtotime($val['date'])); }
 	$entity = array(
 		'id' => $val['id'],

@@ -66,7 +66,7 @@
 			</div>
 			
 			
-			<div class="col-lg-10 col-lg-offset-1 pb-page-block" style="padding-bottom:20px;min-height:500px;">
+			<div class="col-lg-10 col-lg-offset-1 pb-page-block" style="padding-bottom:20px;min-height:200px;">
 				<h3 style="text-align: center;" id="DiscoverServices">Discover Services</h3>
 				
 				<div class="col-md-4">
@@ -77,93 +77,33 @@
 							<p>Some text to tell you about it. This is text to tell you about it.</p>
 						</li>
 						<li>
-							<b>White Glove Cleaning</b>
-							<br/>
-							<p>Some text to tell you about it. This is text to tell you about it.</p>
-						</li>
-						<li>
-							<b>Tutor</b>
-							<br/>
-							<p>Some text to tell you about it.</p>
-						</li>
-						<li>
 							<b>Ride Share</b>
 							<br/>
 							<p>Some text to tell you about it. <a href="#">map</a></p>
+						</li>
+					</ul>
+				</div>
+				
+				
+				<div class="col-md-4">
+					<ul class="pb-service-list">
+						<li>
+							<b>White Glove Cleaning</b>
+							<br/>
+							<p>Some text to tell you about it. This is text to tell you about it.</p>
 						</li>
 						<li>
 							<b>Food Prep</b>
 							<br/>
 							<p>Some text to tell you about it. This is text to tell you about it.</p>
 						</li>
-						<li>
-							<b>Item Six</b>
-							<br/>
-							<p>Some text to tell you about it.</p>
-						</li>
-					</ul>
-				</div>
-				
-				
-				<div class="col-md-4">
-					<ul class="pb-service-list">
-						<li>
-							<b>Item One</b>
-							<br/>
-							<p>Some text to tell you about it. This is text to tell you about it.</p>
-						</li>
-						<li>
-							<b>Item Two</b>
-							<br/>
-							<p>Some text to tell you about it. This is text to tell you about it.</p>
-						</li>
-						<li>
-							<b>Item Three</b>
-							<br/>
-							<p>Some text to tell you about it. This is text to tell you about it.</p>
-						</li>
-						<li>
-							<b>Item Four</b>
-							<br/>
-							<p>Some text to tell you about it.</p>
-						</li>
-						<li>
-							<b>Item Five</b>
-							<br/>
-							<p>Some text to tell you about it.</p>
-						</li>
-						<li>
-							<b>Item Six</b>
-							<br/>
-							<p>Some text to tell you about it. This is text to tell you about it.</p>
-						</li>
 					</ul>
 				</div>
 				
 				<div class="col-md-4">
 					<ul class="pb-service-list">
 						<li>
-							<b>Item One</b>
-							<br/>
-							<p>Some text to tell you about it. This is text to tell you about it.</p>
-						</li>
-						<li>
-							<b>Item Two</b>
-							<br/>
-							<p>Some text to tell you about it. This is text to tell you about it.</p>
-						</li>
-						<li>
-							<b>Item Three</b>
-							<br/>
-							<p>Some text to tell you about it. This is text to tell you about it.</p>
-						</li>
-						<li>
-							<b>Item Four</b>
-							<br/>
-							<p>Some text to tell you about it. This is text to tell you about it.</p>
-						</li>
-						<li>
-							<b>Item Five</b>
+							<b>Tutor</b>
 							<br/>
 							<p>Some text to tell you about it.</p>
 						</li>

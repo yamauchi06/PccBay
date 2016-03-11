@@ -3,6 +3,11 @@
 	if(!empty($_GET['format'])){$format=$_GET['format'];}
 	header("Content-Type: ".$format);
 	
+	if( !isset($_GET['errors']) ){
+		error_reporting(0);
+		ini_set('display_errors', 0);
+	}
+	
 	//Includes	
 	include_once("../includes/php/_db-config.php");
 	include_once('../includes/php/commonFunctions.php');

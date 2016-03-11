@@ -2,6 +2,20 @@
 	$mainJson=array();
 	$mainJson_ordered=array();
 	
+	function masterOrder($type){
+		$key = array_search(strtolower($type), array(
+			//Order that results will be posted.
+			//All must be lowercase
+			"user", 
+			"product", 
+			"question", 
+			"service", 
+			"faq", 
+			"tag"
+		));
+		return $key;
+	}
+	
 	//Set Query
 	if(isset($_GET['q'])){
 		$slq_table = "true";
@@ -133,7 +147,7 @@
 			$conn->close();
 			
 			
-			//pb_services
+			//pb_faq
 			$conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
 			if ($conn->connect_error) {
 			    die("Connection failed: " . $conn->connect_error);
@@ -173,6 +187,7 @@
 					$mainJson_ordered,  array( 
 						'value' => $item['title'], 
 						'data' => array( 
+							'order' => masterOrder($item['type']), 
 							'category' => $item['type'],
 							'small' => $item['small'],
 							'image' => $item['image'],  
@@ -185,7 +200,7 @@
 		
 		foreach ($mainJson_ordered as $key => $row) {
 		    // replace 0 with the field's index/key
-		    $sorts[$key]  = $row['data']['category'];
+		    $sorts[$key]  = $row['data']['order'];
 		}
 		array_multisort($sorts, SORT_ASC, $mainJson_ordered);
 		

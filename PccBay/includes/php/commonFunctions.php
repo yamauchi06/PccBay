@@ -8,7 +8,7 @@
 	include_once('_pb_min_functions.php');
 
 	
-	if(!empty($_GET['sessionSet'])){ $_SESSION[$_GET['sessionSet']] = $_GET['value']; }
+	if(!empty($_GET['sessionSet'])){ $_SESSION[$_GET['sessionSet']] = $_GET['value']; header('Location: '.DOCUMENT_ROOT_EXT); }
 	if(!empty($_GET['sessionUnSet'])){ unset( $_SESSION[$_GET['sessionUnSet']] ); }
 
 	function domain($type='url'){
@@ -348,6 +348,7 @@
 		if(is_object($user_id)){
 			$user_id = $user_id->user_id;
 		}
+		$return=null;
 		$result = pb_db("SELECT * FROM pb_users WHERE (user_id='$user_id' OR username='$user_id') LIMIT 1");
 		if ($result->num_rows > 0) {
 		    while($sqlrow = $result->fetch_assoc()) {
@@ -685,6 +686,7 @@
 			$status='flagged'; }else{
 			$status='open';
 		}
+		
 		pb_notify($post_owner, $user_id, $post_id, 'Commented on', get_words($comment, 20), '/item?id='.$post_id);
 		return pb_db("INSERT INTO pb_comments (post_id, date, author, status, comment) VALUES ('$post_id', '$current_date','$user_id','$status', '$comment')"); 
 	}
@@ -709,7 +711,7 @@
 				            '<div class="pb-post-head-noB">'.
 				                '<img class="pb-post-avatar" src="'.$pb_user['avatar'].'">'.
 				                '<div class="pb-post-author">'.
-				                   	'<strong><a href="/@'.$pb_user['username'].'">'.$pb_user['name'].'</a></strong> '.pb_user_permission($data->author,'label', true).'<br>'.
+				                   	'<strong><a href="/@'.$pb_user['username'].'">'.$pb_user['name'].'</a></strong> '.pb_user_permission($data->author,'label', true).
 				                    '<span class="pb-post-timestamp"><i class="pb-post-timestamp-o">'.$data->date.'</i></span>'.
 				                '</div>'.
 				            '</div>'.
